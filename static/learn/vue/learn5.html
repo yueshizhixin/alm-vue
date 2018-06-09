@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 360浏览器默认使用Webkit内核 -->
+    <meta name="renderer" content="webkit">
+    <title>ALM-埃罗芒老兄</title>
+    <meta name="keywords" content="埃罗芒老兄,ALM,埃罗芒">
+    <meta name="description" content="埃罗芒老兄 个人网站 '沉睡的传说，动摇的事实。真实下的黑暗，废墟上的噩梦。大海的香气，迟来的后悔。'">
+</head>
+<body>
+<a href="../index.html">索引</a><br>
+<div id="app">
+    <strong>1.列表渲染 筛选filter</strong> <br>
+    <ul>
+        <li v-for="o of numM2">{{o}}</li>
+    </ul>
+    <hr>
+    v-for="o of nums.filter(num=>num%2==0)"
+    <ul>
+        <li v-for="o of nums.filter(num=>num%2==0)">{{o}}</li>
+    </ul>
+    <hr>
+    v-for="o of 3"
+    <ul>
+        <li v-for="o of 3">{{o}}</li>
+    </ul>
+    <strong>2.v-for + template</strong> <br>
+    <ul>
+        <template v-for="(o,i) of users">
+            <li>{{i}}</li>
+            <li>{{o.name}}-{{o.age}}-{{o.sex}}</li>
+            <hr>
+        </template>
+
+    </ul>
+    <strong>3.优先级 v-for>v-if</strong> <br>
+    <strong>4.看完组件后过来看组件里的v-for</strong>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script>
+
+    let vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                nums: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                users: [
+                    {id:'1',name: 'John', age: 15,sex:'1'},
+                    {id:'3',name: 'Lina', age: 22,sex:'1'},
+                    {id:'2',name: 'Alex', age: 97,sex:'0'},
+                    {id:'4',name: 'Axe', age: 45,sex:'0'},
+                ],
+            }
+        },
+        computed: {
+            numM2() {
+                return this.nums.filter(num =>num % 2 == 0)
+            }
+        },
+        methods: {}
+    })
+
+</script>
+</html>

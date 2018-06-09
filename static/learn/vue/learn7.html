@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 360浏览器默认使用Webkit内核 -->
+    <meta name="renderer" content="webkit">
+    <title>ALM-埃罗芒老兄</title>
+    <meta name="keywords" content="埃罗芒老兄,ALM,埃罗芒">
+    <meta name="description" content="埃罗芒老兄 个人网站 '沉睡的传说，动摇的事实。真实下的黑暗，废墟上的噩梦。大海的香气，迟来的后悔。'">
+</head>
+<body>
+<a href="../index.html">索引</a><br>
+<div id="app">
+    <strong>1.input and textarea</strong>
+    <hr>
+    <strong>2.checkbox</strong><br>
+    - 单个复选框 v-model绑定到布尔值
+    <input type="checkbox" v-model="ck" :title="222"/>
+    <span>{{ck}}</span> <br>
+    - 多个复选框 v-model绑定到数组
+    <div v-for="o of cks">
+        <template>
+            <input type="checkbox" :id="o.id" :value="o.id" v-model="cksed" title="222">
+            <span>{{o.name}}</span>
+        </template>
+    </div>
+    <span>{{cksed}}</span>
+    <hr>
+    <strong>3.radio</strong>
+    <div v-for="o of rd">
+        <template>
+            <input type="radio" :id="o.id" :value="o.id" v-model="rded" title="222">
+            <span>{{o.name}}</span>
+        </template>
+    </div>
+    <span>{{rded}}</span>
+    <hr>
+    <strong>4.select</strong>
+    <select  v-model="sled">
+        <option value="-1">--请选择--</option>
+        <option v-for="o of sl" :value="o.id" >{{o.name}}</option>
+    </select>
+    <span>{{sled}}</span>
+    <hr>
+    <strong>5. ck rad sel 的值绑定</strong><br>
+    - 用到了再来看看 <br>
+    <span style="color: red;">- 上边都不知不觉中应用了</span>
+    <hr>
+    <strong>6.v-model修饰符</strong>
+    - .lazy change事件后同步 不再实时同步 <br>
+    - .number 将用户的输入值转为数值类型 <br>
+    - .trim <br>
+    <hr>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                ck: false,
+                cks: [
+                    {id: 1, name: 'John'},
+                    {id: 2, name: 'Lina'},
+                    {id: 3, name: 'Alex'},
+                ],
+                cksed: [],
+                rd: [
+                    {id: 1, name: 'John'},
+                    {id: 2, name: 'Lina'},
+                    {id: 3, name: 'Alex'},
+                ],
+                rded: '',
+                sl: [
+                    {id: 1, name: 'John'},
+                    {id: 2, name: 'Lina'},
+                    {id: 3, name: 'Alex'},
+                ],
+                sled: -1,
+            }
+        },
+        computed: {},
+        methods: {}
+    })
+
+</script>
+</html>

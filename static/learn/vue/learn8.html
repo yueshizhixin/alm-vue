@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 360浏览器默认使用Webkit内核 -->
+    <meta name="renderer" content="webkit">
+    <title>ALM-埃罗芒老兄</title>
+    <meta name="keywords" content="埃罗芒老兄,ALM,埃罗芒">
+    <meta name="description" content="埃罗芒老兄 个人网站 '沉睡的传说，动摇的事实。真实下的黑暗，废墟上的噩梦。大海的香气，迟来的后悔。'">
+</head>
+<body>
+<a href="../index.html">索引</a><br>
+<div id="app">
+    <strong>1.自定义组件</strong> <br>
+    - 可以初始化 放在外边div里边 let com1=new Vue({el:'#com1'}) 或let com1=new Vue({el:'button-counter'}) <br>
+    - 组件复用
+    <button-counter></button-counter>
+    <button-counter></button-counter>
+    <button-counter></button-counter>
+    <br>
+    - data需要是函数 <br>
+    - 通过props传递数据 <br>
+    button-counter2 title="我是数据" <br>
+    button-counter2 title="asdcccc" <br>
+    <button-counter2 title="我是数据"></button-counter2>
+    <br>
+    <button-counter2 title="asdcccc"></button-counter2>
+    <br>
+    <hr>
+    <strong>2.通过标签传递数据</strong> <br>
+    <span style="font-size: x-large;color: red;">模板必须只有一个根元素</span>
+    <user-list v-for="o of users" :key="o.id" :user="o"></user-list>
+    <hr>
+    <strong>3.向父组件注册事件</strong> <br>
+    -
+    <div :style="{fontSize: vFontSize+'px'}">
+        <user-list v-for="o of users" :key="o.id*2+10" :user="o" @txt-larger="vFontSize++"></user-list>
+    </div>
+    - 可以抛出参数 然后用$event接收
+
+    <hr>
+    <strong>4.插槽slot</strong>
+    <alert-box>
+        我是插槽
+    </alert-box>
+</div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script>
+    //全局注册一个组件
+    Vue.component('button-counter', {
+        template: `<button @click="count++">自定义组件点击了{{count}}次</button>`,
+        data() {
+            return {
+                count: 0,
+            }
+        },
+
+    });
+
+    //全局注册一个组件
+    Vue.component('button-counter2', {
+        template: `<button @click="count++">自定义组件props传递数据[{{title}}]点击了{{count}}次</button>`,
+        props: ['title'],
+        data() {
+            return {
+                count: 0,
+            }
+        },
+
+    });
+
+    Vue.component('user-list', {
+        props: ['user'],
+        template: `
+            <div>
+                <span>{{user.name}}-{{user.age}}</span>
+                <br>
+                //注册一个叫txt-larger的事件
+                <button @click="$emit('txt-larger')">放大按钮</button>
+            </div>
+        `,
+        data() {
+            return {}
+        }
+    })
+
+    Vue.component('alert-box', {
+        template: `
+            <div>
+                <span>error</span>
+                <slot></slot>
+            </div>
+        `
+    })
+
+    let vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                users: [
+                    {id: '1', name: 'John', age: 15, sex: '1'},
+                    {id: '3', name: 'Lina', age: 22, sex: '1'},
+                    {id: '2', name: 'Alex', age: 97, sex: '0'},
+                    {id: '4', name: 'Axe', age: 45, sex: '0'},
+                ],
+                vFontSize: 10,
+            }
+        },
+        created() {
+        },
+        computed: {},
+        methods: {}
+    })
+
+</script>
+</html>
