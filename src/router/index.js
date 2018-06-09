@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import header from '../components/header'
-import footer from '../components/footer'
+
 import HelloWorld from '@/components/HelloWorld'
 import test1 from '../components/test/test1'
 import test2 from '../components/test/test2'
@@ -16,9 +15,9 @@ export default new Router({
     {
       path: '/',
       name: 'HelloWorld',
-      component: {
-        header,footer
-      }
+      component:
+        HelloWorld
+
     },
     {
       path: '/test1',
