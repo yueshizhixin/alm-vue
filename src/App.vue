@@ -1,8 +1,16 @@
 <template>
   <div id="app">
-    <vue-header></vue-header>
-    <router-view/>
-    <vue-footer></vue-footer>
+    <el-container>
+      <el-header>
+        <vue-header></vue-header>
+      </el-header>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
+      <el-footer>
+        <vue-footer></vue-footer>
+      </el-footer>
+    </el-container>
   </div>
 </template>
 

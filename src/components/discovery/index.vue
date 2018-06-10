@@ -1,13 +1,12 @@
 <template>
     <div>
-      <span>footer</span>
-
+      我是发现首页
     </div>
 </template>
 
 <script>
     export default {
-        name: "vueFooter"
+        name: "index"
     }
 </script>
 

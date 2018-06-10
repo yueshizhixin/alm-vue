@@ -1,12 +1,12 @@
 <template>
     <div>
-      我是test1的show
+      pdf页面
     </div>
 </template>
 
 <script>
     export default {
-        name: "show"
+        name: "index"
     }
 </script>
 

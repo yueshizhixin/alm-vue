@@ -1,13 +1,12 @@
 <template>
     <div>
-      <span>footer</span>
-
+      <router-view></router-view>
     </div>
 </template>
 
 <script>
     export default {
-        name: "vueFooter"
+        name: "index"
     }
 </script>
 

@@ -1,12 +1,12 @@
 <template>
     <div>
-      我是test1的update
+      我是资源首页
     </div>
 </template>
 
 <script>
     export default {
-        name: "update"
+        name: "index"
     }
 </script>
 

@@ -1,12 +1,12 @@
 <template>
-  <div>
-    这是test2
-  </div>
+    <div>
+      low-poly页面
+    </div>
 </template>
 
 <script>
     export default {
-        name: "test2"
+        name: "index"
     }
 </script>
 
