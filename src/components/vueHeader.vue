@@ -1,12 +1,11 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="4">
         &nbsp;
       </el-col>
-      <el-col :span="18">
+      <el-col :span="10">
         <el-menu :default-active="menuActiveIndex" class="el-menu-demo" mode="horizontal" @select="menuHandler">
-
           <el-menu-item index="100">
             <i class="iconfont icon-wangluo">&nbsp;</i>发现
           </el-menu-item>
@@ -18,21 +17,45 @@
           </el-menu-item>
 
           <el-submenu index="400">
-          <template slot="title"><i class="iconfont icon-gengduo">&nbsp;</i>功能</template>
-          <el-menu-item index="400-100"><i class="iconfont icon-crawler">&nbsp;&nbsp;</i>爬虫</el-menu-item>
-          <el-menu-item index="400-200"><i class="iconfont icon-listblock">&nbsp;&nbsp;</i>LOW POLY</el-menu-item>
-          <el-menu-item index="400-300"><i class="iconfont icon-similarproduct">&nbsp;&nbsp;</i>PDF格式转换</el-menu-item>
+            <template slot="title"><i class="iconfont icon-gengduo">&nbsp;</i>功能</template>
+            <el-menu-item index="400-100"><i class="iconfont icon-crawler">&nbsp;&nbsp;</i>爬虫</el-menu-item>
+            <el-menu-item index="400-200"><i class="iconfont icon-listblock">&nbsp;&nbsp;</i>LOW POLY</el-menu-item>
+            <el-menu-item index="400-300"><i class="iconfont icon-similarproduct">&nbsp;&nbsp;</i>PDF格式转换</el-menu-item>
           </el-submenu>
           <el-submenu index="500">
-          <template slot="title"><i class="iconfont icon-icondownload">&nbsp;</i>资源</template>
-          <el-menu-item index="500-100"><i class="iconfont icon-pic">&nbsp;&nbsp;</i>壁纸</el-menu-item>
+            <template slot="title"><i class="iconfont icon-icondownload">&nbsp;</i>资源</template>
+            <el-menu-item index="500-100"><i class="iconfont icon-pic">&nbsp;&nbsp;</i>壁纸</el-menu-item>
           </el-submenu>
 
           <!--<el-menu-item index="3" disabled>消息中心</el-menu-item>-->
           <!--<el-menu-item index="4"><a href="">订单管理</a></el-menu-item>-->
         </el-menu>
       </el-col>
+
+      <el-col :span="10" align="right">
+
+        <el-badge :value="12" class="item" :max="10">
+          <el-button>
+            <i class="iconfont icon-iccomm">&nbsp;</i>评论
+          </el-button>
+        </el-badge>
+        <el-button @click="dialogVisible=true">
+          <i class="iconfont icon-add">&nbsp;</i>注册
+        </el-button>
+
+        <el-button>
+          <i class="iconfont icon-more">&nbsp;</i>登录
+        </el-button>
+      </el-col>
+
     </el-row>
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="60%" :before-close="handleClose">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+          </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -41,7 +64,10 @@
     name: "vueHeader",
     data() {
       return {
+        //菜单默认选择索引
         menuActiveIndex: '0',
+        //注册对话显示标志
+        dialogVisible: false,
       }
     },
     methods: {
@@ -67,7 +93,16 @@
         else if (key === '400-300') {
           this.$router.push({path: '/func/pdf'})
         }
-      }
+      },
+      handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {
+          });
+      },
+
     }
   }
 </script>
