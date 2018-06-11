@@ -39,21 +39,24 @@
             <i class="iconfont icon-iccomm">&nbsp;</i>评论
           </el-button>
         </el-badge>
-        <el-button @click="dialogVisible=true">
-          <i class="iconfont icon-add">&nbsp;</i>注册
-        </el-button>
+        <el-button @click="signUpVisi=true" icon="el-icon-plus">注册</el-button>
 
-        <el-button>
-          <i class="iconfont icon-more">&nbsp;</i>登录
-        </el-button>
+        <el-button @click="signInVisi=true" icon="el-icon-arrow-right">登录</el-button>
       </el-col>
 
     </el-row>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="60%" :before-close="handleClose">
+    <el-dialog title="注  册" center :visible.sync="signUpVisi" width="40%">
       <span>这是一段信息</span>
       <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            <el-button @click="signUpVisi = false">取 消</el-button>
+            <el-button type="primary" @click="signUpVisi = false">确 定</el-button>
+          </span>
+    </el-dialog>
+    <el-dialog title="登  录" center :visible.sync="signInVisi" width="40%">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+            <el-button @click="signInVisi = false">取 消</el-button>
+            <el-button type="primary" @click="signInVisi = false">确 定</el-button>
           </span>
     </el-dialog>
   </div>
@@ -67,7 +70,8 @@
         //菜单默认选择索引
         menuActiveIndex: '0',
         //注册对话显示标志
-        dialogVisible: false,
+        signUpVisi: false,
+        signInVisi:false,
       }
     },
     methods: {
@@ -94,14 +98,7 @@
           this.$router.push({path: '/func/pdf'})
         }
       },
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {
-          });
-      },
+
 
     }
   }
