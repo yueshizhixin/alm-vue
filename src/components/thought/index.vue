@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="divMain">
       我是思想首页
     </div>
 </template>

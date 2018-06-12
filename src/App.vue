@@ -4,11 +4,8 @@
       <el-header class="vueHeader">
         <vue-header></vue-header>
       </el-header>
-      <el-main style="position: relative;margin-top:60px;margin-bottom:60px;height: auto">
-        <transition name="el-fade-in">
-          <router-view></router-view>
-        </transition>
-
+      <el-main class="vueMain divbg1">
+        <router-view></router-view>
       </el-main>
       <el-footer class="vueFooter">
         <vue-footer></vue-footer>
@@ -29,7 +26,7 @@
 </script>
 
 <style>
-  .vueHeader ~ .vueFooter {
+  .vueHeader, .vueFooter {
     position: fixed;
     width: 100%;
     z-index: 99;
@@ -40,12 +37,22 @@
 
   .vueHeader {
     top: 0;
+    font-weight: 700;
   }
 
   .vueFooter {
     bottom: 0;
+    height: 20px !important;
   }
 
+  .vueMain {
+    position: relative;
+    margin-top: 60px;
+    margin-bottom: 20px;
+    height: 100%;
+    top: 0;
+    width: 100%;
+  }
 
 
 </style>

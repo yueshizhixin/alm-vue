@@ -1,6 +1,8 @@
 <template>
     <div>
-      <span>footer&nbsp;</span>
+      <span class="">
+        dfasdfa
+      </span>
     </div>
 </template>
 
@@ -11,5 +13,7 @@
 </script>
 
 <style scoped>
+  .footL{
 
+  }
 </style>

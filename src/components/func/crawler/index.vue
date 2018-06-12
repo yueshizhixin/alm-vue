@@ -1,44 +1,48 @@
 <template>
-  <div>
-    <el-tabs type="border-card" :tab-position="tabPosition">
-      <el-tab-pane>
-        <span slot="label"><i class="iconfont icon-wangyiyunyinle">&nbsp;</i>网易云音乐</span>
-        <el-tabs v-model="yunMusicActive" type="card" @tab-click="yunMusicHandler">
-          <el-tab-pane label="歌曲评论" name="0">
-            <el-row>
-              <el-col :lg="4">
-                <el-input prefix-icon="el-icon-search" clearable></el-input>
-              </el-col>
-              <el-col :lg="4":offset="1">
-                <el-button icon="iconfont icon-crawler" type="danger" style="width: 50%;">&nbsp;爬取</el-button>
-              </el-col>
-            </el-row>
-            <br>
-            <el-row>
-              <el-col :lg="4" :md="12" :sm="12" :xs="24" v-for="(o, i) in songs" :key="i" :offset="i%5===0 ? 0 : 1">
-                <el-card :body-style="{ padding: '0px' }">
-                  <img :src="o.url" class="image">
-                  <div style="padding: 14px;">
-                    <span>好吃的汉堡</span>
-                    <div class="bottom clearfix">
-                      <time class="time">2017-12-10 12:40:36</time>
-                      <el-button type="text" class="button">操作按钮</el-button>
-                    </div>
-                  </div>
-                  <div v-if="i%5===4"><br></div>
-                </el-card>
-              </el-col>
-            </el-row>
+  <div class="divbg2">
+    <transition name="el-zoom-in-top">
+      <div v-show="comShow" class="transition-box">
+        <el-tabs type="border-card" :tab-position="tabPosition">
+          <el-tab-pane>
+            <span slot="label"><i class="iconfont icon-wangyiyunyinle">&nbsp;</i>网易云音乐</span>
+            <el-tabs v-model="yunMusicActive" type="card" @tab-click="yunMusicHandler" >
+              <el-tab-pane label="歌曲评论" name="0">
+                <el-row>
+                  <el-col :lg="4">
+                    <el-input prefix-icon="el-icon-search" clearable placeholder="请输入歌曲名称"></el-input>
+                  </el-col>
+                  <el-col :lg="4" :offset="1">
+                    <el-button icon="iconfont icon-crawler" type="danger" style="width: 100%;">&nbsp;&nbsp;爬&nbsp;取
+                    </el-button>
+                  </el-col>
+                </el-row>
+                <br>
+                <el-row>
+                  <el-col  :md="5" :sm="12" :xs="24" v-for="(o, i) in songs" :key="i" :offset="i%4===0 ? 0 : 1">
+                    <el-card :body-style="{ padding: '0px' }">
+                      <img :src="o.url" class="image">
+                      <div style="padding: 14px;">
+                        <span>好吃的汉堡</span>
+                        <div class="bottom clearfix">
+                          <time class="time">风的清</time>
+                          <el-button type="text" class="button">选择</el-button>
+                        </div>
+                      </div>
+                      <div v-if="i%4===3"><br></div>
+                    </el-card>
+                  </el-col>
+                </el-row>
+              </el-tab-pane>
+              <el-tab-pane label="其他" name="1">开发中</el-tab-pane>
+            </el-tabs>
           </el-tab-pane>
-          <el-tab-pane label="其他" name="1">开发中</el-tab-pane>
+          <el-tab-pane>
+            <span slot="label"><i class="iconfont icon-zhihu">&nbsp;</i>知乎</span>
+            知乎
+          </el-tab-pane>
         </el-tabs>
-      </el-tab-pane>
-      <el-tab-pane>
-        <span slot="label"><i class="iconfont icon-zhihu">&nbsp;</i>知乎</span>
-        知乎
-      </el-tab-pane>
-
-    </el-tabs>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -47,6 +51,7 @@
     name: "index",
     data() {
       return {
+        comShow: false,
         tabPosition: 'left',
         yunMusicActive: '0',
         songs: [
@@ -68,6 +73,9 @@
       yunMusicHandler(tab, eve) {
         // console.log(tab,eve)
       }
+    },
+    mounted() {
+      this.comShow = true
     }
   }
 </script>
@@ -75,7 +83,6 @@
 <style scoped>
   .time {
     font-size: 13px;
-    color: #999;
   }
 
   .bottom {
