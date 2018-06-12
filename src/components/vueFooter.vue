@@ -1,11 +1,6 @@
 <template>
     <div>
-      <span>footer&nbsp;</span><span>footer&nbsp;</span><span>footer&nbsp;</span>
-      <span>footer&nbsp;</span><span>footer&nbsp;</span><span>footer&nbsp;</span>
-      <span>footer&nbsp;</span><span>footer&nbsp;</span><span>footer&nbsp;</span>
-      <span>footer&nbsp;</span><span>footer&nbsp;</span><span>footer&nbsp;</span>
-      <span>footer&nbsp;</span><span>footer&nbsp;</span><span>footer&nbsp;</span>
-      <span>footer&nbsp;</span><span>footer&nbsp;</span><span>footer&nbsp;</span>
+      <span>footer&nbsp;</span>
     </div>
 </template>
 

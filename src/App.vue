@@ -1,13 +1,16 @@
 <template>
-  <div id="app" style="height:inherit;">
+  <div id="app">
     <el-container>
-      <el-header style="position: fixed;top:0;width: 100%;z-index: 99">
+      <el-header class="vueHeader">
         <vue-header></vue-header>
       </el-header>
-      <el-main style="position: relative;margin-top:60px;height: auto">
-        <router-view></router-view>
+      <el-main style="position: relative;margin-top:60px;margin-bottom:60px;height: auto">
+        <transition name="el-fade-in">
+          <router-view></router-view>
+        </transition>
+
       </el-main>
-      <el-footer style="position: fixed;bottom: 0;width: 100%">
+      <el-footer class="vueFooter">
         <vue-footer></vue-footer>
       </el-footer>
     </el-container>
@@ -26,5 +29,23 @@
 </script>
 
 <style>
+  .vueHeader ~ .vueFooter {
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+    background-color: white;
+    left: 0;
+    right: 0;
+  }
+
+  .vueHeader {
+    top: 0;
+  }
+
+  .vueFooter {
+    bottom: 0;
+  }
+
+
 
 </style>
