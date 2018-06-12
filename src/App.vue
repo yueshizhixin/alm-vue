@@ -42,13 +42,14 @@
 
   .vueFooter {
     bottom: 0;
-    height: 20px !important;
+    height: 25px !important;
+    background-color: whitesmoke;
   }
 
   .vueMain {
     position: relative;
     margin-top: 60px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     height: 100%;
     top: 0;
     width: 100%;

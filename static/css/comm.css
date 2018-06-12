@@ -1,6 +1,4 @@
-/**
-  div背景颜色级别
- */
+/*div背景颜色级别*/
 .divbg1{
   background-color: #F2F6FC;
 }
@@ -14,8 +12,27 @@
   background-color: #DCDFE6;
 }
 
+
+/*
+  最大尺寸
+ */
 .divMain{
   max-width: 1199px;
   margin-left: auto;
   margin-right: auto;
+}
+
+/*
+  图片
+ */
+
+/*圆角*/
+.img-circle{
+  border-radius: 50%;
+}
+/*顶部头像*/
+.headHeader{
+  width: 54px;
+  height: 54px;
+  padding: 2px 2px;
 }

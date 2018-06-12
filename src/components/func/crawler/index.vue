@@ -8,11 +8,11 @@
             <el-tabs v-model="yunMusicActive" type="card" @tab-click="yunMusicHandler" >
               <el-tab-pane label="歌曲评论" name="0">
                 <el-row>
-                  <el-col :lg="4">
+                  <el-col :md="5">
                     <el-input prefix-icon="el-icon-search" clearable placeholder="请输入歌曲名称"></el-input>
                   </el-col>
-                  <el-col :lg="4" :offset="1">
-                    <el-button icon="iconfont icon-crawler" type="danger" style="width: 100%;">&nbsp;&nbsp;爬&nbsp;取
+                  <el-col :lg="5" :offset="1">
+                    <el-button icon="iconfont icon-crawler" type="danger" style="width: 60%;">&nbsp;&nbsp;爬&nbsp;取
                     </el-button>
                   </el-col>
                 </el-row>
