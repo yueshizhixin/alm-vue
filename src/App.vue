@@ -38,6 +38,7 @@
   .vueHeader {
     top: 0;
     font-weight: 700;
+    box-shadow:0 1px 3px rgba(26,26,26,.1);
   }
 
   .vueFooter {
@@ -53,6 +54,7 @@
     height: 100%;
     top: 0;
     width: 100%;
+    z-index: 9;
   }
 
 

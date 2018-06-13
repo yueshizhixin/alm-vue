@@ -8,7 +8,7 @@
 
             <!--lazy="true" 除第一个外其他延迟渲染-->
             <transition name="el-zoom-in-top">
-              <el-tabs v-show="actPanShow==0" :tab-position="panelPosition">
+              <el-tabs v-show="actPanShow==='0'" :tab-position="panelPosition">
                 <el-tab-pane>
                   <span slot="label">八皇后问题</span>
                   八皇后问题
@@ -31,7 +31,7 @@
           <el-tab-pane :key="2">
             <span slot="label"><i class="iconfont icon-kuailianshishujujiegoucopy-">&nbsp;</i>数据结构</span>
             <transition name="el-zoom-in-top">
-              <el-tabs v-show="actPanShow==1" :tab-position="panelPosition">
+              <el-tabs v-show="actPanShow==='1'" :tab-position="panelPosition">
 
                 <el-tab-pane>
                   <span slot="label">二叉堆</span>
@@ -44,7 +44,7 @@
           <el-tab-pane :key="3">
             <span slot="label"><i class="iconfont icon-algorithm">&nbsp;</i>算法</span>
             <transition name="el-zoom-in-top">
-              <el-tabs v-show="actPanShow==2" :tab-position="panelPosition">
+              <el-tabs v-show="actPanShow==='2'" :tab-position="panelPosition">
                 <el-tab-pane>
                   <span slot="label">A Star</span>
                   A Star
@@ -74,7 +74,7 @@
         /*tab*/
         //ani
         comShow: false,
-        actPanShow: 0,
+        actPanShow: '0',
         stretch: true,
         //position
         tabPosition: 'top',

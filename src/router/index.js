@@ -24,6 +24,11 @@ export default new Router({
       path: '/',
       component: discoveryIndex
     },
+    {
+      path: '/index',
+      component: discoveryIndex
+    },
+
     //发现
     {
       path:'/discovery',

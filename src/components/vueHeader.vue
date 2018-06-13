@@ -45,7 +45,7 @@
           </el-col>
           <el-col :md="5">
             <el-dropdown>
-              <img class="el-dropdown-link img-circle headHeader"
+              <img class="el-dropdown-link img-circle img-headHeader"
                    src="http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/100/h/100"
               >
               <el-dropdown-menu slot="dropdown">

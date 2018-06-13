@@ -12,7 +12,7 @@
                     <el-input prefix-icon="el-icon-search" clearable placeholder="请输入歌曲名称"></el-input>
                   </el-col>
                   <el-col :lg="5" :offset="1">
-                    <el-button icon="iconfont icon-crawler" type="danger" style="width: 60%;">&nbsp;&nbsp;爬&nbsp;取
+                    <el-button icon="iconfont icon-crawler" plain type="danger" style="width: 60%;">&nbsp;&nbsp;爬&nbsp;取
                     </el-button>
                   </el-col>
                 </el-row>

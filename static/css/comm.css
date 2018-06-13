@@ -31,8 +31,18 @@
   border-radius: 50%;
 }
 /*顶部头像*/
-.headHeader{
+.img-headHeader{
   width: 54px;
   height: 54px;
   padding: 2px 2px;
 }
+
+/*正文*/
+.img-headNote{
+  width: 60px;
+  height: 60px;
+}
+
+/**
+
+ */
