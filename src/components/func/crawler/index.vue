@@ -1,5 +1,5 @@
 <template>
-  <div class="divbg2">
+  <div>
     <transition name="el-zoom-in-top">
       <div v-show="comShow" class="transition-box">
         <el-tabs type="border-card" :tab-position="tabPosition">
