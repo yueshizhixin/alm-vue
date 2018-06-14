@@ -4,102 +4,108 @@
       <div v-show="comShow" class="transition-box">
         <el-row>
           <el-col :md="20">
-            <el-row>
-              <el-col :md="2">&nbsp;</el-col>
-              <el-col :md="2">
-                <img class="img-headNote" src="http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/100/h/100">
-              </el-col>
-              <el-col :md="18" style="background-color: white;padding: 16px 20px;margin-bottom: 10px;">
-                <el-row>
-                  <el-col :md="12">
+            <div v-for="o of notes">
+              <el-row :key="o.id">
+                <el-col :md="2">&nbsp;</el-col>
+                <el-col :md="2">
+                  <img class="img-headNote" :src="o.authorImg">
+                </el-col>
+                <el-col :md="18" class="note-body">
+                  <el-row>
+                    <el-col :md="12">
                     <span style="color: #909399;font-size: 16px;">
-                      来自关注:和泉纱雾
+                      {{o.from}}
                     </span>
-                    <br>
-                    <span style="color: #303133;font-size: 18px;">和泉纱雾</span>
-                    &nbsp;
-                    <span style="color: #606266;font-size: 16px;">学习使人落后</span>
+                      <br>
+                      <span style="color: #303133;font-size: 18px;">{{o.author}}</span>
+                      &nbsp;
+                      <span style="color: #606266;font-size: 16px;">{{o.description}}</span>
 
-                  </el-col>
-                  <el-col :md="12" align="right">
-                    <el-tag>动漫</el-tag>
-                    <el-tag type="success">日本</el-tag>
-                    <el-tag type="info">二次元</el-tag>
-                    <el-tag type="warning">樱花</el-tag>
-                    <el-tag type="danger">和泉纱雾</el-tag>
-                  </el-col>
-                </el-row>
+                    </el-col>
+                    <el-col :md="12" align="right">
+                      <!--<div v-for="(p,i) of o.tags">-->
+                      <!--<el-tag>{{p.tag}}</el-tag>-->
+                      <!--</div>-->
+                      <el-tag>动漫</el-tag>
+                      <el-tag type="success">日本</el-tag>
+                      <el-tag type="info">二次元</el-tag>
+                      <el-tag type="warning">樱花</el-tag>
+                      <el-tag type="danger">和泉纱雾</el-tag>
+                    </el-col>
+                  </el-row>
 
-                <el-row style="margin-top: 9px">
-                  <el-col :md="12">
-                    <span style="color: #303133;font-size: 20px;font-weight: 700">
-                      如何评价《秒速5厘米》这部动漫?
+                  <el-row style="margin-top: 9px">
+                    <el-col :md="18">
+                    <span class="note-tile">
+                      {{o.title}}
                     </span>
-                  </el-col>
-                  <el-col :md="12" align="right">
-                    <span style="color: #909399;font-size: 16px;">今天 14:22</span>
-                  </el-col>
-                </el-row>
+                    </el-col>
+                    <el-col :md="6" align="right">
+                      <span class="note-time">{{o.time}}</span>
+                    </el-col>
+                  </el-row>
 
-                <el-row style="margin-top: 9px">
-                  <el-col :md="24">
+                  <el-row style="margin-top: 9px">
+                    <el-col :md="24">
                     <span style="color: #303133;font-size: 16px;">
-                      萨尔电之所以死亡还在电，是因为这个技能做出来的时候，萨尔还是可以中单的一个英雄，当时的萨尔，电永远75蓝耗，中路无限消耗，初始攻击也不低，血强，电是给你打钱的，你电死一个兵，其他兵得继续给你电吧？所以就这样设计了。
+                      {{o.logotxt}}
                     </span>
-                  </el-col>
+                    </el-col>
+                  </el-row>
+                  <el-row style="margin-top: 9px">
+                    <el-col :md="4" :sm="4">
+                      <div v-if="o.isAgree">
+                        <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-less">&nbsp;&nbsp;{{o.agreeCount}}</el-button>
+                      </div>
+                      <div v-else>
+                        <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{o.agreeCount}}</el-button>
+                      </div>
 
-                </el-row>
+                    </el-col>
+                    <el-col :md="4" :sm="4">
+                      <div v-if="o.isComm">
+                        <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-iccomm">&nbsp;&nbsp;{{o.commCount}}</el-button>
+                      </div>
+                      <div v-else>
+                        <el-button class="bn-note-op" icon="iconfont icon-iccomm">&nbsp;&nbsp;{{o.commCount}}
+                        </el-button>
+                      </div>
+                    </el-col>
+                    <el-col :md="4" :sm="4">
 
-                <el-row style="margin-top: 9px">
-                  <el-col :md="3">
-                    <el-button @click="plain=false" type="primary" plain size="small">
-                      <i class="iconfont icon-less"></i>&nbsp;&nbsp;26
-                    </el-button>
-                  </el-col>
-                  <el-col :md="3">
-                    <el-button class="bn-note-op" icon="iconfont icon-iccomm">
-                      <!--<i class="iconfont icon-iccomm">&nbsp;</i>-->
-                      &nbsp;1165+
-                    </el-button>
+                      <div v-if="o.isShare">
+                        <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-kuailianshishujujiegou">
+                          &nbsp;&nbsp;{{o.shareCount}}
+                        </el-button>
+                      </div>
+                      <div v-else>
+                        <el-button class="bn-note-op" icon="iconfont icon-kuailianshishujujiegou">&nbsp;&nbsp;{{o.shareCount}}</el-button>
+                      </div>
+                    </el-col>
+                    <el-col :md="4" :sm="4">
 
-                  </el-col>
-                  <el-col :md="3">
-                    <el-button class="bn-note-op" icon="iconfont icon-iccomm">
-                      <!--<i class="iconfont icon-iconfontfenxiang">-->
-                      &nbsp;分享
-                      <!--</i>-->
-                    </el-button>
-                  </el-col>
-                  <el-col :md="3">
-                    <el-button class="bn-note-op" icon="iconfont icon-favorite">
-                      <!--<i class="iconfont icon-favorite">-->
-                      &nbsp;收藏
-                      <!--</i>-->
-                    </el-button>
-                  </el-col>
-                  <el-col :md="9">&nbsp;</el-col>
-                  <el-col :md="3">
-                    <el-button class="bn-note-op" icon="iconfont icon-close">
-                      不看
-                    </el-button>
-
-                  </el-col>
-                </el-row>
-              </el-col>
-            </el-row>
-
-
+                      <div v-if="o.isCollect">
+                        <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-favorite">&nbsp;&nbsp;{{o.collectCount}}</el-button>
+                      </div>
+                      <div v-else>
+                        <el-button class="bn-note-op" icon="iconfont icon-favorite">&nbsp;&nbsp;{{o.collectCount}}
+                        </el-button>
+                      </div>
+                    </el-col>
+                    <el-col :md="4" :sm="4">&nbsp;</el-col>
+                    <el-col :md="4" :sm="4">
+                      <el-button class="bn-note-op" icon="iconfont icon-close">&nbsp;不看</el-button>
+                    </el-col>
+                  </el-row>
+                </el-col>
+              </el-row>
+            </div>
           </el-col>
-
           <el-col :md="4" style="background-color: white">
-
             <p>我的收藏</p>
             <p>我的关注</p>
-
           </el-col>
         </el-row>
-
-
       </div>
     </transition>
   </div>
@@ -111,6 +117,88 @@
     data() {
       return {
         comShow: false,
+        opBnGutter:10,
+        tagType: ['', 'danger', 'success', 'info', 'warning'],
+
+        notes: [
+          {
+            'id': 1,
+            'from': '来自关注:和泉纱雾',
+            'author': '和泉纱雾',
+            'authorImg': 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/100/h/100',
+            'description': '学习使人落后',
+            'tags': [{'tag': '动漫'}, {'tag': '日本'}, {'tag': '二次元'}, {'tag': '樱花'}, {'tag': '和泉纱雾'}],
+            'title': '如何评价《秒速5厘米》这部动漫?',
+            'logotxt': '秒速5厘米想要传达的是  仅仅相爱并不能打破一切阻隔  爱情并不像说起来那么简单  爱的力量在现实面前常常显得异常渺小。  不能天天在一起 不代表不想念；  天天都能见面  不代表心的距离也如身体距离那么近。',
+            'time': '今天 14:45',
+            'agreeCount': '8k',
+            'isAgree': true,
+            'commCount': '16k',
+            'isComm': false,
+            'shareCount': '36',
+            'isShare': true,
+            'collectCount': '10k',
+            'isCollect': false,
+          },
+
+          {
+            'id': 3,
+            'from': '来自关注:琉璃仙',
+            'author': '琉璃仙',
+            'authorImg': 'http://cdn.yueshizhixin.top/248986-106.jpg?imageView2/1/w/100/h/100',
+            'description': '吃遍天下美食',
+            'tags': [{'tag': '修仙'}],
+            'title': '步行街上都是好吃的!',
+            'logotxt': '重庆步行街重庆步行街位于重庆解放碑,是重庆最为繁华的商圈之一,这里的步行街上卖的也是五花八门,吃喝玩乐保证畅快。',
+            'time': '08-14 02:01',
+            'agreeCount': '46',
+            'isAgree': false,
+            'commCount': '65',
+            'isComm': true,
+            'shareCount': '15',
+            'isShare': false,
+            'collectCount': '97',
+            'isCollect': false,
+          },
+          {
+            'id': 4,
+            'from': '来自标签:修仙',
+            'author': '枯琴真君',
+            'authorImg': 'http://cdn.yueshizhixin.top/231751-106.jpg?imageView2/1/w/100/h/100',
+            'description': '修仙使人强大',
+            'tags': [],
+            'title': '修仙使人强大!',
+            'logotxt': '我热衷于修仙已经很久了,现在对于修仙之法总算是有...规划这种东西只能学习和去领悟啊,强大的人能够制定',
+            'time': '2017-10-15',
+            'agreeCount': '4669',
+            'isAgree': true,
+            'commCount': '2929',
+            'isComm': false,
+            'shareCount': '1804',
+            'isShare': true,
+            'collectCount': '7717',
+            'isCollect': true,
+          },
+          {
+            'id': 2,
+            'from': '来自标签:DOTA2',
+            'author': '祁厅长',
+            'authorImg': 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/100/h/100',
+            'description': '我有高达250的APM',
+            'tags': [{'tag': 'DOTA2'}, {'tag': '电竞'}],
+            'title': '如何评价萨尔这个英雄?',
+            'logotxt': '萨尔电之所以死亡还在电，是因为这个技能做出来的时候，萨尔还是可以中单的一个英雄，当时的萨尔，电永远75蓝耗，中路无限消耗，初始攻击也不低，血强，电是给你打钱的，你电死一个兵，其他兵得继续给你电吧？所以就这样设计了。',
+            'time': '昨天 17:02',
+            'agreeCount': '22',
+            'isAgree': false,
+            'commCount': '1024',
+            'isComm': false,
+            'shareCount': '2048',
+            'isShare': false,
+            'collectCount': '4096',
+            'isCollect': false,
+          },
+        ]
       }
     },
     mounted() {
@@ -125,4 +213,20 @@
     text-align: center;
   }
 
+  .note-body {
+    background-color: white;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+  }
+
+  .note-tile {
+    color: #303133;
+    font-size: 20px;
+    font-weight: 700
+  }
+
+  .note-time {
+    color: #909399;
+    font-size: 16px;
+  }
 </style>
