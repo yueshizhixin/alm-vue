@@ -1,19 +1,19 @@
 <template>
-    <div>
-      <span class="">
+  <div>
+      <span >
         dfasdfa
       </span>
-    </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "vueFooter"
-    }
+  export default {
+    name: "vueFooter"
+  }
 </script>
 
 <style scoped>
-  .footL{
+  .footL {
 
   }
 </style>

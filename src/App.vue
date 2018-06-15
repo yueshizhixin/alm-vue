@@ -44,7 +44,6 @@
   .vueFooter {
     bottom: 0;
     height: 25px !important;
-    background-color: whitesmoke;
   }
 
   .vueMain {

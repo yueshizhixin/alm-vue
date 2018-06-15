@@ -2,13 +2,28 @@
   <div class="divMain">
     <transition name="el-zoom-in-top">
       <div v-show="comShow" class="transition-box">
-        <el-row>
+        <el-row style="z-index: 10">
           <el-col :md="20">
             <div v-for="o of notes">
               <el-row :key="o.id">
                 <el-col :md="2">&nbsp;</el-col>
                 <el-col :md="2">
-                  <img class="img-headNote" :src="o.authorImg">
+                  <div  @mouseenter="imgMouseE(o.id)" @mouseleave="imgMouseL(o.id)">
+                    <img class="img-headNote" :src="o.authorImg">
+                    <el-card v-show="o.authorMsgShow" :body-style="{ padding: '0px' }"  style="left: 20px;top: 20px;z-index:20;position:absolute">
+                      <img :src="o.authorImg" class="image">
+                      <div style="padding: 14px;">
+                        <span>{{o.author}}</span>
+                        <div class="bottom clearfix">
+                          <time class="time">风的清</time>
+                          <el-button type="text" class="button" plain>私信</el-button>
+                        </div>
+                      </div>
+                    </el-card>
+                  </div>
+
+
+
                 </el-col>
                 <el-col :md="18" class="note-body">
                   <el-row>
@@ -19,7 +34,9 @@
                       <br>
                       <span style="color: #303133;font-size: 18px;">{{o.author}}</span>
                       &nbsp;
-                      <span style="color: #606266;font-size: 16px;">{{o.description}}</span>
+                      <span style="color: #606266;font-size: 16px;">
+                        {{o.description}}
+                      </span>
 
                     </el-col>
                     <el-col :md="12" align="right">
@@ -36,7 +53,7 @@
 
                   <el-row style="margin-top: 9px">
                     <el-col :md="18">
-                    <span class="note-tile">
+                    <span @click="alert('查看全文')" class="note-tile">
                       {{o.title}}
                     </span>
                     </el-col>
@@ -47,8 +64,8 @@
 
                   <el-row style="margin-top: 9px">
                     <el-col :md="24">
-                    <span style="color: #303133;font-size: 16px;">
-                      {{o.logotxt}}
+                    <span @click="alert('查看全文')" style="color: #303133;font-size: 16px;">
+                        {{o.logotxt}}
                     </span>
                     </el-col>
                   </el-row>
@@ -56,6 +73,9 @@
                     <el-col :md="4" :sm="4">
                       <div v-if="o.isAgree">
                         <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-less">&nbsp;&nbsp;{{o.agreeCount}}</el-button>
+                        <div>
+
+                        </div>
                       </div>
                       <div v-else>
                         <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{o.agreeCount}}</el-button>
@@ -107,11 +127,14 @@
           </el-col>
         </el-row>
       </div>
+
     </transition>
+
   </div>
 </template>
 
 <script>
+  // import Vue from 'vue'
   export default {
     name: "index",
     data() {
@@ -119,7 +142,6 @@
         comShow: false,
         opBnGutter:10,
         tagType: ['', 'danger', 'success', 'info', 'warning'],
-
         notes: [
           {
             'id': 1,
@@ -201,8 +223,22 @@
         ]
       }
     },
+    methods:{
+      alert(msg){
+        alert(msg)
+      },
+      imgMouseE(id){
+        this.notes.find(note=>note.id===id).authorMsgShow=true
+      },
+      imgMouseL(id){
+        this.notes.find(note=>note.id===id).authorMsgShow=false
+      },
+    },
     mounted() {
       this.comShow = true
+      this.notes.forEach(item=>{
+        this.$set(item,'authorMsgShow',false)
+      })
     }
   }
 </script>
@@ -228,5 +264,36 @@
   .note-time {
     color: #909399;
     font-size: 16px;
+  }
+
+
+  /*卡片头像*/
+  .time {
+    font-size: 13px;
+  }
+
+  .bottom {
+    margin-top: 13px;
+    line-height: 12px;
+  }
+
+  .button {
+    padding: 0;
+    float: right;
+  }
+
+  .image {
+    width: 100%;
+    display: block;
+  }
+
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+
+  .clearfix:after {
+    clear: both
   }
 </style>
