@@ -1,22 +1,24 @@
 /*div背景颜色级别*/
-.divbg1{
+.divbg1 {
   background-color: #f6f6f6;
 }
-.divbg2{
+
+.divbg2 {
   background-color: #EBEEF5;
 }
-.divbg3{
+
+.divbg3 {
   background-color: #E4E7ED;
 }
-.divbg4{
+
+.divbg4 {
   background-color: #DCDFE6;
 }
-
 
 /*
   最大尺寸
  */
-.divMain{
+.divMain {
   max-width: 1199px;
   margin-left: auto;
   margin-right: auto;
@@ -27,20 +29,31 @@
  */
 
 /*圆角*/
-.img-circle{
+.img-circle {
   border-radius: 50%;
 }
+
 /*顶部头像*/
-.img-headHeader{
+.img-headHeader {
   width: 54px;
   height: 54px;
   padding: 2px 2px;
 }
 
 /*正文*/
-.img-headNote{
+.img-headNote {
   width: 60px;
   height: 60px;
+}
+
+/*el-card*/
+.img-headCard {
+  left: 15%;
+  top: 0;
+  z-index: 20;
+  position: absolute;
+  min-width: 230px;
+  max-width: 230px;
 }
 
 /**
