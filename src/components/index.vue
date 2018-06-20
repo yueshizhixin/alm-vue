@@ -48,7 +48,7 @@
 
                       </el-col>
                       <el-col :md="12" align="right">
-                        <el-tag v-for="(p,i) of o.tags" :key="i" style="margin-left: 7px;" :type="randTagType">
+                        <el-tag v-for="(p,i) of o.tags" :key="i" style="margin-left: 7px;" :type="tagType[Math.floor((Math.random()*5))]">
 
                           {{p.tag}}
                         </el-tag>
@@ -236,11 +236,6 @@
       }
     },
     computed: {
-      //随机标签
-      randTagType() {
-        let r = (Math.random() * 4).toFixed(0);
-        return this.tagType[r];
-      },
     },
     methods: {
 
@@ -260,6 +255,8 @@
       this.notes.forEach(item => {
         this.$set(item, 'authorMsgShow', false)
       })
+    },
+    created(){
     }
   }
 </script>
