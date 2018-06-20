@@ -7,7 +7,7 @@
       <el-col :md="12">
         <el-menu :default-active="menuActiveIndex" mode="horizontal" @select="menuHandler"
                  class="menu" active-text-color="#409eff" text-color="#666666" background-color="#ffffff">
-          <el-menu-item index="100" class="menuItem">发现
+          <el-menu-item index="100" class="menuItem">首页
           </el-menu-item>
           <el-menu-item index="200" class="menuItem">思想
           </el-menu-item>
@@ -83,7 +83,7 @@
          * 路由控制
          */
         if (key === '100') {
-          this.$router.push({path: '/discovery'})
+          this.$router.push({path: '/'})
         }
         else if (key === '200') {
           this.$router.push({path: '/thought'})

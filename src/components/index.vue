@@ -8,124 +8,133 @@
               <el-row :key="o.id">
                 <el-col :md="2">&nbsp;</el-col>
                 <el-col :md="2">
-                  <div @mouseenter="imgMouseE(o.id)" @mouseleave="imgMouseL(o.id)">
-                    <img class="img-headNote" :src="o.authorImg">
-                    <el-card v-show="o.authorMsgShow" class="img-headCard" :body-style="{ padding: '8px 6px' }">
-                      <el-row>
-                        <img :src="o.authorImg2" class="image">
-                      </el-row>
-                      <el-row style="padding: 8px;">
-                        <span class="note-author" style="font-weight: 500">{{o.author}}</span>
-                        <br>
-                        <span class="note-signature" style="font-size: 14px">{{o.description}}</span>
-                      </el-row>
-                      <el-row class="bottom clearfix" style="padding:2px 8px;margin-top: 0">
-                        <el-col :md="12">
-                          <el-button type="primary" size="medium" icon="el-icon-plus">关注</el-button>
-                        </el-col>
-                        <el-col :md="12" style="text-align: right">
-                          <el-button type="info" size="medium" icon="el-icon-message">私信</el-button>
-                        </el-col>
-                      </el-row>
-                    </el-card>
+                  <div class="img-headNote" @mouseenter="imgMouseE(o.id)" @mouseleave="imgMouseL(o.id)">
+                    <img :src="o.authorImg">
+                    <el-collapse-transition>
+                      <el-card v-show="o.authorMsgShow" class="img-headCard" :body-style="{ padding: '8px 6px' }">
+                        <el-row>
+                          <img :src="o.authorImg2" class="image" @click="alert('转个跳人主页')">
+                        </el-row>
+                        <el-row style="padding: 8px;">
+                          <span class="note-author" style="font-weight: 500">{{o.author}}</span>
+                          <br>
+                          <span class="note-signature" style="font-size: 14px">{{o.description}}</span>
+                        </el-row>
+                        <el-row class="bottom clearfix" style="padding:2px 8px;margin-top: 0">
+                          <el-col :md="12">
+                            <el-button type="primary" size="medium" icon="el-icon-plus">关注</el-button>
+                          </el-col>
+                          <el-col :md="12" style="text-align: right">
+                            <el-button type="info" size="medium" icon="el-icon-message">私信</el-button>
+                          </el-col>
+                        </el-row>
+                      </el-card>
+                    </el-collapse-transition>
                   </div>
-
 
                 </el-col>
                 <el-col :md="18" class="note-body">
-                  <el-row>
-                    <el-col :md="12">
+                  <el-card>
+                    <el-row>
+                      <el-col :md="12">
                     <span style="color: #909399;font-size: 16px;">
                       {{o.from}}
                     </span>
-                      <br>
-                      <span class="note-author">{{o.author}}</span>
-                      &nbsp;
-                      <span class="note-signature">
+                        <br>
+                        <span class="note-author">{{o.author}}</span>
+                        <span class="note-signature">
                         {{o.description}}
-                      </span>
+                    </span>
 
-                    </el-col>
-                    <el-col :md="12" align="right">
-                      <el-tag v-for="(p,i) of o.tags">
-                        {{p.tag}}
-                      </el-tag>
-                    </el-col>
-                  </el-row>
+                      </el-col>
+                      <el-col :md="12" align="right">
+                        <el-tag v-for="(p,i) of o.tags" :key="i" style="margin-left: 7px;" :type="randTagType">
 
-                  <el-row style="margin-top: 9px">
-                    <el-col :md="18">
+                          {{p.tag}}
+                        </el-tag>
+                      </el-col>
+                    </el-row>
+
+                    <el-row style="margin-top: 9px">
+                      <el-col :md="18">
                     <span @click="alert('查看全文')" class="note-tile">
                       {{o.title}}
                     </span>
-                    </el-col>
-                    <el-col :md="6" align="right">
-                      <span class="note-time">{{o.time}}</span>
-                    </el-col>
-                  </el-row>
+                      </el-col>
+                      <el-col :md="6" align="right">
+                        <span class="note-time">{{o.time}}</span>
+                      </el-col>
+                    </el-row>
 
-                  <el-row style="margin-top: 9px">
-                    <el-col :md="24">
+                    <el-row style="margin-top: 9px">
+                      <el-col :md="24">
                     <span @click="alert('查看全文')" style="color: #303133;font-size: 16px;">
                         {{o.logotxt}}
                     </span>
-                    </el-col>
-                  </el-row>
-                  <el-row style="margin-top: 9px">
-                    <el-col :md="4" :sm="4">
-                      <div v-if="o.isAgree">
-                        <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-less">&nbsp;&nbsp;{{o.agreeCount}}</el-button>
-                        <div>
+                      </el-col>
+                    </el-row>
+                    <el-row style="margin-top: 9px">
+                      <el-col :md="4" :sm="4">
+                        <div v-if="o.isAgree">
+                          <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-less">&nbsp;&nbsp;{{o.agreeCount}}</el-button>
+                          <div>
 
+                          </div>
                         </div>
-                      </div>
-                      <div v-else>
-                        <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{o.agreeCount}}</el-button>
-                      </div>
+                        <div v-else>
+                          <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{o.agreeCount}}</el-button>
+                        </div>
 
-                    </el-col>
-                    <el-col :md="4" :sm="4">
-                      <div v-if="o.isComm">
-                        <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-iccomm">&nbsp;&nbsp;{{o.commCount}}</el-button>
-                      </div>
-                      <div v-else>
-                        <el-button class="bn-note-op" icon="iconfont icon-iccomm">&nbsp;&nbsp;{{o.commCount}}
-                        </el-button>
-                      </div>
-                    </el-col>
-                    <el-col :md="4" :sm="4">
+                      </el-col>
+                      <el-col :md="4" :sm="4">
+                        <div v-if="o.isComm">
+                          <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-iccomm">&nbsp;&nbsp;{{o.commCount}}</el-button>
+                        </div>
+                        <div v-else>
+                          <el-button class="bn-note-op" icon="iconfont icon-iccomm">&nbsp;&nbsp;{{o.commCount}}
+                          </el-button>
+                        </div>
+                      </el-col>
+                      <el-col :md="4" :sm="4">
 
-                      <div v-if="o.isShare">
-                        <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-kuailianshishujujiegou">
-                          &nbsp;&nbsp;{{o.shareCount}}
-                        </el-button>
-                      </div>
-                      <div v-else>
-                        <el-button class="bn-note-op" icon="iconfont icon-kuailianshishujujiegou">&nbsp;&nbsp;{{o.shareCount}}</el-button>
-                      </div>
-                    </el-col>
-                    <el-col :md="4" :sm="4">
+                        <div v-if="o.isShare">
+                          <el-button class="bn-note-op" type="primary" plain
+                                     icon="iconfont icon-kuailianshishujujiegou">
+                            &nbsp;&nbsp;{{o.shareCount}}
+                          </el-button>
+                        </div>
+                        <div v-else>
+                          <el-button class="bn-note-op" icon="iconfont icon-kuailianshishujujiegou">&nbsp;&nbsp;{{o.shareCount}}</el-button>
+                        </div>
+                      </el-col>
+                      <el-col :md="4" :sm="4">
 
-                      <div v-if="o.isCollect">
-                        <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-favorite">&nbsp;&nbsp;{{o.collectCount}}</el-button>
-                      </div>
-                      <div v-else>
-                        <el-button class="bn-note-op" icon="iconfont icon-favorite">&nbsp;&nbsp;{{o.collectCount}}
-                        </el-button>
-                      </div>
-                    </el-col>
-                    <el-col :md="4" :sm="4">&nbsp;</el-col>
-                    <el-col :md="4" :sm="4">
-                      <el-button class="bn-note-op" icon="iconfont icon-close">&nbsp;不看</el-button>
-                    </el-col>
-                  </el-row>
+                        <div v-if="o.isCollect">
+                          <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-favorite">&nbsp;&nbsp;{{o.collectCount}}</el-button>
+                        </div>
+                        <div v-else>
+                          <el-button class="bn-note-op" icon="iconfont icon-favorite">&nbsp;&nbsp;{{o.collectCount}}
+                          </el-button>
+                        </div>
+                      </el-col>
+                      <el-col :md="4" :sm="4">&nbsp;</el-col>
+                      <el-col :md="4" :sm="4">
+                        <el-button class="bn-note-op" icon="iconfont icon-close">&nbsp;不看</el-button>
+                      </el-col>
+                    </el-row>
+                  </el-card>
+
                 </el-col>
               </el-row>
             </div>
           </el-col>
-          <el-col :md="4" style="background-color: white">
+          <el-col :md="4" style="background-color: white;top:80px;left:1200px;position: fixed;">
             <p>我的收藏</p>
             <p>我的关注</p>
+            <p>积分商城</p>
+            <p>&nbsp;</p>
+            <p>其他项目</p>
+            <p>联系作者</p>
           </el-col>
         </el-row>
       </div>
@@ -138,9 +147,10 @@
     name: "index",
     data() {
       return {
+        tagIndex: 0,
         comShow: false,
         opBnGutter: 10,
-        tagType: ['', 'danger', 'success', 'info', 'warning'],
+        tagType: ['success', 'danger', 'info', '', 'warning'],
         notes: [
           {
             id: 1,
@@ -186,7 +196,7 @@
             id: 4,
             from: '来自标签:修仙',
             author: '枯琴真君',
-            authorImg: 'http://cdn.yueshizhixin.top/231751-106.jpg?imageView2/1/w/100/h/100',
+            authorImg: 'http://cdn.yueshizhixin.top/231751-106.jpg?imageView2/1/w/60/h/60',
             authorImg2: 'http://cdn.yueshizhixin.top/231751-106.jpg?imageView2/1/w/250/h/120',
             description: '修仙使人强大',
             tags: [],
@@ -225,7 +235,15 @@
         ],
       }
     },
+    computed: {
+      //随机标签
+      randTagType() {
+        let r = (Math.random() * 4).toFixed(0);
+        return this.tagType[r];
+      },
+    },
     methods: {
+
       alert(msg) {
         alert(msg)
       },
@@ -254,7 +272,7 @@
 
   .note-body {
     background-color: white;
-    padding: 16px 20px;
+    /*padding: 16px 20px;*/
     margin-bottom: 10px;
   }
 

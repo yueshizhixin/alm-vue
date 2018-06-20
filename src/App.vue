@@ -7,9 +7,9 @@
       <el-main class="vueMain divbg1">
         <router-view></router-view>
       </el-main>
-      <el-footer class="vueFooter">
-        <vue-footer></vue-footer>
-      </el-footer>
+      <!--<el-footer class="vueFooter">-->
+        <!--<vue-footer></vue-footer>-->
+      <!--</el-footer>-->
     </el-container>
   </div>
 </template>
@@ -38,7 +38,7 @@
   .vueHeader {
     top: 0;
     font-weight: 700;
-    box-shadow:0 1px 3px rgba(26,26,26,.1);
+    box-shadow:0 1px 6px rgba(26,26,26,.1);
   }
 
   .vueFooter {
@@ -49,8 +49,8 @@
   .vueMain {
     position: relative;
     margin-top: 60px;
-    margin-bottom: 25px;
-    height: 100%;
+    margin-bottom: 0;
+    height: calc(100vh - 60px);
     top: 0;
     width: 100%;
     z-index: 9;

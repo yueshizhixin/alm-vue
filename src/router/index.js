@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-//发现
-import discoveryIndex from '../components/discovery/index'
+//首页
+import index from '../components/index'
 
 //思想
 import thoughtIndex from '../components/thought/index'
@@ -22,17 +22,11 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: discoveryIndex
+      component: index
     },
     {
       path: '/index',
-      component: discoveryIndex
-    },
-
-    //发现
-    {
-      path:'/discovery',
-      component:discoveryIndex,
+      component: index
     },
     //思想
     {
