@@ -47,14 +47,9 @@
 
                     </el-col>
                     <el-col :md="12" align="right">
-                      <!--<div v-for="(p,i) of o.tags">-->
-                      <!--<el-tag>{{p.tag}}</el-tag>-->
-                      <!--</div>-->
-                      <el-tag>动漫</el-tag>
-                      <el-tag type="success">日本</el-tag>
-                      <el-tag type="info">二次元</el-tag>
-                      <el-tag type="warning">樱花</el-tag>
-                      <el-tag type="danger">和泉纱雾</el-tag>
+                      <el-tag v-for="(p,i) of o.tags">
+                        {{p.tag}}
+                      </el-tag>
                     </el-col>
                   </el-row>
 
