@@ -48,7 +48,8 @@
 
                       </el-col>
                       <el-col :md="12" align="right">
-                        <el-tag v-for="(p,i) of o.tags" :key="i" style="margin-left: 7px;" :type="tagType[Math.floor((Math.random()*5))]">
+                        <el-tag v-for="(p,i) of o.tags" :key="i" style="margin-left: 7px;"
+                                :type="tagType[Math.floor((Math.random()*5))]">
 
                           {{p.tag}}
                         </el-tag>
@@ -128,13 +129,16 @@
               </el-row>
             </div>
           </el-col>
-          <el-col :md="4" style="background-color: white;top:80px;left:1200px;position: fixed;">
-            <p>我的收藏</p>
-            <p>我的关注</p>
-            <p>积分商城</p>
-            <p>&nbsp;</p>
-            <p>其他项目</p>
-            <p>联系作者</p>
+          <el-col :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
+            <div>
+              <el-button icon="el-icon-add">我的收藏</el-button>
+              <el-button icon="el-icon-add">我的关注</el-button>
+              <el-button icon="el-icon-add">积分商城</el-button>
+            </div>
+            <div :style="{top:sideRightTop2+'px'}">
+              <el-button icon="el-icon-add" >其他项目</el-button>
+              <el-button icon="el-icon-add" >联系作者</el-button>
+            </div>
           </el-col>
         </el-row>
       </div>
@@ -236,6 +240,22 @@
       }
     },
     computed: {
+      //右侧导航栏
+      sideRight() {
+        //el-main pad 20px
+        let w = document.body.clientWidth
+        if (w > 1199) {
+          return (w - 1199 - 20 *2) / 2 - 20 *2.5 + 1199 / 24 * 20
+        }
+        else {
+          return w / 24 * 20
+        }
+        // return 0
+      },
+      sideRightTop2(){
+        //基础+pad*2+button*3+margin
+        return 80+20*2+34*3+10
+      }
     },
     methods: {
 
@@ -256,7 +276,7 @@
         this.$set(item, 'authorMsgShow', false)
       })
     },
-    created(){
+    created() {
     }
   }
 </script>
@@ -292,6 +312,26 @@
   .note-signature {
     color: #606266;
     font-size: 16px;
+  }
+
+  .side-right{
+    top: 80px;
+    position: fixed;
+  }
+
+  .side-right div {
+    background-color: white;
+    padding: 20px 0;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1);
+    margin-bottom: 10px;
+  }
+
+  .side-right div button {
+    border: 0;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: left;
+    margin-left: 0;
   }
 
   /*卡片头像*/
