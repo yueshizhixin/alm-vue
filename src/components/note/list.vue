@@ -2,6 +2,7 @@
   <div class="divMain">
     <transition name="el-zoom-in-top">
       <div v-show="comShow" class="transition-box">
+        <el-row>222</el-row>
         <el-row style="z-index: 10">
           <el-col :md="20">
             <div v-for="o of notes">
@@ -10,64 +11,24 @@
                 <el-col :md="2">
                   <div class="img-headNote" @mouseenter="imgMouseE(o.id)" @mouseleave="imgMouseL(o.id)">
                     <img :src="o.authorImg">
-                    <el-collapse-transition>
-                      <el-card v-show="o.authorMsgShow" class="img-headCard" :body-style="{ padding: '8px 6px' }">
-                        <el-row>
-                          <img :src="o.authorImg2" style="height: 100px;" class="image" @click="alert('转个跳人主页')">
-                        </el-row>
-                        <el-row style="padding: 8px;">
-                          <span class="note-author" style="font-weight: 500">{{o.author}}</span>
-                          <br>
-                          <span class="note-signature" style="font-size: 14px">{{o.description}}</span>
-                        </el-row>
-                        <el-row class="bottom clearfix" style="padding:2px 8px;margin-top: 0">
-                          <el-col :md="12">
-                            <el-button type="primary" size="medium" icon="el-icon-plus">关注</el-button>
-                          </el-col>
-                          <el-col :md="12" style="text-align: right">
-                            <el-button type="info" size="medium" icon="el-icon-message">私信</el-button>
-                          </el-col>
-                        </el-row>
-                      </el-card>
-                    </el-collapse-transition>
                   </div>
-
                 </el-col>
                 <el-col :md="18" class="note-body">
                   <el-card>
                     <el-row>
                       <el-col :md="12">
-                    <span style="color: #909399;font-size: 16px;">
-                      {{o.from}}
-                    </span>
-                        <br>
-                        <span class="note-author">{{o.author}}</span>
-                        <span class="note-signature">
-                        {{o.description}}
-                    </span>
-
+                        <span @click="alert('查看全文')" class="note-tile">
+                          {{o.title}}
+                        </span>
                       </el-col>
                       <el-col :md="12" align="right">
-                        <el-tag v-for="(p,i) of o.tags" :key="i" style="margin-left: 7px;"
+                        <el-tag v-for="(p,i) of o.tags" :key="i" style="margin-left: 7px;padding: 0 7px;"
                                 :type="tagType[Math.floor((Math.random()*5))]">
-
                           {{p.tag}}
                         </el-tag>
                       </el-col>
                     </el-row>
-
-                    <el-row style="margin-top: 9px">
-                      <el-col :md="18">
-                    <span @click="alert('查看全文')" class="note-tile">
-                      {{o.title}}
-                    </span>
-                      </el-col>
-                      <el-col :md="6" align="right">
-                        <span class="note-time">{{o.time}}</span>
-                      </el-col>
-                    </el-row>
-
-                    <el-row style="margin-top: 9px">
+                    <el-row style="margin-top: 1px">
                       <el-col :md="24">
                     <span @click="alert('查看全文')" style="color: #303133;font-size: 16px;">
                         {{o.logotxt}}
@@ -76,55 +37,24 @@
                     </el-row>
                     <el-row style="margin-top: 9px">
                       <el-col :md="4" :sm="4">
-                        <div v-if="o.isAgree">
-                          <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-less">&nbsp;&nbsp;{{o.agreeCount}}</el-button>
-                          <div>
-
-                          </div>
-                        </div>
-                        <div v-else>
-                          <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{o.agreeCount}}</el-button>
-                        </div>
-
+                        <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{o.agreeCount}}</el-button>
                       </el-col>
                       <el-col :md="4" :sm="4">
-                        <div v-if="o.isComm">
-                          <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-iccomm">&nbsp;&nbsp;{{o.commCount}}</el-button>
-                        </div>
-                        <div v-else>
-                          <el-button class="bn-note-op" icon="iconfont icon-iccomm">&nbsp;&nbsp;{{o.commCount}}
-                          </el-button>
-                        </div>
+                        <el-button class="bn-note-op" icon="iconfont icon-iccomm">&nbsp;&nbsp;{{o.commCount}}
+                        </el-button>
                       </el-col>
                       <el-col :md="4" :sm="4">
-
-                        <div v-if="o.isShare">
-                          <el-button class="bn-note-op" type="primary" plain
-                                     icon="iconfont icon-kuailianshishujujiegou">
-                            &nbsp;&nbsp;{{o.shareCount}}
-                          </el-button>
-                        </div>
-                        <div v-else>
-                          <el-button class="bn-note-op" icon="iconfont icon-kuailianshishujujiegou">&nbsp;&nbsp;{{o.shareCount}}</el-button>
-                        </div>
+                        <el-button class="bn-note-op" icon="iconfont icon-kuailianshishujujiegou">&nbsp;&nbsp;{{o.shareCount}}</el-button>
                       </el-col>
                       <el-col :md="4" :sm="4">
-
-                        <div v-if="o.isCollect">
-                          <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-favorite">&nbsp;&nbsp;{{o.collectCount}}</el-button>
-                        </div>
-                        <div v-else>
-                          <el-button class="bn-note-op" icon="iconfont icon-favorite">&nbsp;&nbsp;{{o.collectCount}}
-                          </el-button>
-                        </div>
+                        <el-button class="bn-note-op" icon="iconfont icon-favorite">&nbsp;&nbsp;{{o.collectCount}}
+                        </el-button>
                       </el-col>
                       <el-col :md="4" :sm="4">&nbsp;</el-col>
-                      <el-col :md="4" :sm="4">
-                        <el-button class="bn-note-op" icon="iconfont icon-close">&nbsp;不看</el-button>
+                      <el-col :md="4" :sm="4" align="right">&nbsp;<span class="note-time" style="padding: 12px 0">{{o.time}}</span>
                       </el-col>
                     </el-row>
                   </el-card>
-
                 </el-col>
               </el-row>
             </div>
@@ -136,8 +66,16 @@
               <el-button icon="iconfont icon-shop">&nbsp;&nbsp;积分商城</el-button>
             </div>
             <div :style="{top:sideRightTop2+'px'}">
-              <el-button icon="iconfont icon-gengduo" >&nbsp;&nbsp;其他项目</el-button>
-              <el-button icon="iconfont icon-account" >&nbsp;&nbsp;联系作者</el-button>
+
+                <el-checkbox-group v-model="checkboxGroup3" size="small" text-color="#ecf5ff">
+                  <el-checkbox-button v-for="city in cities" :label="city" :disabled="city === '北京'" :key="city">{{city}}</el-checkbox-button>
+                </el-checkbox-group>
+
+              <el-button>&nbsp;&nbsp;go</el-button>
+              <el-button>&nbsp;&nbsp;unity</el-button>
+              <el-button>&nbsp;&nbsp;vue</el-button>
+              <el-button>&nbsp;&nbsp;db</el-button>
+              <el-button>&nbsp;&nbsp;mysql</el-button>
             </div>
           </el-col>
         </el-row>
@@ -145,12 +83,20 @@
     </transition>
   </div>
 </template>
-
 <script>
+
+  const cityOptions = ['上海', '北京', '广州', '深圳'];
+
   export default {
     name: "index",
     data() {
       return {
+          checkboxGroup1: ['上海'],
+          checkboxGroup2: ['上海'],
+          checkboxGroup3: ['上海'],
+          checkboxGroup4: ['上海'],
+          cities: cityOptions,
+
         tagIndex: 0,
         comShow: false,
         opBnGutter: 10,
@@ -161,7 +107,7 @@
             from: '来自关注:和泉纱雾',
             author: '和泉纱雾',
             authorImg: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/100/h/100',
-            authorImg2: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/220/h/100',
+            authorImg2: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/250/h/120',
             description: '学习使人落后',
             tags: [{'tag': '动漫'}, {'tag': '日本'}, {'tag': '二次元'}, {'tag': '樱花'}, {'tag': '和泉纱雾'}],
             title: '如何评价《秒速5厘米》这部动漫?',
@@ -181,7 +127,7 @@
             from: '来自关注:琉璃仙',
             author: '琉璃仙',
             authorImg: 'http://cdn.yueshizhixin.top/248986-106.jpg?imageView2/1/w/100/h/100',
-            authorImg2: 'http://cdn.yueshizhixin.top/248986-106.jpg?imageView2/1/w/220/h/100',
+            authorImg2: 'http://cdn.yueshizhixin.top/248986-106.jpg?imageView2/1/w/250/h/120',
             description: '吃遍天下美食',
             tags: [{'tag': '修仙'}],
             title: '步行街上都是好吃的!',
@@ -201,7 +147,7 @@
             from: '来自标签:修仙',
             author: '枯琴真君',
             authorImg: 'http://cdn.yueshizhixin.top/231751-106.jpg?imageView2/1/w/60/h/60',
-            authorImg2: 'http://cdn.yueshizhixin.top/231751-106.jpg?imageView2/1/w/220/h/100',
+            authorImg2: 'http://cdn.yueshizhixin.top/231751-106.jpg?imageView2/1/w/250/h/120',
             description: '修仙使人强大',
             tags: [],
             title: '修仙使人强大!',
@@ -221,7 +167,7 @@
             from: '来自标签:DOTA2',
             author: '祁厅长',
             authorImg: 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/100/h/100',
-            authorImg2: 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/220/h/100',
+            authorImg2: 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/250/h/120',
             description: '我有高达250的APM',
             tags: [{'tag': 'DOTA2'}, {'tag': '电竞'}],
             title: '如何评价萨尔这个英雄?',
@@ -245,16 +191,16 @@
         //el-main pad 20px
         let w = document.body.clientWidth
         if (w > 1199) {
-          return (w - 1199 - 20 *2) / 2 - 20 *2.5 + 1199 / 24 * 20
+          return (w - 1199 - 20 * 2) / 2 - 20 * 2.5 + 1199 / 24 * 20
         }
         else {
           return w / 24 * 20
         }
         // return 0
       },
-      sideRightTop2(){
+      sideRightTop2() {
         //基础+pad*2+button*3+margin
-        return 80+20*2+34*3+10
+        return 80 + 20 * 2 + 34 * 3 + 10
       }
     },
     methods: {
@@ -314,7 +260,7 @@
     font-size: 16px;
   }
 
-  .side-right{
+  .side-right {
     top: 80px;
     position: fixed;
   }
@@ -322,7 +268,7 @@
   .side-right div {
     background-color: white;
     padding: 20px 0;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
     margin-bottom: 10px;
   }
 

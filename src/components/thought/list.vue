@@ -68,7 +68,7 @@
 
 <script>
   export default {
-    name: "index",
+    name: "list",
     data() {
       return {
         /*tab*/

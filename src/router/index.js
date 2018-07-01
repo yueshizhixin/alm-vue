@@ -5,10 +5,10 @@ import Router from 'vue-router'
 import index from '../components/index'
 
 //思想
-import thoughtIndex from '../components/thought/index'
+import thoughtIndex from '../components/thought/list'
 
 //笔记
-import noteIndex from '../components/note/index'
+import noteIndex from '../components/note/list'
 
 //功能
 import funcIndex from '../components/func/index'
