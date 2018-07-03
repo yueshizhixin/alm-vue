@@ -39,7 +39,7 @@
           <el-col :md="5">
             <el-button class="button">
               <el-badge :value="12" class="item badge" :max="10">
-                <i class="iconfont icon-iccomm"></i>&nbsp;评论
+                <i class="iconfont icon-iccomm"></i>&nbsp;消息
               </el-badge>
             </el-button>
           </el-col>
@@ -57,7 +57,7 @@
             </el-dropdown>
           </el-col>
           <el-col :md="5">
-            <el-button class="button" icon="el-icon-plus"> 注册</el-button>
+            <el-button class="button" icon="el-icon-plus" @click="dialogVisible=true"> 注册</el-button>
           </el-col>
           <el-col :md="5">
             <el-button class="button" icon="el-icon-arrow-right"> 登录</el-button>
@@ -65,41 +65,53 @@
         </el-row>
       </el-col>
     </el-row>
+
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+
+  // import SingUpTempl from "./user/templ/signUpTempl"
+
   export default {
     name: "vueHeader",
     data() {
       return {
+        //注册,
+        dialogVisible: false,
+
         //菜单默认选择索引
         menuActiveIndex: '0',
       }
     },
     methods: {
+      handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {
+          });
+      },
       menuHandler(key, keyPath) {
-        /**
-         * 路由控制
-         */
-        if (key === '100') {
-          this.$router.push({path: '/'})
-        }
-        else if (key === '200') {
-          this.$router.push({path: '/thought'})
-        }
-        else if (key === '300') {
-          this.$router.push({path: '/note'})
-        }
-        else if (key === '400-100') {
-          this.$router.push({path: '/func/crawler'})
-        }
-        else if (key === '400-200') {
-          this.$router.push({path: '/func/low-poly'})
-        }
-        else if (key === '400-300') {
-          this.$router.push({path: '/func/pdf'})
-        }
+        //路由控制
+        if (key === '100') this.$router.push({path: '/'})
+        else if (key === '200') this.$router.push({path: '/thought'})
+        else if (key === '300') this.$router.push({path: '/note'})
+        else if (key === '400-100') this.$router.push({path: '/func/crawler'})
+        else if (key === '400-200') this.$router.push({path: '/func/low-poly'})
+        else if (key === '400-300') this.$router.push({path: '/func/pdf'})
       },
     }
   }

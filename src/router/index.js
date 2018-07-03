@@ -5,16 +5,16 @@ import Router from 'vue-router'
 import index from '../components/index'
 
 //思想
-import thoughtIndex from '../components/thought/list'
+import thoughtList from '../components/thought/list'
 
 //笔记
-import noteIndex from '../components/note/list'
+import noteList from '../components/note/list'
 
 //功能
 import funcIndex from '../components/func/index'
-import funcCraIndex from '../components/func/crawler/index'
-import funcLpIndex from '../components/func/low-poly/index'
-import funcPdfIndex from '../components/func/pdf/index'
+import funcCrawler from '../components/func/crawler/crawler'
+import funcLowPoly from '../components/func/low-poly/low_poly'
+import funcPdf from '../components/func/pdf/pdf'
 
 Vue.use(Router);
 
@@ -31,12 +31,12 @@ export default new Router({
     //思想
     {
       path:'/thought',
-      component:thoughtIndex,
+      component:thoughtList,
     },
     //笔记
     {
       path:'/note',
-      component:noteIndex,
+      component:noteList,
     },
     //功能
     {
@@ -45,15 +45,15 @@ export default new Router({
       children: [{
         //爬虫
         path: 'crawler',
-        component: funcCraIndex,
+        component: funcCrawler,
       }, {
         //LOW POLY
         path: 'low-poly',
-        component: funcLpIndex,
+        component: funcLowPoly,
       }, {
         //PDF
         path: 'pdf',
-        component: funcPdfIndex,
+        component: funcPdf,
       },
       ],
     },

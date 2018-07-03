@@ -45,6 +45,7 @@
   width: 62px;
   height: 62px;
 }
+
 .img-headNote img {
   margin-top: 2px;
   width: 60px;
@@ -66,5 +67,36 @@
 }
 
 /**
-
+  日记列表
  */
+.bn-note-op {
+  border: 0;
+  text-align: center;
+}
+
+.note-body {
+  background-color: white;
+  /*padding: 16px 20px;*/
+  margin-bottom: 10px;
+}
+
+.note-tile {
+  color: #303133;
+  font-size: 20px;
+  font-weight: 700
+}
+
+.note-time {
+  color: #909399;
+  font-size: 16px;
+}
+
+.note-author {
+  color: #303133;
+  font-size: 18px;
+}
+
+.note-signature {
+  color: #606266;
+  font-size: 16px;
+}

@@ -2,75 +2,17 @@
   <div class="divMain">
     <transition name="el-zoom-in-top">
       <div v-show="comShow" class="transition-box">
-        <el-row>222</el-row>
         <el-row style="z-index: 10">
           <el-col :md="20">
-            <div v-for="o of notes">
-              <el-row :key="o.id">
-                <el-col :md="2">&nbsp;</el-col>
-                <el-col :md="2">
-                  <div class="img-headNote" @mouseenter="imgMouseE(o.id)" @mouseleave="imgMouseL(o.id)">
-                    <img :src="o.authorImg">
-                  </div>
-                </el-col>
-                <el-col :md="18" class="note-body">
-                  <el-card>
-                    <el-row>
-                      <el-col :md="12">
-                        <span @click="alert('查看全文')" class="note-tile">
-                          {{o.title}}
-                        </span>
-                      </el-col>
-                      <el-col :md="12" align="right">
-                        <el-tag v-for="(p,i) of o.tags" :key="i" style="margin-left: 7px;padding: 0 7px;"
-                                :type="tagType[Math.floor((Math.random()*5))]">
-                          {{p.tag}}
-                        </el-tag>
-                      </el-col>
-                    </el-row>
-                    <el-row style="margin-top: 1px">
-                      <el-col :md="24">
-                    <span @click="alert('查看全文')" style="color: #303133;font-size: 16px;">
-                        {{o.logotxt}}
-                    </span>
-                      </el-col>
-                    </el-row>
-                    <el-row style="margin-top: 9px">
-                      <el-col :md="4" :sm="4">
-                        <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{o.agreeCount}}</el-button>
-                      </el-col>
-                      <el-col :md="4" :sm="4">
-                        <el-button class="bn-note-op" icon="iconfont icon-iccomm">&nbsp;&nbsp;{{o.commCount}}
-                        </el-button>
-                      </el-col>
-                      <el-col :md="4" :sm="4">
-                        <el-button class="bn-note-op" icon="iconfont icon-kuailianshishujujiegou">&nbsp;&nbsp;{{o.shareCount}}</el-button>
-                      </el-col>
-                      <el-col :md="4" :sm="4">
-                        <el-button class="bn-note-op" icon="iconfont icon-favorite">&nbsp;&nbsp;{{o.collectCount}}
-                        </el-button>
-                      </el-col>
-                      <el-col :md="4" :sm="4">&nbsp;</el-col>
-                      <el-col :md="4" :sm="4" align="right">&nbsp;<span class="note-time" style="padding: 12px 0">{{o.time}}</span>
-                      </el-col>
-                    </el-row>
-                  </el-card>
-                </el-col>
-              </el-row>
-            </div>
+            <note-list-item :notes="notes" :self="self"></note-list-item>
           </el-col>
           <el-col :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
             <div>
-              <el-button icon="iconfont icon-attachment">&nbsp;&nbsp;我的收藏</el-button>
+              <el-button icon="iconfont icon-add" >&nbsp;&nbsp;新建笔记</el-button>
+              <el-button icon="iconfont icon-attachment" >&nbsp;&nbsp;我的收藏</el-button>
               <el-button icon="iconfont icon-favorite">&nbsp;&nbsp;我的关注</el-button>
-              <el-button icon="iconfont icon-shop">&nbsp;&nbsp;积分商城</el-button>
             </div>
             <div :style="{top:sideRightTop2+'px'}">
-
-                <el-checkbox-group v-model="checkboxGroup3" size="small" text-color="#ecf5ff">
-                  <el-checkbox-button v-for="city in cities" :label="city" :disabled="city === '北京'" :key="city">{{city}}</el-checkbox-button>
-                </el-checkbox-group>
-
               <el-button>&nbsp;&nbsp;go</el-button>
               <el-button>&nbsp;&nbsp;unity</el-button>
               <el-button>&nbsp;&nbsp;vue</el-button>
@@ -84,19 +26,15 @@
   </div>
 </template>
 <script>
-
-  const cityOptions = ['上海', '北京', '广州', '深圳'];
+  import NoteListItem from "./templ/noteList"
 
   export default {
     name: "index",
+    components: {NoteListItem},
     data() {
       return {
-          checkboxGroup1: ['上海'],
-          checkboxGroup2: ['上海'],
-          checkboxGroup3: ['上海'],
-          checkboxGroup4: ['上海'],
-          cities: cityOptions,
-
+        //是否查看自己的笔记
+        self: true,
         tagIndex: 0,
         comShow: false,
         opBnGutter: 10,
@@ -204,10 +142,6 @@
       }
     },
     methods: {
-
-      alert(msg) {
-        alert(msg)
-      },
       imgMouseE(id) {
         let note = this.notes.find(note => note.id === id)
         note.authorMsgShow = true
@@ -228,38 +162,9 @@
 </script>
 
 <style scoped>
-  .bn-note-op {
-    border: 0;
-    text-align: center;
-  }
-
-  .note-body {
-    background-color: white;
-    /*padding: 16px 20px;*/
-    margin-bottom: 10px;
-  }
-
-  .note-tile {
-    color: #303133;
-    font-size: 20px;
-    font-weight: 700
-  }
-
-  .note-time {
-    color: #909399;
-    font-size: 16px;
-  }
-
-  .note-author {
-    color: #303133;
-    font-size: 18px;
-  }
-
-  .note-signature {
-    color: #606266;
-    font-size: 16px;
-  }
-
+  /**
+    右侧列表
+   */
   .side-right {
     top: 80px;
     position: fixed;
@@ -278,35 +183,5 @@
     width: 100%;
     text-align: left;
     margin-left: 0;
-  }
-
-  /*卡片头像*/
-  .time {
-    font-size: 13px;
-  }
-
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
-
-  .button {
-    padding: 0;
-    float: right;
-  }
-
-  .image {
-    width: 100%;
-    display: block;
-  }
-
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-
-  .clearfix:after {
-    clear: both
   }
 </style>

@@ -4,130 +4,7 @@
       <div v-show="comShow" class="transition-box">
         <el-row style="z-index: 10">
           <el-col :md="20">
-            <div v-for="o of notes">
-              <el-row :key="o.id">
-                <el-col :md="2">&nbsp;</el-col>
-                <el-col :md="2">
-                  <div class="img-headNote" @mouseenter="imgMouseE(o.id)" @mouseleave="imgMouseL(o.id)">
-                    <img :src="o.authorImg">
-                    <el-collapse-transition>
-                      <el-card v-show="o.authorMsgShow" class="img-headCard" :body-style="{ padding: '8px 6px' }">
-                        <el-row>
-                          <img :src="o.authorImg2" style="height: 100px;" class="image" @click="alert('转个跳人主页')">
-                        </el-row>
-                        <el-row style="padding: 8px;">
-                          <span class="note-author" style="font-weight: 500">{{o.author}}</span>
-                          <br>
-                          <span class="note-signature" style="font-size: 14px">{{o.description}}</span>
-                        </el-row>
-                        <el-row class="bottom clearfix" style="padding:2px 8px;margin-top: 0">
-                          <el-col :md="12">
-                            <el-button type="primary" size="medium" icon="el-icon-plus">关注</el-button>
-                          </el-col>
-                          <el-col :md="12" style="text-align: right">
-                            <el-button type="info" size="medium" icon="el-icon-message">私信</el-button>
-                          </el-col>
-                        </el-row>
-                      </el-card>
-                    </el-collapse-transition>
-                  </div>
-
-                </el-col>
-                <el-col :md="18" class="note-body">
-                  <el-card>
-                    <el-row>
-                      <el-col :md="12">
-                    <span style="color: #909399;font-size: 16px;">
-                      {{o.from}}
-                    </span>
-                        <br>
-                        <span class="note-author">{{o.author}}</span>
-                        <span class="note-signature">
-                        {{o.description}}
-                    </span>
-
-                      </el-col>
-                      <el-col :md="12" align="right">
-                        <el-tag v-for="(p,i) of o.tags" :key="i" style="margin-left: 7px;"
-                                :type="tagType[Math.floor((Math.random()*5))]">
-
-                          {{p.tag}}
-                        </el-tag>
-                      </el-col>
-                    </el-row>
-
-                    <el-row style="margin-top: 9px">
-                      <el-col :md="18">
-                    <span @click="alert('查看全文')" class="note-tile">
-                      {{o.title}}
-                    </span>
-                      </el-col>
-                      <el-col :md="6" align="right">
-                        <span class="note-time">{{o.time}}</span>
-                      </el-col>
-                    </el-row>
-
-                    <el-row style="margin-top: 9px">
-                      <el-col :md="24">
-                    <span @click="alert('查看全文')" style="color: #303133;font-size: 16px;">
-                        {{o.logotxt}}
-                    </span>
-                      </el-col>
-                    </el-row>
-                    <el-row style="margin-top: 9px">
-                      <el-col :md="4" :sm="4">
-                        <div v-if="o.isAgree">
-                          <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-less">&nbsp;&nbsp;{{o.agreeCount}}</el-button>
-                          <div>
-
-                          </div>
-                        </div>
-                        <div v-else>
-                          <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{o.agreeCount}}</el-button>
-                        </div>
-
-                      </el-col>
-                      <el-col :md="4" :sm="4">
-                        <div v-if="o.isComm">
-                          <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-iccomm">&nbsp;&nbsp;{{o.commCount}}</el-button>
-                        </div>
-                        <div v-else>
-                          <el-button class="bn-note-op" icon="iconfont icon-iccomm">&nbsp;&nbsp;{{o.commCount}}
-                          </el-button>
-                        </div>
-                      </el-col>
-                      <el-col :md="4" :sm="4">
-
-                        <div v-if="o.isShare">
-                          <el-button class="bn-note-op" type="primary" plain
-                                     icon="iconfont icon-kuailianshishujujiegou">
-                            &nbsp;&nbsp;{{o.shareCount}}
-                          </el-button>
-                        </div>
-                        <div v-else>
-                          <el-button class="bn-note-op" icon="iconfont icon-kuailianshishujujiegou">&nbsp;&nbsp;{{o.shareCount}}</el-button>
-                        </div>
-                      </el-col>
-                      <el-col :md="4" :sm="4">
-
-                        <div v-if="o.isCollect">
-                          <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-favorite">&nbsp;&nbsp;{{o.collectCount}}</el-button>
-                        </div>
-                        <div v-else>
-                          <el-button class="bn-note-op" icon="iconfont icon-favorite">&nbsp;&nbsp;{{o.collectCount}}
-                          </el-button>
-                        </div>
-                      </el-col>
-                      <el-col :md="4" :sm="4">&nbsp;</el-col>
-                      <el-col :md="4" :sm="4">
-                        <el-button class="bn-note-op" icon="iconfont icon-close">&nbsp;不看</el-button>
-                      </el-col>
-                    </el-row>
-                  </el-card>
-
-                </el-col>
-              </el-row>
-            </div>
+            <note-list-item :notes="notes" :self="this.self"></note-list-item>
           </el-col>
           <el-col :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
             <div>
@@ -136,8 +13,8 @@
               <el-button icon="iconfont icon-shop">&nbsp;&nbsp;积分商城</el-button>
             </div>
             <div :style="{top:sideRightTop2+'px'}">
-              <el-button icon="iconfont icon-gengduo" >&nbsp;&nbsp;其他项目</el-button>
-              <el-button icon="iconfont icon-account" >&nbsp;&nbsp;联系作者</el-button>
+              <el-button icon="iconfont icon-gengduo">&nbsp;&nbsp;其他项目</el-button>
+              <el-button icon="iconfont icon-account">&nbsp;&nbsp;联系作者</el-button>
             </div>
           </el-col>
         </el-row>
@@ -147,14 +24,20 @@
 </template>
 
 <script>
+
+  import NoteListItem from "./note/templ/noteList"
+
   export default {
     name: "index",
+    components: {NoteListItem},
     data() {
       return {
+        //是否查看自己的笔记
+        self: false,
         tagIndex: 0,
         comShow: false,
         opBnGutter: 10,
-        tagType: ['success', 'danger', 'info', '', 'warning'],
+
         notes: [
           {
             id: 1,
@@ -245,31 +128,19 @@
         //el-main pad 20px
         let w = document.body.clientWidth
         if (w > 1199) {
-          return (w - 1199 - 20 *2) / 2 - 20 *2.5 + 1199 / 24 * 20
+          return (w - 1199 - 20 * 2) / 2 - 20 * 2.5 + 1199 / 24 * 20
         }
         else {
           return w / 24 * 20
         }
         // return 0
       },
-      sideRightTop2(){
+      sideRightTop2() {
         //基础+pad*2+button*3+margin
-        return 80+20*2+34*3+10
+        return 80 + 20 * 2 + 34 * 3 + 10
       }
     },
-    methods: {
-
-      alert(msg) {
-        alert(msg)
-      },
-      imgMouseE(id) {
-        let note = this.notes.find(note => note.id === id)
-        note.authorMsgShow = true
-      },
-      imgMouseL(id) {
-        this.notes.find(note => note.id === id).authorMsgShow = false
-      },
-    },
+    methods: {},
     mounted() {
       this.comShow = true
       this.notes.forEach(item => {
@@ -282,39 +153,10 @@
 </script>
 
 <style scoped>
-  .bn-note-op {
-    border: 0;
-    text-align: center;
-  }
-
-  .note-body {
-    background-color: white;
-    /*padding: 16px 20px;*/
-    margin-bottom: 10px;
-  }
-
-  .note-tile {
-    color: #303133;
-    font-size: 20px;
-    font-weight: 700
-  }
-
-  .note-time {
-    color: #909399;
-    font-size: 16px;
-  }
-
-  .note-author {
-    color: #303133;
-    font-size: 18px;
-  }
-
-  .note-signature {
-    color: #606266;
-    font-size: 16px;
-  }
-
-  .side-right{
+  /**
+    右侧列表
+   */
+  .side-right {
     top: 80px;
     position: fixed;
   }
@@ -322,7 +164,7 @@
   .side-right div {
     background-color: white;
     padding: 20px 0;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
     margin-bottom: 10px;
   }
 
@@ -334,33 +176,4 @@
     margin-left: 0;
   }
 
-  /*卡片头像*/
-  .time {
-    font-size: 13px;
-  }
-
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
-
-  .button {
-    padding: 0;
-    float: right;
-  }
-
-  .image {
-    width: 100%;
-    display: block;
-  }
-
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-
-  .clearfix:after {
-    clear: both
-  }
 </style>
