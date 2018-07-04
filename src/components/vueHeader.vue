@@ -57,7 +57,8 @@
             </el-dropdown>
           </el-col>
           <el-col :md="5">
-            <el-button class="button" icon="el-icon-plus" @click="dialogVisible=true"> 注册</el-button>
+            <el-button class="button" icon="el-icon-plus" @click="signUpDigV=true"> 注册</el-button>
+
           </el-col>
           <el-col :md="5">
             <el-button class="button" icon="el-icon-arrow-right"> 登录</el-button>
@@ -65,47 +66,31 @@
         </el-row>
       </el-col>
     </el-row>
-
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
-      <span>这是一段信息</span>
-      <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-  </span>
-    </el-dialog>
+    <sign-up-templ :visi="signUpDigV" @signUpEve="signUpEve"></sign-up-templ>
   </div>
 </template>
 
 <script>
 
-  // import SingUpTempl from "./user/templ/signUpTempl"
+  import SignUpTempl from "./user/templ/signUpTempl"
 
   export default {
     name: "vueHeader",
+    components: {SignUpTempl},
     data() {
       return {
-        //注册,
-        dialogVisible: false,
-
-        //菜单默认选择索引
-        menuActiveIndex: '0',
+        signUpDigV: false,//显示注册
+        menuActiveIndex: '0',//菜单默认选择索引
       }
     },
     methods: {
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {
-          });
+      //注册模板事件
+      signUpEve(data) {
+        console.log(data)
+        this.signUpDigV = false
       },
+      //路由控制
       menuHandler(key, keyPath) {
-        //路由控制
         if (key === '100') this.$router.push({path: '/'})
         else if (key === '200') this.$router.push({path: '/thought'})
         else if (key === '300') this.$router.push({path: '/note'})

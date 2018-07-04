@@ -1,38 +1,26 @@
 <template>
   <div>
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
-      <span>这是一段信息</span>
+    <el-dialog title="提示" :visible.sync="visi" width="30%" center
+               :close-on-click-modal="false"
+               :modal-append-to-body="false"
+               :show-close="false"
+    >
+      <span>需要注意的是内容是默认不居中的</span>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-  </span>
+        <el-button type="primary" @click="$emit('signUpEve','signUpData')">确 定</el-button>
+      </span>
     </el-dialog>
-
   </div>
 </template>
 
 <script>
   export default {
     name: "signUpTempl",
+    props: ['visi'],
     data() {
-      return {
-        dialogVisible: false
-      };
+      return {}
     },
-    methods: {
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {
-          });
-      }
-    }
+    methods: {},
   }
 </script>
 
