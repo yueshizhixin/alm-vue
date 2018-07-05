@@ -1,7 +1,7 @@
 <template>
   <div class="divMain">
     <transition name="el-zoom-in-top">
-      <div v-show="comShow" class="transition-box">
+      <div v-show="aniShow" class="transition-box">
         <el-row style="z-index: 10">
           <el-col :md="20">
             <note-list-item :notes="notes" :self="self"></note-list-item>
@@ -29,15 +29,13 @@
   import NoteListItem from "./templ/noteList"
 
   export default {
-    name: "index",
+    name: "noteList",
     components: {NoteListItem},
     data() {
       return {
-        //是否查看自己的笔记
-        self: true,
-        tagIndex: 0,
-        comShow: false,
-        opBnGutter: 10,
+
+        self: true,//是否查看自己的笔记
+        aniShow: false,//加载动画
         tagType: ['success', 'danger', 'info', '', 'warning'],
         notes: [
           {
@@ -151,7 +149,7 @@
       },
     },
     mounted() {
-      this.comShow = true
+      this.aniShow = true
       this.notes.forEach(item => {
         this.$set(item, 'authorMsgShow', false)
       })

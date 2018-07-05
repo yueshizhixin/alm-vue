@@ -1,7 +1,7 @@
 <template>
   <div class="divMain">
     <transition name="el-zoom-in-top">
-      <div v-show="comShow" class="transition-box">
+      <div v-show="aniShow" class="transition-box">
         <el-tabs type="border-card" stretch="stretch" @tab-click="tabHandler">
           <el-tab-pane :key="1">
             <span slot="label"><i class="iconfont icon-icon_puzzle">&nbsp;</i>经典问题</span>
@@ -68,12 +68,12 @@
 
 <script>
   export default {
-    name: "list",
+    name: "thoughtList",
     data() {
       return {
         /*tab*/
         //ani
-        comShow: false,
+        aniShow: false,
         actPanShow: '0',
         stretch: true,
         //position
@@ -89,7 +89,7 @@
       }
     },
     mounted() {
-      this.comShow = true
+      this.aniShow = true
     },
   }
 </script>

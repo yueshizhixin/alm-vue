@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition name="el-zoom-in-top">
-      <div v-show="comShow" class="transition-box">
+      <div v-show="aniShow" class="transition-box">
         <el-tabs type="border-card" :tab-position="tabPosition">
           <el-tab-pane>
             <span slot="label"><i class="iconfont icon-wangyiyunyinle">&nbsp;</i>网易云音乐</span>
@@ -48,10 +48,10 @@
 
 <script>
   export default {
-    name: "index",
+    name: "crawler",
     data() {
       return {
-        comShow: false,
+        aniShow: false,//加载动画
         tabPosition: 'left',
         yunMusicActive: '0',
         songs: [
@@ -75,7 +75,7 @@
       }
     },
     mounted() {
-      this.comShow = true
+      this.aniShow = true
     }
   }
 </script>
