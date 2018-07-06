@@ -73,30 +73,33 @@
             <el-button class="button" icon="el-icon-plus" @click="signUpDigV=true"> 注册</el-button>
           </el-col>
           <el-col :md="12">
-            <el-button class="button" icon="el-icon-arrow-right"> 登录</el-button>
+            <el-button class="button" icon="el-icon-arrow-right" @click="signInDigV=true"> 登录</el-button>
           </el-col>
         </el-row>
       </el-col>
     </el-row>
     <sign-up-templ :visi="signUpDigV" @signUpEve="signUpEve"></sign-up-templ>
+    <sign-in-templ :visi="signInDigV" @signInEve="signInEve"></sign-in-templ>
   </div>
 </template>
 
 <script>
   import 'gsap/TweenLite.js'
   import SignUpTempl from "./user/templ/signUpTempl"
+  import SignInTempl from "./user/templ/signInTempl"
 
   const searchWidthB = 250; //搜索框默认width
   const searchWidthF = 350; //搜索框focus width
 
   export default {
     name: "vueHeader",
-    components: {SignUpTempl},
+    components: {SignUpTempl,SignInTempl},
     data() {
       return {
         serachWidth: searchWidthB,//搜索框长度
 
         signUpDigV: false,//显示注册
+        signInDigV: false,//显示登录
         menuActiveIndex: '0',//菜单默认选择索引
       }
     },
@@ -112,6 +115,11 @@
       signUpEve(data) {
         console.log(data)
         this.signUpDigV = false
+      },
+      //登录模板事件
+      signInEve(data) {
+        console.log(data)
+        this.signInDigV = false
       },
       //路由控制
       menuHandler(key, keyPath) {
