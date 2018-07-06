@@ -1,6 +1,6 @@
 # [ALM-VUE](https://yueshizhixin.github.io)
->[English](README.en.md)
+>[简体中文](README.md)
 
-- 单页面网站
+- single page web
 - VUE + ElementUI + RESTful-API by Golang
-- MVVM框架
+- MVVM Frame
