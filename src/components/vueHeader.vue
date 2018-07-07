@@ -78,22 +78,20 @@
         </el-row>
       </el-col>
     </el-row>
-    <sign-up-templ :visi="signUpDigV" @signUpEve="signUpEve"></sign-up-templ>
-    <sign-in-templ :visi="signInDigV" @signInEve="signInEve"></sign-in-templ>
+    <sign-templ :visi="signUpDigV" @signUpEve="signUpEve"></sign-templ>
   </div>
 </template>
 
 <script>
   import 'gsap/TweenLite.js'
-  import SignUpTempl from "./user/templ/signUpTempl"
-  import SignInTempl from "./user/templ/signInTempl"
+  import SignTempl from "./user/templ/signTempl"
 
   const searchWidthB = 250; //搜索框默认width
   const searchWidthF = 350; //搜索框focus width
 
   export default {
     name: "vueHeader",
-    components: {SignUpTempl,SignInTempl},
+    components: {SignTempl},
     data() {
       return {
         serachWidth: searchWidthB,//搜索框长度

@@ -18,18 +18,28 @@
                 <span slot="prepend">密 码</span>
               </el-input>
             </el-form-item>
+            <el-form-item prop="pwd2">
+              <el-input type="password" placeholder="请再次输入密码" v-model="user.pwd2">
+                <span slot="prepend">密 码</span>
+              </el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-input placeholder="请填写图形验证码">
+                <span slot="prepend">验 证</span>
+              </el-input>
+            </el-form-item>
             <el-form-item>
               <el-row>
                 <el-col :sm="10">
-                  <el-button class="regBtn" type="info" @click="close">
-                    <i class="iconfont icon-add"></i>
-                    注&nbsp;册
+                  <el-button class="regBtn" type="info" @click="close" >
+                    <i class="iconfont icon-more"></i>
+                    登&nbsp;录
                   </el-button>
                 </el-col>
                 <el-col :sm="{span:10,offset:4}">
                   <el-button class="regBtn" type="success" @click="sub('signForm')">
-                    <i class="iconfont icon-more"></i>
-                    登&nbsp;录
+                    <i class="iconfont icon-add"></i>
+                    注&nbsp;册
                   </el-button>
                 </el-col>
               </el-row>
@@ -42,11 +52,9 @@
 </template>
 
 <script>
-
   import gol from "./../../GLOBAL"
-
   export default {
-    name: "signInTempl",
+    name: "signTempl",
     props: ['visi'],
     data() {
       let valiAcc = (r, v, callback) => {
@@ -71,12 +79,22 @@
           callback();
         }
       };
+      let valiPwd2 = (r, v, callback) => {
+        if (v.trim() === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (v !== this.user.pwd) {
+          callback(new Error('两次输入密码不一致'));
+        } else {
+          callback();
+        }
+      };
       return {
         aniShow: false,//加载动画
-
         user: {
           acc: '',
           pwd: '',
+          pwd2: '',
+          vali: '',
         },
         rules: {
           acc: [
@@ -85,16 +103,18 @@
           pwd: [
             {validator: valiPwd, trigger: 'blur'},
           ],
+          pwd2: [
+            {validator: valiPwd2, trigger: 'blur'},
+          ],
         },
       };
-
     },
     methods: {
       sub(form) {
         this.$refs[form].validate(vali => {
           if (vali) {
             this.$refs[form].resetFields();
-            this.$emit('signInEve', 'signInData')
+            this.$emit('signUpEve', 'signUpData')
           }
           else {
             return false;
@@ -103,10 +123,9 @@
       },
       close() {
         this.$refs['signForm'].resetFields();
-        this.$emit('signInEve', 'close')
+        this.$emit('signUpEve', 'close')
       }
     },
-
     mounted() {
       this.aniShow = true
     },
