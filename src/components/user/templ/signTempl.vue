@@ -56,8 +56,7 @@
 </template>
 
 <script>
-  import gol from "./../../GLOBAL"
-  // import {cvs_pv_draw} from "../../../../static/js/cvs_point_line";
+  import gol from "comp/GLOBAL"
 
   export default {
     name: "signTempl",

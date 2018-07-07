@@ -80,7 +80,7 @@
 </template>
 
 <script>
-  import SignTempl from "./user/templ/signTempl"
+  import SignTempl from "comp/user/templ/signTempl"
   import {TweenLite} from 'gsap'
 
   const searchWidthB = 250; //搜索框默认width

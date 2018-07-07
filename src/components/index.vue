@@ -25,7 +25,7 @@
 
 <script>
 
-  import NoteListItem from "./note/templ/noteList"
+  import NoteListItem from "comp/note/templ/noteList"
 
   export default {
     name: "index",

@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-  import NoteListItem from "./templ/noteList"
+  import NoteListItem from "comp/note/templ/noteList"
 
   export default {
     name: "noteList",
