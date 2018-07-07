@@ -80,8 +80,8 @@
 </template>
 
 <script>
-  import 'gsap/TweenLite.js'
   import SignTempl from "./user/templ/signTempl"
+  import {TweenLite} from 'gsap'
 
   const searchWidthB = 250; //搜索框默认width
   const searchWidthF = 350; //搜索框focus width
