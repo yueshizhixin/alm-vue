@@ -36,14 +36,11 @@
             </el-menu>
           </el-col>
 
-          <!---->
           <el-col :md="10" class="search" :style="{left:searchLeft+'px !important',width:serachWidth+'px'}">
             <el-input placeholder="搜索" @focus="searchFocus" @blur="searchBlur">
               <el-button slot="append" icon="el-icon-search" style="font-size: 20px;"></el-button>
-              <!--<el-button slot="append" icon="iconfont icon-search"></el-button>-->
             </el-input>
           </el-col>
-
         </el-row>
       </el-col>
 
@@ -69,16 +66,16 @@
           <!--</el-dropdown-menu>-->
           <!--</el-dropdown>-->
           <!--</el-col>-->
-          <el-col :md="12">
-            <el-button class="button" icon="el-icon-plus" @click="signUpDigV=true"> 注册</el-button>
+          <el-col :md="{span:8,offset:0}">
+            <el-button class="button" icon="el-icon-plus" @click="signDigV=true;signType='up'"> 注册</el-button>
           </el-col>
-          <el-col :md="12">
-            <el-button class="button" icon="el-icon-arrow-right" @click="signInDigV=true"> 登录</el-button>
+          <el-col :md="8">
+            <el-button class="button" icon="el-icon-arrow-right" @click="signDigV=true;signType='in'"> 登录</el-button>
           </el-col>
         </el-row>
       </el-col>
     </el-row>
-    <sign-templ :visi="signUpDigV" @signUpEve="signUpEve"></sign-templ>
+    <sign-templ :visi="signDigV" :sign="signType" @signGotoUp="signGotoUp" @signGotoIn="signGotoIn" @signEve="signEve"></sign-templ>
   </div>
 </template>
 
@@ -96,36 +93,38 @@
       return {
         serachWidth: searchWidthB,//搜索框长度
 
-        signUpDigV: false,//显示注册
-        signInDigV: false,//显示登录
+        signDigV: false,//显示注册登录
+        signType:'',//注册还是登录
+
         menuActiveIndex: '0',//菜单默认选择索引
       }
     },
     computed: {
       //搜索框左边距
       searchLeft() {
-        let w = document.body.clientWidth
+        let w = document.body.clientWidth;
         return w * 4 / 24 + w * 16 / 24 * (10 / 24)
       },
     },
     methods: {
       //注册模板事件
-      signUpEve(data) {
-        console.log(data)
-        this.signUpDigV = false
+      signEve(data) {
+        this.signType=data.signType
+        this.signDigV = false
       },
-      //登录模板事件
-      signInEve(data) {
-        console.log(data)
-        this.signInDigV = false
+      signGotoUp(){
+        this.signType='up'
+      },
+      signGotoIn(){
+        this.signType='in'
       },
       //路由控制
       menuHandler(key, keyPath) {
-        if (key === '100') this.$router.push({path: '/'})
-        else if (key === '200') this.$router.push({path: '/thought'})
-        else if (key === '300') this.$router.push({path: '/note'})
-        else if (key === '400-100') this.$router.push({path: '/func/crawler'})
-        else if (key === '400-200') this.$router.push({path: '/func/low-poly'})
+        if (key === '100') this.$router.push({path: '/'});
+        else if (key === '200') this.$router.push({path: '/thought'});
+        else if (key === '300') this.$router.push({path: '/note'});
+        else if (key === '400-100') this.$router.push({path: '/func/crawler'});
+        else if (key === '400-200') this.$router.push({path: '/func/low-poly'});
         else if (key === '400-300') this.$router.push({path: '/func/pdf'})
       },
       //搜索框

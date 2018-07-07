@@ -144,7 +144,10 @@
 <script>
   export default {
     //笔记item,所有笔记,是否查看自己的笔记
-    props: ['notes', 'self'],
+    props: {
+      notes:Array,
+      self:Boolean,
+    },
     name: "noteListItem",
     data() {
       return {

@@ -27,7 +27,6 @@
 /*
   图片
  */
-
 /*圆角*/
 .img-circle {
   border-radius: 50%;
@@ -99,4 +98,18 @@
 .note-signature {
   color: #606266;
   font-size: 16px;
+}
+
+
+/**
+  dialog统一样式
+ */
+.dia-comm,.sign-dia-comm{
+  max-width: 660px;
+  min-width: 660px;
+}
+
+.sign-dia-comm{
+  /*background:url("http://cdn.yueshizhixin.top/231751-106.jpg");*/
+
 }

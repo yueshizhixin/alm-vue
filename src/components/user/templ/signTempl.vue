@@ -1,61 +1,70 @@
 <template>
   <div>
-    <transition name="el-zoom-in-top">
-      <div v-show="aniShow" class="transition-box">
-        <el-dialog title="" :visible.sync="visi" width="30%" center
-                   :close-on-click-modal="false"
-                   :modal-append-to-body="false"
-                   :before-close="close"
-        >
-          <el-form :model="user" :rules="rules" ref="signForm" status-icon>
-            <el-form-item prop="acc">
-              <el-input placeholder="请输入6-16数字或字母组合" v-model="user.acc">
-                <span slot="prepend">账 号</span>
-              </el-input>
-            </el-form-item>
-            <el-form-item prop="pwd">
-              <el-input type="password" placeholder="请输入6-16数字或字母组合" v-model="user.pwd">
-                <span slot="prepend">密 码</span>
-              </el-input>
-            </el-form-item>
-            <el-form-item prop="pwd2">
-              <el-input type="password" placeholder="请再次输入密码" v-model="user.pwd2">
-                <span slot="prepend">密 码</span>
-              </el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-input placeholder="请填写图形验证码">
-                <span slot="prepend">验 证</span>
-              </el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-row>
-                <el-col :sm="10">
-                  <el-button class="regBtn" type="info" @click="close" >
-                    <i class="iconfont icon-more"></i>
-                    登&nbsp;录
-                  </el-button>
-                </el-col>
-                <el-col :sm="{span:10,offset:4}">
-                  <el-button class="regBtn" type="success" @click="sub('signForm')">
-                    <i class="iconfont icon-add"></i>
-                    注&nbsp;册
-                  </el-button>
-                </el-col>
-              </el-row>
-            </el-form-item>
-          </el-form>
-        </el-dialog>
-      </div>
-    </transition>
+
+    <el-dialog title="" :visible.sync="visi" center custom-class="sign-dia-comm"
+               :close-on-click-modal="false"
+               :modal-append-to-body="false"
+               :before-close="close"
+
+    >
+      <el-form :model="user" :rules="rules" :ref="formName" status-icon style="max-width: 300px;min-width: 300px;margin: 0 auto;text-align: center">
+        <el-form-item prop="acc">
+          <el-input placeholder="请输入6-16数字或字母组合" v-model="user.acc" auto-complete="off">
+            <span slot="prepend">账 号</span>
+          </el-input>
+        </el-form-item>
+        <el-form-item prop="pwd">
+          <el-input type="password" placeholder="请输入6-16数字或字母组合" v-model="user.pwd" auto-complete="off">
+            <span slot="prepend">密 码</span>
+          </el-input>
+        </el-form-item>
+
+        <div v-if="sign==='up'">
+          <el-form-item prop="pwd2">
+            <el-input type="password" placeholder="请再次输入密码" v-model="user.pwd2" auto-complete="off">
+              <span slot="prepend">密 码</span>
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-input placeholder="请填写图形验证码" auto-complete="off">
+              <span slot="prepend">验 证</span>
+            </el-input>
+          </el-form-item>
+        </div>
+
+        <el-form-item>
+          <el-row>
+            <el-col :sm="10">
+
+              <el-button class="regBtn" type="primary" @click="signUp('signForm')">
+                <i class="iconfont icon-add"></i>
+                注&nbsp;册
+              </el-button>
+
+            </el-col>
+            <el-col :sm="{span:10,offset:4}">
+              <el-button class="regBtn" type="success" @click="signIn('signForm')">
+                <i class="iconfont icon-more"></i>
+                登&nbsp;录
+              </el-button>
+            </el-col>
+          </el-row>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
 <script>
   import gol from "./../../GLOBAL"
+  // import {cvs_pv_draw} from "../../../../static/js/cvs_point_line";
+
   export default {
     name: "signTempl",
-    props: ['visi'],
+    props: {
+      visi: Boolean,
+      sign: String,
+    },
     data() {
       let valiAcc = (r, v, callback) => {
         if (v === '') {
@@ -89,12 +98,13 @@
         }
       };
       return {
-        aniShow: false,//加载动画
+        formName:'signForm',//模板名称
         user: {
           acc: '',
           pwd: '',
           pwd2: '',
-          vali: '',
+          vali: '',//验证码
+          signType:'',//操作标志
         },
         rules: {
           acc: [
@@ -110,30 +120,58 @@
       };
     },
     methods: {
-      sub(form) {
-        this.$refs[form].validate(vali => {
-          if (vali) {
-            this.$refs[form].resetFields();
-            this.$emit('signUpEve', 'signUpData')
-          }
-          else {
-            return false;
-          }
-        })
+
+      signUp(form) {
+        if (this.sign === 'in') {
+          this.$emit('signGotoUp')
+          this.$refs[form].resetFields();
+        }
+        else {
+          this.$refs[form].validate(vali => {
+            if (vali) {
+              this.user.signType='up'
+              this.$emit('signEve', this.user)
+              // this.$refs[form].resetFields();
+            }
+            else {
+              return false;
+            }
+          })
+        }
+      },
+      signIn(form) {
+        if (this.sign === 'up') {
+          this.$emit('signGotoIn')
+          this.$refs[form].resetFields();
+        }
+        else {
+          this.$refs[form].validate(vali => {
+            if (vali) {
+              this.user.signType='in'
+              this.$emit('signEve', this.user)
+              // this.$refs[form].resetFields();
+            }
+            else {
+              return false;
+            }
+          })
+        }
       },
       close() {
-        this.$refs['signForm'].resetFields();
-        this.$emit('signUpEve', 'close')
-      }
+        this.user.signType=''
+        this.$emit('signEve', this.user)
+        this.$refs[this.formName].resetFields();
+      },
     },
     mounted() {
-      this.aniShow = true
     },
+    updated(){
+    }
   }
 </script>
 
 <style scoped>
-  .regBtn,i {
+  .regBtn, i {
     width: 100%;
     font-weight: 600;
     font-size: 17px;
