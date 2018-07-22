@@ -128,6 +128,8 @@
         else {
           this.$refs[form].validate(vali => {
             if (vali) {
+              console.log('signUp vali ok')
+
               this.user.signType='up'
               this.$emit('signEve', this.user)
               // this.$refs[form].resetFields();

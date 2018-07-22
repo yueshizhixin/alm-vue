@@ -109,6 +109,7 @@
     methods: {
       //注册模板事件
       signEve(data) {
+        console.log('header signeve')
         this.signType=data.signType
         this.signDigV = false
       },
