@@ -129,7 +129,13 @@
           this.$refs[form].validate(vali => {
             if (vali) {
               console.log('signUp vali ok')
-
+              axios.get('http://127.0.0.1/api/user')
+                .then(function (response) {
+                  console.log(response);
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
               this.user.signType='up'
               this.$emit('signEve', this.user)
               // this.$refs[form].resetFields();
