@@ -7,7 +7,8 @@
                :before-close="close"
 
     >
-      <el-form :model="user" :rules="rules" :ref="formName" status-icon style="max-width: 300px;min-width: 300px;margin: 0 auto;text-align: center">
+      <el-form :model="user" :rules="rules" :ref="formName" status-icon
+               style="max-width: 300px;min-width: 300px;margin: 0 auto;text-align: center">
         <el-form-item prop="acc">
           <el-input placeholder="请输入6-16数字或字母组合" v-model="user.acc" auto-complete="off">
             <span slot="prepend">账 号</span>
@@ -97,13 +98,15 @@
         }
       };
       return {
-        formName:'signForm',//模板名称
+        formName: 'signForm',//模板名称
         user: {
           acc: '',
           pwd: '',
+          signType: 'a',
           pwd2: '',
           vali: '',//验证码
-          signType:'',//操作标志
+          opType: '',//操作标志
+
         },
         rules: {
           acc: [
@@ -128,16 +131,21 @@
         else {
           this.$refs[form].validate(vali => {
             if (vali) {
-              console.log('signUp vali ok')
-              axios.get('http://127.0.0.1/api/user')
-                .then(function (response) {
-                  console.log(response);
+              this.$axios.post('http://127.0.0.1:8080/api/user', this.user)
+              // this.$axios.get('http://127.0.0.1:8080/api/user')
+                .then((res) => {
+                  if (res.status === 200) {
+                    console.log(res.data);
+                    this.sendMsgToParent('up')
+                  } else {
+                    alert(res.status)
+                  }
                 })
-                .catch(function (error) {
-                  console.log(error);
+                .catch((err) => {
+                  console.log(err);
+                  alert('操作失败')
                 });
-              this.user.signType='up'
-              this.$emit('signEve', this.user)
+
               // this.$refs[form].resetFields();
             }
             else {
@@ -154,8 +162,7 @@
         else {
           this.$refs[form].validate(vali => {
             if (vali) {
-              this.user.signType='in'
-              this.$emit('signEve', this.user)
+              this.sendMsgToParent('in')
               // this.$refs[form].resetFields();
             }
             else {
@@ -165,14 +172,19 @@
         }
       },
       close() {
-        this.user.signType=''
-        this.$emit('signEve', this.user)
+        this.sendMsgToParent('')
         this.$refs[this.formName].resetFields();
       },
+
+      sendMsgToParent(type) {
+        this.user.opType = type
+        this.$emit('signEve', this.user)
+      }
+
     },
     mounted() {
     },
-    updated(){
+    updated() {
     }
   }
 </script>

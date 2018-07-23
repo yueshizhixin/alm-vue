@@ -67,15 +67,15 @@
           <!--</el-dropdown>-->
           <!--</el-col>-->
           <el-col :md="{span:8,offset:0}">
-            <el-button class="button" icon="el-icon-plus" @click="signDigV=true;signType='up'"> 注册</el-button>
+            <el-button class="button" icon="el-icon-plus" @click="signDigV=true;opType='up'"> 注册</el-button>
           </el-col>
           <el-col :md="8">
-            <el-button class="button" icon="el-icon-arrow-right" @click="signDigV=true;signType='in'"> 登录</el-button>
+            <el-button class="button" icon="el-icon-arrow-right" @click="signDigV=true;opType='in'"> 登录</el-button>
           </el-col>
         </el-row>
       </el-col>
     </el-row>
-    <sign-templ :visi="signDigV" :sign="signType" @signGotoUp="signGotoUp" @signGotoIn="signGotoIn" @signEve="signEve"></sign-templ>
+    <sign-templ :visi="signDigV" :sign="opType" @signGotoUp="signGotoUp" @signGotoIn="signGotoIn" @signEve="signEve"></sign-templ>
   </div>
 </template>
 
@@ -94,7 +94,7 @@
         serachWidth: searchWidthB,//搜索框长度
 
         signDigV: false,//显示注册登录
-        signType:'',//注册还是登录
+        opType:'',//注册还是登录
 
         menuActiveIndex: '0',//菜单默认选择索引
       }
@@ -110,14 +110,15 @@
       //注册模板事件
       signEve(data) {
         console.log('header signeve')
-        this.signType=data.signType
+        console.log(data)
+        this.opType=data.opType
         this.signDigV = false
       },
       signGotoUp(){
-        this.signType='up'
+        this.opType='up'
       },
       signGotoIn(){
-        this.signType='in'
+        this.opType='in'
       },
       //路由控制
       menuHandler(key, keyPath) {
