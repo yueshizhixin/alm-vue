@@ -102,7 +102,7 @@
         user: {
           acc: '',
           pwd: '',
-          signType: 'a',
+          signType: 1,
           pwd2: '',
           vali: '',//验证码
           opType: '',//操作标志
@@ -132,7 +132,6 @@
           this.$refs[form].validate(vali => {
             if (vali) {
               this.$axios.post('http://127.0.0.1:8080/api/user', this.user)
-              // this.$axios.get('http://127.0.0.1:8080/api/user')
                 .then((res) => {
                   if (res.status === 200) {
                     console.log(res.data);
@@ -162,7 +161,19 @@
         else {
           this.$refs[form].validate(vali => {
             if (vali) {
-              this.sendMsgToParent('in')
+              this.$axios.post('http://127.0.0.1:8080/api/user/signIn', this.user)
+                .then((res) => {
+                  if (res.status === 200) {
+                    console.log(res.data);
+                    this.sendMsgToParent('in')
+                  } else {
+                    alert(res.status)
+                  }
+                })
+                .catch((err) => {
+                  console.log(err);
+                  alert('操作失败')
+                });
               // this.$refs[form].resetFields();
             }
             else {

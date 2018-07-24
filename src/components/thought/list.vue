@@ -22,9 +22,14 @@
                   理发师问题
                 </el-tab-pane>
                 <el-tab-pane>
+                  <span slot="label">约瑟夫问题</span>
+                  约瑟夫问题
+                </el-tab-pane>
+                <el-tab-pane>
                   <span slot="label">中国邮递员问题</span>
                   中国邮递员问题
                 </el-tab-pane>
+
               </el-tabs>
             </transition>
           </el-tab-pane>
