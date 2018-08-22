@@ -25,6 +25,7 @@
                   <span slot="label">约瑟夫问题</span>
                   约瑟夫问题
                 </el-tab-pane>
+
                 <el-tab-pane>
                   <span slot="label">中国邮递员问题</span>
                   中国邮递员问题
@@ -41,6 +42,10 @@
                 <el-tab-pane>
                   <span slot="label">二叉堆</span>
                   二叉堆
+                </el-tab-pane>
+                <el-tab-pane>
+                  <span slot="label">跳表</span>
+                  跳表
                 </el-tab-pane>
 
               </el-tabs>
