@@ -3,6 +3,6 @@
 >[简体中文](README.md)
 
 - single page web
-- VUE + ElementUI + RESTful-API by Golang
+- VUE + ElementUI + RESTful-API
 - MVVM Frame
 

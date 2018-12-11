@@ -24,8 +24,6 @@
                 <el-menu-item index="400-200" class="menuItemSub"><i class="menuItemSub iconfont icon-listblock">&nbsp;&nbsp;</i>LOW
                   POLY
                 </el-menu-item>
-                <el-menu-item index="400-300" class="menuItemSub"><i class="menuItemSub iconfont icon-similarproduct">&nbsp;&nbsp;</i>PDF格式转换
-                </el-menu-item>
               </el-submenu>
               <el-submenu index="500">
                 <template slot="title">资源</template>
@@ -126,7 +124,6 @@
         else if (key === '200') this.$router.push({path: '/thought'});
         else if (key === '300') this.$router.push({path: '/note'});
         else if (key === '400-100') this.$router.push({path: '/func/crawler'});
-        else if (key === '400-200') this.$router.push({path: '/func/low-poly'});
         else if (key === '400-300') this.$router.push({path: '/func/pdf'})
       },
       //搜索框

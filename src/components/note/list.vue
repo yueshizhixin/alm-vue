@@ -4,7 +4,7 @@
       <div v-show="aniShow" class="transition-box">
         <el-row style="z-index: 10">
           <el-col :md="20">
-            <note-list-item :notes="notes" :self="self"></note-list-item>
+            <note-profile-templ v-for="item of notes" :note="item" :self="self"></note-profile-templ>
           </el-col>
           <el-col :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
             <div>
@@ -26,11 +26,11 @@
   </div>
 </template>
 <script>
-  import NoteListItem from "comp/note/templ/noteList"
+  import noteProfileTempl from "comp/note/templ/profile"
 
   export default {
     name: "noteList",
-    components: {NoteListItem},
+    components: {noteProfileTempl},
     data() {
       return {
 

@@ -7,9 +7,6 @@
       <el-main class="vueMain divbg1">
         <router-view></router-view>
       </el-main>
-      <!--<el-footer class="vueFooter">-->
-        <!--<vue-footer></vue-footer>-->
-      <!--</el-footer>-->
     </el-container>
   </div>
 </template>

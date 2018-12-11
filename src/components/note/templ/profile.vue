@@ -1,19 +1,19 @@
 <template>
   <div>
-    <el-row v-for="item of notes" :key="item.id">
-      <el-col :md="2">&nbsp;</el-col>
-      <el-col :md="2">
-        <div class="img-headNote" @mouseenter="imgMouseE(item.id)" @mouseleave="imgMouseL(item.id)">
-          <img :src="item.authorImg">
+    <el-row :key="note.id">
+      <!--<el-col :md="2">&nbsp;</el-col>-->
+      <el-col :md="2" v-if="!self">
+        <div class="img-headNote" @mouseenter="imgMouseE()" @mouseleave="imgMouseL()">
+          <img :src="note.authorImg">
           <el-collapse-transition>
-            <el-card v-show="item.authorMsgShow" class="img-headCard" :body-style="{ padding: '8px 6px' }">
+            <el-card v-if="note.authorMsgShow" class="img-headCard" :body-style="{ padding: '8px 6px' }">
               <el-row>
-                <img :src="item.authorImg2" style="height: 100px;" class="image">
+                <img :src="note.authorImg2" style="height: 100px;" class="image">
               </el-row>
               <el-row style="padding: 8px;">
-                <span class="note-author" style="font-weight: 500">{{item.author}}</span>
+                <span class="note-author" style="font-weight: 500">{{note.author}}</span>
                 <br>
-                <span class="note-signature" style="font-size: 14px">{{item.description}}</span>
+                <span class="note-signature" style="font-size: 14px">{{note.description}}</span>
               </el-row>
               <el-row class="bottom clearfix" style="padding:2px 8px;margin-top: 0">
                 <el-col :md="12">
@@ -27,22 +27,22 @@
           </el-collapse-transition>
         </div>
       </el-col>
-      <el-col :md="18" class="note-body">
+      <el-col :md="20" class="note-body">
         <el-card>
           <el-row>
-            <el-col :md="12" v-show="!self">
+            <el-col :md="12" v-if="!self">
                     <span style="color: #909399;font-size: 16px;">
-                      {{item.from}}
+                      {{note.from}}
                     </span>
               <br>
-              <span class="note-author">{{item.author}}</span>
+              <span class="note-author">{{note.author}}</span>
               <span class="note-signature">
-                        {{item.description}}
+                        {{note.description}}
                     </span>
 
             </el-col>
             <el-col :md="12" align="right" v-if="!self">
-              <el-tag v-for="(p,i) of item.tags" :key="i" style="margin-left: 7px;"
+              <el-tag v-for="(p,i) of note.tags" :key="i" style="margin-left: 7px;"
                       :type="tagType[Math.floor((Math.random()*5))]">
                 {{p.tag}}
               </el-tag>
@@ -53,21 +53,21 @@
           <el-row style="margin-top: 9px" v-if="!self">
             <el-col :md="18">
                     <span class="note-tile">
-                      {{item.title}}
+                      {{note.title}}
                     </span>
             </el-col>
             <el-col :md="6" align="right">
-              <span class="note-time" v-show="!self">{{item.time}}</span>
+              <span class="note-time" v-if="!self">{{note.time}}</span>
             </el-col>
           </el-row>
           <el-row style="margin-top: 6px" v-else>
             <el-col :md="12">
                     <span class="note-tile">
-                      {{item.title}}
+                      {{note.title}}
                     </span>
             </el-col>
             <el-col :md="12" align="right">
-              <el-tag v-for="(p,i) of item.tags" :key="i" style="margin-left: 7px;"
+              <el-tag v-for="(p,i) of note.tags" :key="i" style="margin-left: 7px;"
                       :type="tagType[Math.floor((Math.random()*5))]">
 
                 {{p.tag}}
@@ -77,52 +77,52 @@
           <el-row :style="{'margin-top': selfMarTop+'px'}">
             <el-col :md="24">
                     <span style="color: #303133;font-size: 16px;">
-                        {{item.logotxt}}
+                        {{note.logotxt}}
                     </span>
             </el-col>
           </el-row>
           <el-row style="margin-top: 9px">
             <el-col :md="4" :sm="4">
-              <div v-if="item.isAgree && !self">
-                <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-less">&nbsp;&nbsp;{{item.agreeCount}}</el-button>
+              <div v-if="note.isAgree && !self">
+                <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-less">&nbsp;&nbsp;{{note.agreeCount}}</el-button>
                 <div>
 
                 </div>
               </div>
               <div v-else>
-                <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{item.agreeCount}}</el-button>
+                <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{note.agreeCount}}</el-button>
               </div>
 
             </el-col>
             <el-col :md="4" :sm="4">
-              <div v-if="item.isComm && !self">
-                <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-iccomm">&nbsp;&nbsp;{{item.commCount}}</el-button>
+              <div v-if="note.isComm && !self">
+                <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-iccomm">&nbsp;&nbsp;{{note.commCount}}</el-button>
               </div>
               <div v-else>
-                <el-button class="bn-note-op" icon="iconfont icon-iccomm">&nbsp;&nbsp;{{item.commCount}}
+                <el-button class="bn-note-op" icon="iconfont icon-iccomm">&nbsp;&nbsp;{{note.commCount}}
                 </el-button>
               </div>
             </el-col>
             <el-col :md="4" :sm="4">
 
-              <div v-if="item.isShare && !self">
+              <div v-if="note.isShare && !self">
                 <el-button class="bn-note-op" type="primary" plain
                            icon="iconfont icon-kuailianshishujujiegou">
-                  &nbsp;&nbsp;{{item.shareCount}}
+                  &nbsp;&nbsp;{{note.shareCount}}
                 </el-button>
               </div>
               <div v-else>
-                <el-button class="bn-note-op" icon="iconfont icon-kuailianshishujujiegou">&nbsp;&nbsp;{{item.shareCount}}
+                <el-button class="bn-note-op" icon="iconfont icon-kuailianshishujujiegou">&nbsp;&nbsp;{{note.shareCount}}
                 </el-button>
               </div>
             </el-col>
             <el-col :md="4" :sm="4">
 
-              <div v-if="item.isCollect && !self">
-                <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-favorite">&nbsp;&nbsp;{{item.collectCount}}</el-button>
+              <div v-if="note.isCollect && !self">
+                <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-favorite">&nbsp;&nbsp;{{note.collectCount}}</el-button>
               </div>
               <div v-else>
-                <el-button class="bn-note-op" icon="iconfont icon-favorite">&nbsp;&nbsp;{{item.collectCount}}
+                <el-button class="bn-note-op" icon="iconfont icon-favorite">&nbsp;&nbsp;{{note.collectCount}}
                 </el-button>
               </div>
             </el-col>
@@ -131,7 +131,7 @@
               <el-button  class="bn-note-op" icon="iconfont icon-close">&nbsp;不看</el-button>
             </el-col>
             <el-col :md="4" :sm="4" v-else style="margin-top: 8px;">
-              <span class="note-time" >{{item.time}}</span>
+              <span class="note-time" >{{note.time}}</span>
             </el-col>
           </el-row>
         </el-card>
@@ -145,10 +145,10 @@
   export default {
     //笔记item,所有笔记,是否查看自己的笔记
     props: {
-      notes:Array,
+      note:Object,
       self:Boolean,
     },
-    name: "noteListItem",
+    name: "profile",
     data() {
       return {
         tagType: ['success', 'danger', 'info', '', 'warning'],
@@ -162,13 +162,12 @@
     },
     methods: {
       imgMouseE(id) {
-        if (self) return;
-        let note = this.notes.find(note => note.id === id)
-        note.authorMsgShow = true
+        if (this.self) return;
+        this.note.authorMsgShow = true
       },
       imgMouseL(id) {
-        if (self) return;
-        this.notes.find(note => note.id === id).authorMsgShow = false
+        if (this.self) return;
+        this.note.authorMsgShow = false
       },
     },
   }
