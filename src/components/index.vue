@@ -4,7 +4,7 @@
       <div v-show="aniShow" class="transition-box">
         <el-row style="z-index: 10">
           <el-col :md="20">
-            <note-profile-templ v-for="item of notes" :note="item" :self="self"></note-profile-templ>
+            <note-profile-templ v-for="item of notes" :item="item" :self="self"></note-profile-templ>
           </el-col>
           <el-col :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
             <div>

@@ -121,8 +121,8 @@
       //路由控制
       menuHandler(key, keyPath) {
         if (key === '100') this.$router.push({path: '/'});
-        else if (key === '200') this.$router.push({path: '/thought'});
-        else if (key === '300') this.$router.push({path: '/note'});
+        else if (key === '200') this.$router.push({path: '/thoughts'});
+        else if (key === '300') this.$router.push({path: '/notes'});
         else if (key === '400-100') this.$router.push({path: '/func/crawler'});
         else if (key === '400-300') this.$router.push({path: '/func/pdf'})
       },

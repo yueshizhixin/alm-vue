@@ -9,6 +9,7 @@ import thoughtList from '../components/thought/list'
 
 //笔记
 import noteList from '../components/note/list'
+import noteView from '../components/note/view'
 
 //功能
 import funcIndex from '../components/func/index'
@@ -29,13 +30,17 @@ export default new Router({
     },
     //思想
     {
-      path: '/thought',
+      path: '/thoughts',
       component: thoughtList,
     },
     //笔记
     {
-      path: '/note',
+      path: '/notes',
       component: noteList,
+    },
+    {
+      path: '/note/:id',
+      component: noteView,
     },
     //功能
     {
