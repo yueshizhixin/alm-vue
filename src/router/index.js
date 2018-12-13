@@ -10,6 +10,7 @@ import thoughtList from '../components/thought/list'
 //笔记
 import noteList from '../components/note/list'
 import noteView from '../components/note/view'
+import noteSave from '../components/note/save'
 
 //功能
 import funcIndex from '../components/func/index'
@@ -41,6 +42,10 @@ export default new Router({
     {
       path: '/note/:id',
       component: noteView,
+    },
+    {
+      path: '/note1/save1',
+      component:noteSave,
     },
     //功能
     {

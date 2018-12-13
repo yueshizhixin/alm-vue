@@ -8,7 +8,7 @@
           </el-col>
           <el-col :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
             <div>
-              <el-button icon="iconfont icon-add" >&nbsp;&nbsp;新建笔记</el-button>
+              <el-button icon="iconfont icon-add" @click="$router.push({path: '/note1/save1'})" >&nbsp;&nbsp;新建笔记</el-button>
               <el-button icon="iconfont icon-attachment" >&nbsp;&nbsp;我的收藏</el-button>
               <el-button icon="iconfont icon-favorite">&nbsp;&nbsp;我的关注</el-button>
             </div>
