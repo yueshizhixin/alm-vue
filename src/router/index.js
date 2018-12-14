@@ -8,14 +8,17 @@ import index from '../components/index'
 import thoughtList from '../components/thought/list'
 
 //笔记
-import noteList from '../components/note/list'
-import noteView from '../components/note/view'
-import noteSave from '../components/note/save'
+import note_list from '../components/note/list'
+import note_view from '../components/note/view'
+import note_save from '../components/note/save'
 
 //功能
-import funcIndex from '../components/func/index'
+import funcIndex from '../components/func/view'
 import funcCrawler from '../components/func/crawler/crawler'
 import funcLowPoly from '../components/func/low-poly/low_poly'
+
+import asset_view from '../components/asset/view'
+import asset_img from '../components/asset/img/view'
 
 Vue.use(Router);
 
@@ -37,15 +40,15 @@ export default new Router({
     //笔记
     {
       path: '/notes',
-      component: noteList,
+      component: note_list,
     },
     {
       path: '/note/:id',
-      component: noteView,
+      component: note_view,
     },
     {
       path: '/note1/save1',
-      component:noteSave,
+      component:note_save,
     },
     //功能
     {
@@ -59,6 +62,17 @@ export default new Router({
         //LOW POLY
         path: 'low-poly',
         component: funcLowPoly,
+      },
+      ],
+    },
+    //资源
+    {
+      path: '/asset',
+      component: asset_view,
+      children: [{
+        //爬虫
+        path: 'bg',
+        component: asset_img,
       },
       ],
     },

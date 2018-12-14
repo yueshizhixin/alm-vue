@@ -11,16 +11,16 @@
                      class="menu" active-text-color="#409eff" text-color="#666666" background-color="#ffffff">
               <el-menu-item index="100" class="menuItem">首页
               </el-menu-item>
-              <el-menu-item index="200" class="menuItem">思想
-              </el-menu-item>
+              <!--<el-menu-item index="200" class="menuItem">思想-->
+              <!--</el-menu-item>-->
               <el-menu-item index="300" class="menuItem">笔记
               </el-menu-item>
 
               <el-submenu index="400">
                 <template slot="title">功能</template>
-                <el-menu-item index="400-100" class="menuItemSub"><i
-                  class="menuItemSub iconfont icon-crawler">&nbsp;&nbsp;</i>爬虫
-                </el-menu-item>
+                <!--<el-menu-item index="400-100" class="menuItemSub"><i-->
+                  <!--class="menuItemSub iconfont icon-crawler">&nbsp;&nbsp;</i>爬虫-->
+                <!--</el-menu-item>-->
                 <el-menu-item index="400-200" class="menuItemSub"><i class="menuItemSub iconfont icon-listblock">&nbsp;&nbsp;</i>LOW
                   POLY
                 </el-menu-item>
@@ -124,7 +124,8 @@
         else if (key === '200') this.$router.push({path: '/thoughts'});
         else if (key === '300') this.$router.push({path: '/notes'});
         else if (key === '400-100') this.$router.push({path: '/func/crawler'});
-        else if (key === '400-300') this.$router.push({path: '/func/pdf'})
+        else if (key === '400-200') this.$router.push({path: '/func/low-poly'});
+        else if (key === '500-100') this.$router.push({path: '/asset/bg'})
       },
       //搜索框
       searchFocus() {

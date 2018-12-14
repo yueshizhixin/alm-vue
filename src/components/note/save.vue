@@ -9,7 +9,24 @@
     name: "save",
     data() {
       return {
-        value: 'asdfasdfasdf'
+        value: '- 非IE浏览器\n' +
+          '接口返回的数据格式为\n' +
+          '```\n' +
+          '<xml ...>\n' +
+          '  <string ...>\n' +
+          '    [{data},{data},{data}]\n' +
+          '  </string>\n' +
+          '</xml>\n' +
+          '```\n' +
+          '```\n' +
+          '//DOM解析器\n' +
+          'var parser = new DOMParser();\n' +
+          '//读取返回字符串\n' +
+          'var _xml = parser.parseFromString(data, "text/xml");\n' +
+          '//获取节点内容\n' +
+          'var jsonXml = _xml.getElementsByTagName("string")[0].innerHTML;\n' +
+          '//获得json数组\n' +
+          'var jsonArr = JSON.parse(jsonXml);'
       }
     },
     methods:{
