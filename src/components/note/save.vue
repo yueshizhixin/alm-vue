@@ -1,6 +1,13 @@
 <template>
   <div>
-    <mavon-editor @save="save" v-model="value"/>
+    <el-row>
+
+    </el-row>
+    <el-input placeholder="请输入..." v-model="title" style="width: 50vw;">
+      <template slot="prepend">标题</template>
+    </el-input>
+
+    <mavon-editor :placeholder="placeholder" @save="save" v-model="value"/>
   </div>
 </template>
 
@@ -9,6 +16,8 @@
     name: "save",
     data() {
       return {
+        title:'',
+        placeholder:'请输入...',
         value: '- 非IE浏览器\n' +
           '接口返回的数据格式为\n' +
           '```\n' +

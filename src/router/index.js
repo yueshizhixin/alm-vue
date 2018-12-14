@@ -47,7 +47,7 @@ export default new Router({
       component: note_view,
     },
     {
-      path: '/note1/save1',
+      path: '/note/save/:id',
       component:note_save,
     },
     //功能

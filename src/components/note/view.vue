@@ -2,15 +2,62 @@
   <div>
     <transition name="el-zoom-in-top">
       <div v-show="aniShow" class="transition-box">
+        <el-row>
+          <el-col :md="3">&nbsp;</el-col>
+          <el-col :md="18" class="note-body">
+            <el-card>
+              <el-row style="margin-top: 6px">
+                <el-col :md="12">
+                    <span class="note-tile">
+                      {{item.title}}
+                    </span>
+                </el-col>
+                <el-col :md="12" align="right">
+                  <el-tag v-for="(p,i) of item.tags" :key="i" style="margin-left: 7px;"
+                          :type="tagType[Math.floor((Math.random()*5))]">
+
+                    {{p.tag}}
+                  </el-tag>
+                </el-col>
+              </el-row>
+              <el-row style="align-items: flex-end;display: flex">
+                <el-col :md="1" style="display: flex;align-items: center;max-width: 64px;min-width: 64px;">
+                  <img style=";border-radius:50%;width: 48px" :src="item.authorImg">
+                </el-col>
+                <el-col :md="20" align="left">
+                  <el-row><span class="note-author">{{item.author}}</span></el-row>
+                  <el-row>
+                    <span style="font-size: 14px;" class="note-time">{{item.time}}</span>
+                  </el-row>
+
+                </el-col>
+                <el-col :md="3" align="right">
+                  <el-button size="small" @click="$router.push({path: '/note/save/'+id})" icon="iconfont icon-edit">
+                    &nbsp;&nbsp;编辑
+                  </el-button>
+                </el-col>
+              </el-row>
+
+            </el-card>
+
+          </el-col>
+        </el-row>
         <el-row style="z-index: 10">
-          <el-col :md="2">&nbsp;</el-col>
-          <el-col :md="20">
-            <note-profile-templ :item="item" :self="false"></note-profile-templ>
+          <el-col :md="3">&nbsp;</el-col>
+          <el-col :md="18">
+            <div>
+              <mavon-editor
+                :value="note"
+                :subfield="prop.subfield"
+                :defaultOpen="prop.defaultOpen"
+                :toolbarsFlag="prop.toolbarsFlag"
+                :editable="prop.editable"
+                :scrollStyle="prop.scrollStyle"></mavon-editor>
+            </div>
           </el-col>
         </el-row>
       </div>
     </transition>
-
 
 
   </div>
@@ -25,9 +72,49 @@
     components: {noteProfileTempl},
     data() {
       return {
-        aniShow:false,
+        aniShow: false,
+
+        tagType: ['success', 'danger', 'info', '', 'warning'],
+        defaultOpen: 'preview',
         id: 0,
-        item: {},
+        item: {
+          id: 1,
+          from: '来自关注:和泉纱雾',
+          author: '和泉纱雾',
+          authorImg: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/100/h/100',
+          authorImg2: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/250/h/120',
+          description: '学习使人落后',
+          tags: [{'tag': '动漫'}, {'tag': '日本'}, {'tag': '二次元'}, {'tag': '樱花'}, {'tag': '和泉纱雾'}],
+          title: '如何评价《秒速5厘米》这部动漫?',
+          logotxt: '秒速5厘米想要传达的是  仅仅相爱并不能打破一切阻隔  爱情并不像说起来那么简单  爱的力量在现实面前常常显得异常渺小。  不能天天在一起 不代表不想念；  天天都能见面  不代表心的距离也如身体距离那么近。萨尔电之所以死亡还在电，是因为这个技能做出来的时候，萨尔还是可以中单的一个英雄，当时的萨尔，电永远75蓝耗，中路无限消耗，初始攻击也不低，血强，电是给你打钱的，你电死一个兵，其他兵得继续给你电吧？所以就这样设计了。秒速5厘米想要传达的是  仅仅相爱并不能打破一切阻隔  爱情并不像说起来那么简单  爱的力量在现实面前常常显得异常渺小。\n  不能天天在一起 不代表不想念；  \n\r天天都能见面  不代表心的距离也如身体距离那么近。',
+          time: '今天 14:45',
+          agreeCount: '8k',
+          isAgree: true,
+          commCount: '16k',
+          isComm: false,
+          shareCount: '36',
+          isShare: true,
+          collectCount: '10k',
+          isCollect: false,
+        },
+        note: '- 非IE浏览器\n' +
+          '接口返回的数据格式为\n' +
+          '```\n' +
+          '<xml ...>\n' +
+          '  <string ...>\n' +
+          '    [{data},{data},{data}]\n' +
+          '  </string>\n' +
+          '</xml>\n' +
+          '```\n' +
+          '```\n' +
+          '//DOM解析器\n' +
+          'var parser = new DOMParser();\n' +
+          '//读取返回字符串\n' +
+          'var _xml = parser.parseFromString(data, "text/xml");\n' +
+          '//获取节点内容\n' +
+          'var jsonXml = _xml.getElementsByTagName("string")[0].innerHTML;\n' +
+          '//获得json数组\n' +
+          'var jsonArr = JSON.parse(jsonXml);',
         notes: [
           {
             id: 1,
@@ -110,6 +197,17 @@
             isCollect: false,
           },
         ],
+      }
+    },
+    computed: {
+      prop() {
+        return {
+          subfield: false,// 单双栏模式
+          defaultOpen: 'preview',//edit： 默认展示编辑区域 ， preview： 默认展示预览区域
+          editable: false,
+          toolbarsFlag: false,
+          scrollStyle: true
+        }
       }
     },
     mounted() {
