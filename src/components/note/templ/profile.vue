@@ -1,12 +1,12 @@
 <template>
   <div>
-    <el-row v-for="item of notes" :key="item.id">
-      <el-col :md="2">&nbsp;</el-col>
-      <el-col :md="2">
-        <div class="img-headNote" @mouseenter="imgMouseE(item.id)" @mouseleave="imgMouseL(item.id)">
+    <el-row :key="item.id">
+      <!--<el-col :md="2">&nbsp;</el-col>-->
+      <el-col :md="2" v-if="!self">
+        <div class="img-headNote" @mouseenter="imgMouseE()" @mouseleave="imgMouseL()">
           <img :src="item.authorImg">
           <el-collapse-transition>
-            <el-card v-show="item.authorMsgShow" class="img-headCard" :body-style="{ padding: '8px 6px' }">
+            <el-card v-if="item.authorMsgShow" class="img-headCard" :body-style="{ padding: '8px 6px' }">
               <el-row>
                 <img :src="item.authorImg2" style="height: 100px;" class="image">
               </el-row>
@@ -27,10 +27,10 @@
           </el-collapse-transition>
         </div>
       </el-col>
-      <el-col :md="18" class="note-body">
+      <el-col :md="20" class="note-body">
         <el-card>
           <el-row>
-            <el-col :md="12" v-show="!self">
+            <el-col :md="12" v-if="!self">
                     <span style="color: #909399;font-size: 16px;">
                       {{item.from}}
                     </span>
@@ -57,7 +57,7 @@
                     </span>
             </el-col>
             <el-col :md="6" align="right">
-              <span class="note-time" v-show="!self">{{item.time}}</span>
+              <span class="note-time" v-if="!self">{{item.time}}</span>
             </el-col>
           </el-row>
           <el-row style="margin-top: 6px" v-else>
@@ -76,7 +76,7 @@
           </el-row>
           <el-row :style="{'margin-top': selfMarTop+'px'}">
             <el-col :md="24">
-                    <span style="color: #303133;font-size: 16px;">
+                    <span style="color: #303133;font-size: 16px;" @click="$router.push({path: '/note/'+item.id})">
                         {{item.logotxt}}
                     </span>
             </el-col>
@@ -145,10 +145,10 @@
   export default {
     //笔记item,所有笔记,是否查看自己的笔记
     props: {
-      notes:Array,
+      item:Object,
       self:Boolean,
     },
-    name: "noteListItem",
+    name: "profile",
     data() {
       return {
         tagType: ['success', 'danger', 'info', '', 'warning'],
@@ -162,13 +162,12 @@
     },
     methods: {
       imgMouseE(id) {
-        if (self) return;
-        let note = this.notes.find(note => note.id === id)
-        note.authorMsgShow = true
+        if (this.self) return;
+        this.item.authorMsgShow = true
       },
       imgMouseL(id) {
-        if (self) return;
-        this.notes.find(note => note.id === id).authorMsgShow = false
+        if (this.self) return;
+        this.item.authorMsgShow = false
       },
     },
   }
