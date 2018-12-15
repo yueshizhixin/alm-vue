@@ -1,27 +1,30 @@
 <template>
   <div>
     <el-row>
-      <el-col :md="3" style=" overflow-y:auto;  height:calc(100vh - 100px);">
+      <el-col :md="3" style=" overflow-y:scroll;  height:calc(100vh - 100px);">
         <el-row v-for="x of 5">
           <el-col :md="24">
             <el-button class="aside-rightdivbutton">&nbsp;&nbsp;{{x}}</el-button>
           </el-col>
         </el-row>
       </el-col>
-      <el-col :md="4">
-        <el-input placeholder="请输入..." v-model="title">
-        </el-input>
+      <el-col :md="4" style=" overflow-y:scroll;  height:calc(100vh - 100px);">
+        <el-row v-for="x of 5">
+          <el-col :md="24">
+            <el-button class="aside-rightdivbutton">&nbsp;&nbsp;{{x}}</el-button>
+          </el-col>
+        </el-row>
       </el-col>
       <el-col :md="17">
         <el-row>
-          <el-col :md="6">
-            <el-input placeholder="请输入..." v-model="title">
-            </el-input>
+          <el-col :md="24">
+            <input class="title inputShadow"  v-model="title" >
+            </input>
           </el-col>
         </el-row>
         <el-row>
           <el-col :md="24">
-            <mavon-editor :placeholder="placeholder" @save="save" v-model="value"/>
+            <mavon-editor  :placeholder="placeholder" @save="save" v-model="value"/>
           </el-col>
         </el-row>
       </el-col>
@@ -34,7 +37,7 @@
     name: "save",
     data() {
       return {
-        title: '',
+        title: '神奇的天路',
         placeholder: '请输入...',
         value: '- 非IE浏览器\n' +
           '接口返回的数据格式为\n' +
@@ -55,6 +58,9 @@
           '//获得json数组\n' +
           'var jsonArr = JSON.parse(jsonXml);'
       }
+    },
+    mounted() {
+      this.title=new Date().toLocaleString()
     },
     methods: {
       save() {
@@ -88,5 +94,32 @@
     width: 100%;
     text-align: left;
     margin-left: 0;
+  }
+  div.el-input{
+    min-height: 80px;
+  }
+  .title {
+    min-height: 55px !important;
+    font-size: 22px;
+    margin-bottom: 5px;
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    line-height: 40px;
+    outline: 0;
+    padding: 0 15px;
+    -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+  }
+
+  .inputShadow{
+    box-shadow: 0 0px 4px rgba(0,0,0,0.157), 0 0px 4px rgba(0,0,0,0.227)
   }
 </style>
