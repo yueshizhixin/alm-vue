@@ -32,7 +32,7 @@
 
                 </el-col>
                 <el-col :md="3" align="right">
-                  <el-button size="small" @click="$router.push({path: '/note/save/'+id})" icon="iconfont icon-edit">
+                  <el-button size="small"   @click="$router.push({path: '/note/save/'+id})" icon="iconfont icon-edit">
                     &nbsp;&nbsp;编辑
                   </el-button>
                 </el-col>

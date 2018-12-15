@@ -1,13 +1,31 @@
 <template>
   <div>
     <el-row>
-
+      <el-col :md="3" style=" overflow-y:auto;  height:calc(100vh - 100px);">
+        <el-row v-for="x of 5">
+          <el-col :md="24">
+            <el-button class="aside-rightdivbutton">&nbsp;&nbsp;{{x}}</el-button>
+          </el-col>
+        </el-row>
+      </el-col>
+      <el-col :md="4">
+        <el-input placeholder="请输入..." v-model="title">
+        </el-input>
+      </el-col>
+      <el-col :md="17">
+        <el-row>
+          <el-col :md="6">
+            <el-input placeholder="请输入..." v-model="title">
+            </el-input>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :md="24">
+            <mavon-editor :placeholder="placeholder" @save="save" v-model="value"/>
+          </el-col>
+        </el-row>
+      </el-col>
     </el-row>
-    <el-input placeholder="请输入..." v-model="title" style="width: 50vw;">
-      <template slot="prepend">标题</template>
-    </el-input>
-
-    <mavon-editor :placeholder="placeholder" @save="save" v-model="value"/>
   </div>
 </template>
 
@@ -16,8 +34,8 @@
     name: "save",
     data() {
       return {
-        title:'',
-        placeholder:'请输入...',
+        title: '',
+        placeholder: '请输入...',
         value: '- 非IE浏览器\n' +
           '接口返回的数据格式为\n' +
           '```\n' +
@@ -38,12 +56,12 @@
           'var jsonArr = JSON.parse(jsonXml);'
       }
     },
-    methods:{
-      save(){
+    methods: {
+      save() {
         this.$message({
           message: '恭喜你，这是一条成功消息',
           type: 'success',
-          showClose:true,
+          showClose: true,
         });
         console.log(this.value)
       }
@@ -52,4 +70,23 @@
 </script>
 
 <style scoped>
+  .aside-right {
+    top: 80px;
+    position: fixed;
+  }
+
+  .aside-right div {
+    background-color: white;
+    padding: 20px 0;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
+    margin-bottom: 10px;
+  }
+
+  .aside-rightdivbutton {
+    border: 0;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: left;
+    margin-left: 0;
+  }
 </style>
