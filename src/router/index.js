@@ -39,7 +39,7 @@ export default new Router({
     },
     //笔记
     {
-      path: '/notes',
+      path: '/note',
       component: note_list,
     },
     {
