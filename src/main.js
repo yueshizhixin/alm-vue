@@ -9,13 +9,19 @@ import '../static/css/comm.css'
 import axios from 'axios'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
-
-
+import qs from 'qs';
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
-Vue.prototype.$axios=axios
+Vue.prototype.$axios = axios
 Vue.use(mavonEditor)
+
+// axios.defaults.timeout = 5000;
+axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+axios.defaults.baseURL = 'http://127.0.0.1:8080/api/v1';
+axios.defaults.transformRequest = (data => {
+  return qs.stringify(data)
+})
 
 /* eslint-disable no-new */
 new Vue({

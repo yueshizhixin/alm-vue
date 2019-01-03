@@ -2,14 +2,14 @@
   <div>
     <el-row>
       <el-col :md="3" style=" overflow-y:scroll;  height:calc(100vh - 100px);">
-        <el-row v-for="x of 5">
+        <el-row v-for="x of 35">
           <el-col :md="24">
             <el-button class="aside-rightdivbutton">&nbsp;&nbsp;{{x}}</el-button>
           </el-col>
         </el-row>
       </el-col>
       <el-col :md="4" style=" overflow-y:scroll;  height:calc(100vh - 100px);">
-        <el-row v-for="x of 5">
+        <el-row v-for="x of 15">
           <el-col :md="24">
             <el-button class="aside-rightdivbutton">&nbsp;&nbsp;{{x}}</el-button>
           </el-col>

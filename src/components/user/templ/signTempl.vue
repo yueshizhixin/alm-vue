@@ -28,7 +28,9 @@
           </el-form-item>
           <el-form-item>
             <el-input placeholder="请填写图形验证码" auto-complete="off">
-              <span slot="prepend">验 证</span>
+              <!--<span slot="append">验 证</span>-->
+              <img slot="append" style="width: 100px;height: 35px;"
+                   src="http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/100/h/100"/>
             </el-input>
           </el-form-item>
         </div>
@@ -100,10 +102,10 @@
       return {
         formName: 'signForm',//模板名称
         user: {
-          acc: '',
-          pwd: '',
+          acc: '111111',
+          pwd: '111111',
           signType: 1,
-          pwd2: '',
+          pwd2: '111111',
           vali: '',//验证码
           opType: '',//操作标志
 
@@ -131,11 +133,19 @@
         else {
           this.$refs[form].validate(vali => {
             if (vali) {
-              this.$axios.post('http://127.0.0.1:8080/api/user', this.user)
+              this.$axios.post('/user?tag=signUp', this.user)
                 .then((res) => {
+                  console.log(res)
                   if (res.status === 200) {
-                    console.log(res.data);
-                    this.sendMsgToParent('up')
+                    let data = JSON.parse(res.data)
+                    if (data.code === 200) {
+                      if (data.ok === 0) {
+                        alert(data.msg)
+                      }
+                      else {
+                        this.sendMsgToParent('up')
+                      }
+                    }
                   } else {
                     alert(res.status)
                   }
@@ -161,7 +171,7 @@
         else {
           this.$refs[form].validate(vali => {
             if (vali) {
-              this.$axios.post('http://127.0.0.1:8080/api/user/signIn', this.user)
+              this.$axios.post('user', this.user)
                 .then((res) => {
                   if (res.status === 200) {
                     console.log(res.data);
