@@ -27,10 +27,9 @@
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-input placeholder="请填写图形验证码" auto-complete="off">
+            <el-input v-model="user.vali" placeholder="请填写验证码" auto-complete="off">
               <!--<span slot="append">验 证</span>-->
-              <img slot="append" style="width: 100px;height: 35px;"
-                   src="http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/100/h/100"/>
+              <img id="imgVerify" @click="getVali()" slot="append" style="width: 100px;height: 35px;"  src=""/>
             </el-input>
           </el-form-item>
         </div>
@@ -108,8 +107,11 @@
           pwd2: '111111',
           vali: '',//验证码
           opType: '',//操作标志
-
         },
+
+        vali: '',
+        imgVerifyFlag:true,//加载一次验证码
+
         rules: {
           acc: [
             {validator: valiAcc, trigger: 'blur'},
@@ -123,8 +125,27 @@
         },
       };
     },
+    mounted() {
+      console.log('mounted')
+      // this.getVali()
+      // this.getVali()
+    },
+    updated() {
+      console.log('updated')
+      if(this.imgVerifyFlag && this.sign){
+        this.imgVerifyFlag=false
+        this.getVali()
+      }
+    },
     methods: {
 
+      //获取验证码
+      getVali() {
+        console.log('验证码')
+        document.getElementById("imgVerify").src = gol.preUrl + '/imgVerify?'+Math.random()
+      },
+
+      //注册
       signUp(form) {
         if (this.sign === 'in') {
           this.$emit('signGotoUp')
@@ -152,7 +173,6 @@
                 })
                 .catch((err) => {
                   console.log(err);
-                  alert('操作失败')
                 });
 
               // this.$refs[form].resetFields();
@@ -163,6 +183,7 @@
           })
         }
       },
+      //登录
       signIn(form) {
         if (this.sign === 'up') {
           this.$emit('signGotoIn')
@@ -192,7 +213,9 @@
           })
         }
       },
+      //关闭
       close() {
+        this.imgVerifyFlag=true
         this.sendMsgToParent('')
         this.$refs[this.formName].resetFields();
       },
@@ -203,10 +226,7 @@
       }
 
     },
-    mounted() {
-    },
-    updated() {
-    }
+
   }
 </script>
 

@@ -18,13 +18,13 @@
       <el-col :md="17">
         <el-row>
           <el-col :md="24">
-            <input class="title inputShadow"  v-model="title" >
+            <input class="title inputShadow" v-model="title">
             </input>
           </el-col>
         </el-row>
         <el-row>
           <el-col :md="24">
-            <mavon-editor  :placeholder="placeholder" @save="save" v-model="value"/>
+            <mavon-editor :placeholder="placeholder" @save="save" v-model="value"/>
           </el-col>
         </el-row>
       </el-col>
@@ -33,6 +33,9 @@
 </template>
 
 <script>
+
+  import gol from "comp/GLOBAL"
+
   export default {
     name: "save",
     data() {
@@ -60,15 +63,11 @@
       }
     },
     mounted() {
-      this.title=new Date().toLocaleString()
+      this.title = new Date().toLocaleString()
     },
     methods: {
       save() {
-        this.$message({
-          message: '恭喜你，这是一条成功消息',
-          type: 'success',
-          showClose: true,
-        });
+        gol.alert_success(this,'保存成功')
         console.log(this.value)
       }
     }
@@ -95,9 +94,11 @@
     text-align: left;
     margin-left: 0;
   }
-  div.el-input{
+
+  div.el-input {
     min-height: 80px;
   }
+
   .title {
     min-height: 55px !important;
     font-size: 22px;
@@ -114,12 +115,12 @@
     line-height: 40px;
     outline: 0;
     padding: 0 15px;
-    -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
-    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    -webkit-transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+    transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
     width: 100%;
   }
 
-  .inputShadow{
-    box-shadow: 0 0px 4px rgba(0,0,0,0.157), 0 0px 4px rgba(0,0,0,0.227)
+  .inputShadow {
+    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.157), 0 0px 4px rgba(0, 0, 0, 0.227)
   }
 </style>
