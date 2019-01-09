@@ -26,10 +26,10 @@
               <span slot="prepend">密 码</span>
             </el-input>
           </el-form-item>
-          <el-form-item>
-            <el-input v-model="user.vali" placeholder="请填写验证码" auto-complete="off">
+          <el-form-item prop="captcha">
+            <el-input v-model="user.captcha" placeholder="请填写验证码" auto-complete="off">
               <!--<span slot="append">验 证</span>-->
-              <img id="imgVerify" @click="getVali()" slot="append" style="width: 100px;height: 35px;"  src=""/>
+              <img id="imgVerify" @click="getVali()" slot="append" style="width: 100px;height: 35px;" src=""/>
             </el-input>
           </el-form-item>
         </div>
@@ -98,19 +98,26 @@
           callback();
         }
       };
+      let valiCap = (r, v, callback) => {
+        if (v.trim() === '' || v.trim().length !== 4) {
+          callback(new Error('请输入4位验证码'));
+        } else {
+          callback();
+        }
+      };
       return {
         formName: 'signForm',//模板名称
         user: {
-          acc: '111111',
-          pwd: '111111',
+          acc: '',
+          pwd: '',
           signType: 1,
-          pwd2: '111111',
-          vali: '',//验证码
+          pwd2: '',
+          captcha: '',//验证码
           opType: '',//操作标志
         },
 
-        vali: '',
-        imgVerifyFlag:true,//加载一次验证码
+        captcha: '',
+        imgVerifyFlag: true,//加载一次验证码
 
         rules: {
           acc: [
@@ -122,18 +129,17 @@
           pwd2: [
             {validator: valiPwd2, trigger: 'blur'},
           ],
+          captcha: [
+            {validator: valiCap, trigger: 'blur'},
+          ],
         },
       };
     },
     mounted() {
-      console.log('mounted')
-      // this.getVali()
-      // this.getVali()
     },
     updated() {
-      console.log('updated')
-      if(this.imgVerifyFlag && this.sign){
-        this.imgVerifyFlag=false
+      if (this.imgVerifyFlag && this.sign) {
+        this.imgVerifyFlag = false
         this.getVali()
       }
     },
@@ -142,7 +148,7 @@
       //获取验证码
       getVali() {
         console.log('验证码')
-        document.getElementById("imgVerify").src = gol.preUrl + '/imgVerify?'+Math.random()
+        document.getElementById("imgVerify").src = gol.preUrl + '/captcha/img?' + Math.random()
       },
 
       //注册
@@ -152,8 +158,15 @@
           this.$refs[form].resetFields();
         }
         else {
-          this.$refs[form].validate(vali => {
-            if (vali) {
+          this.$refs[form].validate(x => {
+            if (x) {
+              this.$axios.post('/demo/add', {})
+                .then((res) => {
+                  console.log(res)
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
               this.$axios.post('/user?tag=signUp', this.user)
                 .then((res) => {
                   console.log(res)
@@ -161,14 +174,13 @@
                     let data = JSON.parse(res.data)
                     if (data.code === 200) {
                       if (data.ok === 0) {
-                        alert(data.msg)
+                        gol.alert_info(this, data.msg)
                       }
                       else {
                         this.sendMsgToParent('up')
                       }
                     }
                   } else {
-                    alert(res.status)
                   }
                 })
                 .catch((err) => {
@@ -191,7 +203,7 @@
         }
         else {
           this.$refs[form].validate(vali => {
-            if (vali) {
+            if (captcha) {
               this.$axios.post('user', this.user)
                 .then((res) => {
                   if (res.status === 200) {
@@ -208,6 +220,7 @@
               // this.$refs[form].resetFields();
             }
             else {
+              gol.alert_error('请填写验证码')
               return false;
             }
           })
@@ -215,7 +228,7 @@
       },
       //关闭
       close() {
-        this.imgVerifyFlag=true
+        this.imgVerifyFlag = true
         this.sendMsgToParent('')
         this.$refs[this.formName].resetFields();
       },
