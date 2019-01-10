@@ -11,16 +11,11 @@
                      class="menu" active-text-color="#409eff" text-color="#666666" background-color="#ffffff">
               <el-menu-item index="100" class="menuItem">首页
               </el-menu-item>
-              <!--<el-menu-item index="200" class="menuItem">思想-->
-              <!--</el-menu-item>-->
               <el-menu-item index="300" class="menuItem">笔记
               </el-menu-item>
 
               <el-submenu index="400">
                 <template slot="title">功能</template>
-                <!--<el-menu-item index="400-100" class="menuItemSub"><i-->
-                  <!--class="menuItemSub iconfont icon-crawler">&nbsp;&nbsp;</i>爬虫-->
-                <!--</el-menu-item>-->
                 <el-menu-item index="400-200" class="menuItemSub"><i class="menuItemSub iconfont icon-listblock">&nbsp;&nbsp;</i>LOW
                   POLY
                 </el-menu-item>
@@ -44,40 +39,50 @@
 
       <el-col :md="4" align="right">
         <el-row>
-          <!--<el-col :md="{span:5,offset:4}">-->
-          <!--<el-button class="button">-->
-          <!--<el-badge :value="12" class="item badge" :max="10">-->
-          <!--<i class="iconfont icon-iccomm"></i>&nbsp;消息-->
-          <!--</el-badge>-->
-          <!--</el-button>-->
-          <!--</el-col>-->
-          <!--<el-col :md="5">-->
-          <!--<el-dropdown>-->
-          <!--<img class="el-dropdown-link img-circle img-headHeader"-->
-          <!--src="http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/100/h/100"-->
-          <!--&gt;-->
-          <!--<el-dropdown-menu slot="dropdown">-->
-          <!--<el-dropdown-item><i class="iconfont icon-account">&nbsp;</i>信息&nbsp;&nbsp;&nbsp;</el-dropdown-item>-->
-          <!--<el-dropdown-item><i class="iconfont icon-set">&nbsp;</i>设置&nbsp;&nbsp;&nbsp;</el-dropdown-item>-->
-          <!--<el-dropdown-item><i class="iconfont icon-survey">&nbsp;</i>反馈&nbsp;&nbsp;&nbsp;</el-dropdown-item>-->
-          <!--<el-dropdown-item><i class="iconfont icon-back">&nbsp;</i>退出&nbsp;&nbsp;&nbsp;</el-dropdown-item>-->
-          <!--</el-dropdown-menu>-->
-          <!--</el-dropdown>-->
-          <!--</el-col>-->
-          <el-col :md="{span:8,offset:0}">
-            <el-button class="button" icon="el-icon-plus" @click="signDigV=true;opType='up'"> 注册</el-button>
-          </el-col>
-          <el-col :md="8">
-            <el-button class="button" icon="el-icon-arrow-right" @click="signDigV=true;opType='in'"> 登录</el-button>
-          </el-col>
+          <div v-if="isSign===1">
+            <el-col :md="{span:5}">
+              <el-button class="button">
+                <el-badge :value="12" class="item badge" :max="10">
+                  <i class="iconfont icon-iccomm"></i>&nbsp;消息
+                </el-badge>
+              </el-button>
+            </el-col>
+            <el-col :md="{span:5,offset:4}">
+              <el-dropdown>
+                <img class="el-dropdown-link img-circle img-headHeader"
+                     src=""
+                >
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item><i class="iconfont icon-account">&nbsp;</i>信息&nbsp;&nbsp;&nbsp;</el-dropdown-item>
+                  <el-dropdown-item><i class="iconfont icon-set">&nbsp;</i>设置&nbsp;&nbsp;&nbsp;</el-dropdown-item>
+                  <el-dropdown-item><i class="iconfont icon-survey">&nbsp;</i>反馈&nbsp;&nbsp;&nbsp;</el-dropdown-item>
+                  <el-dropdown-item>
+                    <div @click="userQuit()">
+                      <i class="iconfont icon-back">&nbsp;</i>b退出&nbsp;&nbsp;&nbsp;
+                    </div>
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </el-col>
+          </div>
+          <div v-else-if="isSign===0">
+            <el-col :md="{span:8,offset:0}">
+              <el-button class="button" icon="el-icon-plus" @click="signDigV=true;opType='up'"> 注册</el-button>
+            </el-col>
+            <el-col :md="8">
+              <el-button class="button" icon="el-icon-arrow-right" @click="signDigV=true;opType='in'"> 登录</el-button>
+            </el-col>
+          </div>
         </el-row>
       </el-col>
     </el-row>
-    <sign-templ :visi="signDigV" :sign="opType" @signGotoUp="signGotoUp" @signGotoIn="signGotoIn" @signEve="signEve"></sign-templ>
+    <sign-templ :visi="signDigV" :sign="opType" @signGotoUp="signGotoUp" @signGotoIn="signGotoIn"
+                @signEve="signEve"></sign-templ>
   </div>
 </template>
 
 <script>
+  import glb from "comp/GLOBAL"
   import SignTempl from "comp/user/templ/signTempl"
   import {TweenLite} from 'gsap'
 
@@ -92,9 +97,11 @@
         serachWidth: searchWidthB,//搜索框长度
 
         signDigV: false,//显示注册登录
-        opType:'',//注册还是登录
+        opType: '',//注册还是登录
 
         menuActiveIndex: '0',//菜单默认选择索引
+
+        isSign: -1,//是否已登录
       }
     },
     computed: {
@@ -104,20 +111,10 @@
         return w * 4 / 24 + w * 16 / 24 * (10 / 24)
       },
     },
+    mounted() {
+      this.signFresh()
+    },
     methods: {
-      //注册模板事件
-      signEve(data) {
-        console.log('header signeve')
-        console.log(data)
-        this.opType=data.opType
-        this.signDigV = false
-      },
-      signGotoUp(){
-        this.opType='up'
-      },
-      signGotoIn(){
-        this.opType='in'
-      },
       //路由控制
       menuHandler(key, keyPath) {
         if (key === '100') this.$router.push({path: '/'});
@@ -134,8 +131,60 @@
       searchBlur() {
         TweenLite.to(this.$data, 0.5, {serachWidth: searchWidthB});
       },
-    },
 
+      /**
+       * 注册登录
+       */
+      signGotoUp() {
+        this.opType = 'up'
+      },
+      signGotoIn() {
+        this.opType = 'in'
+      },
+      //注册模板事件
+      signEve(data) {
+        console.log('header signeve')
+        console.log(data)
+        this.opType = data.opType
+        this.signDigV = false
+        this.signFresh()
+      },
+      //修改状态
+      setSignStatus(v) {
+        sessionStorage['isSign'] = v
+        this.isSign = v
+      },
+      //检测登录
+      signFresh() {
+        glb.post(this, '/user?tag=signFresh', {}, (data) => {
+          if (data.code === 200 && data.ok === 1) {
+            this.setSignStatus(1)
+          }
+          else {
+            this.setSignStatus(0)
+          }
+        })
+      },
+
+
+      /**
+       * 用户面板
+       */
+      //用户退出
+      userQuit() {
+        glb.post(this, '/user?tag=signOut', {}, (data) => {
+          if (data.code === 200 && data.ok === 1) {
+            this.setSignStatus(0)
+            this.signFresh()
+          }
+        })
+      },
+
+
+      test() {
+
+      }
+    },
   }
 </script>
 

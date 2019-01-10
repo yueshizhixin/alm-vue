@@ -17,7 +17,7 @@ Vue.prototype.$axios = axios
 Vue.use(mavonEditor)
 
 // axios.defaults.timeout = 5000;
-axios.defaults.withCredentials=true
+axios.defaults.withCredentials = true
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.baseURL = 'http://127.0.0.1:8080/api/v1';
 axios.defaults.transformRequest = (data => {

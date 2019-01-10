@@ -26,14 +26,13 @@
               <span slot="prepend">密 码</span>
             </el-input>
           </el-form-item>
-          <el-form-item prop="captcha">
-            <el-input v-model="user.captcha" placeholder="请填写验证码" auto-complete="off">
-              <!--<span slot="append">验 证</span>-->
-              <img id="imgVerify" @click="getVali()" slot="append" style="width: 100px;height: 35px;" src=""/>
-            </el-input>
-          </el-form-item>
         </div>
-
+        <el-form-item prop="captcha">
+          <el-input v-model="user.captcha" placeholder="请填写验证码" auto-complete="off">
+            <!--<span slot="append">验 证</span>-->
+            <img id="imgVerify" @click="getVali()" slot="append" style="width: 100px;height: 35px;" src=""/>
+          </el-input>
+        </el-form-item>
         <el-form-item>
           <el-row>
             <el-col :sm="10">
@@ -58,7 +57,7 @@
 </template>
 
 <script>
-  import gol from "comp/GLOBAL"
+  import glb from "comp/GLOBAL"
 
   export default {
     name: "signTempl",
@@ -72,8 +71,8 @@
           callback(new Error('请填写账号'));
         }
         setTimeout(() => {
-          if (!gol.regStrNormal.test(v)) {
-            callback(new Error(gol.regTipNormal));
+          if (!glb.regStrNormal.test(v)) {
+            callback(new Error(glb.regTipNormal));
           } else {
             callback();
           }
@@ -83,8 +82,8 @@
         if (v === '') {
           callback(new Error('请输入密码'));
         }
-        if (!gol.regStrNormal.test(v)) {
-          callback(new Error(gol.regTipNormal));
+        if (!glb.regStrNormal.test(v)) {
+          callback(new Error(glb.regTipNormal));
         } else {
           callback();
         }
@@ -147,8 +146,8 @@
 
       //获取验证码
       getVali() {
-        console.log('验证码')
-        document.getElementById("imgVerify").src = gol.preUrl + '/captcha/img?' + Math.random()
+        console.log('获取验证码方法')
+        document.getElementById("imgVerify").src = glb.preUrl + '/captcha/img?' + Math.random()
       },
 
       //注册
@@ -158,36 +157,21 @@
           this.$refs[form].resetFields();
         }
         else {
-          this.$refs[form].validate(x => {
-            if (x) {
-              this.$axios.post('/demo/add', {})
-                .then((res) => {
-                  console.log(res)
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-              this.$axios.post('/user?tag=signUp', this.user)
-                .then((res) => {
-                  console.log(res)
-                  if (res.status === 200) {
-                    let data = JSON.parse(res.data)
-                    if (data.code === 200) {
-                      if (data.ok === 0) {
-                        gol.alert_info(this, data.msg)
-                      }
-                      else {
-                        this.sendMsgToParent('up')
-                      }
+          this.$refs[form].validate(ok => {
+            if (ok) {
+              glb.post(this, '/user/act=sign?tag=signUp', this.user, (data) => {
+                  if (data.code === 200) {
+                    if (data.ok === 0) {
+                      glb.alert_info(this, data.msg)
+                      this.getVali()
                     }
-                  } else {
+                    else {
+                      sessionStorage['isSign'] = 1
+                      this.sendMsgToParent('up')
+                    }
                   }
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-
-              // this.$refs[form].resetFields();
+                }
+              )
             }
             else {
               return false;
@@ -202,25 +186,23 @@
           this.$refs[form].resetFields();
         }
         else {
-          this.$refs[form].validate(vali => {
-            if (captcha) {
-              this.$axios.post('user', this.user)
-                .then((res) => {
-                  if (res.status === 200) {
-                    console.log(res.data);
-                    this.sendMsgToParent('in')
-                  } else {
-                    alert(res.status)
+          this.$refs[form].validate(ok => {
+            if (ok) {
+              glb.post(this, '/user/act=sign?tag=signIn', this.user, (data) => {
+                  if (data.code === 200) {
+                    if (data.ok === 0) {
+                      glb.alert_info(this, data.msg)
+                      this.getVali()
+                    }
+                    else {
+                      sessionStorage['isSign'] = 1
+                      this.sendMsgToParent('in')
+                    }
                   }
-                })
-                .catch((err) => {
-                  console.log(err);
-                  alert('操作失败')
-                });
-              // this.$refs[form].resetFields();
+                }
+              )
             }
             else {
-              gol.alert_error('请填写验证码')
               return false;
             }
           })
