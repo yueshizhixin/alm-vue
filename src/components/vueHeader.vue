@@ -39,7 +39,7 @@
 
       <el-col :md="4" align="right">
         <el-row>
-          <div v-if="isSign===1">
+          <div v-if="user.isSign===1">
             <el-col :md="{span:5}">
               <el-button class="button">
                 <el-badge :value="12" class="item badge" :max="10">
@@ -50,7 +50,7 @@
             <el-col :md="{span:5,offset:4}">
               <el-dropdown>
                 <img class="el-dropdown-link img-circle img-headHeader"
-                     src=""
+                     :src="user.headImg"
                 >
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item><i class="iconfont icon-account">&nbsp;</i>信息&nbsp;&nbsp;&nbsp;</el-dropdown-item>
@@ -65,7 +65,7 @@
               </el-dropdown>
             </el-col>
           </div>
-          <div v-else-if="isSign===0">
+          <div v-else-if="user.isSign===0">
             <el-col :md="{span:8,offset:0}">
               <el-button class="button" icon="el-icon-plus" @click="signDigV=true;opType='up'"> 注册</el-button>
             </el-col>
@@ -95,13 +95,16 @@
     data() {
       return {
         serachWidth: searchWidthB,//搜索框长度
+        menuActiveIndex: '0',//菜单默认选择索引
 
         signDigV: false,//显示注册登录
         opType: '',//注册还是登录
 
-        menuActiveIndex: '0',//菜单默认选择索引
+        user: {
+          isSign: -1,//是否已登录
+          headImg: '',//用户头像
+        },
 
-        isSign: -1,//是否已登录
       }
     },
     computed: {
@@ -143,8 +146,6 @@
       },
       //注册模板事件
       signEve(data) {
-        console.log('header signeve')
-        console.log(data)
         this.opType = data.opType
         this.signDigV = false
         this.signFresh()
@@ -152,13 +153,15 @@
       //修改状态
       setSignStatus(v) {
         sessionStorage['isSign'] = v
-        this.isSign = v
+        this.user.isSign = v
       },
       //检测登录
       signFresh() {
         glb.post(this, '/user?tag=signFresh', {}, (data) => {
           if (data.code === 200 && data.ok === 1) {
             this.setSignStatus(1)
+            console.log(data)
+            this.user.headImg = data.data.headImg + glb.imgFormat.head
           }
           else {
             this.setSignStatus(0)

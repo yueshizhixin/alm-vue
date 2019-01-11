@@ -146,7 +146,6 @@
 
       //获取验证码
       getVali() {
-        console.log('获取验证码方法')
         document.getElementById("imgVerify").src = glb.preUrl + '/captcha/img?' + Math.random()
       },
 
