@@ -2,9 +2,9 @@
   <div>
     <el-row>
       <el-col :md="3" style=" overflow-y:scroll;  height:calc(100vh - 100px);">
-        <el-row v-for="x of 35">
+        <el-row v-for="item of userTag">
           <el-col :md="24">
-            <el-button class="aside-rightdivbutton">&nbsp;&nbsp;{{x}}</el-button>
+            <el-button class="aside-rightdivbutton">&nbsp;&nbsp;{{item}}</el-button>
           </el-col>
         </el-row>
       </el-col>
@@ -18,8 +18,9 @@
       <el-col :md="17">
         <el-row>
           <el-col :md="24">
-            <input class="title inputShadow" v-model="title">
-            </input>
+            <label>
+              <input class="title inputShadow" v-model="title"/>
+            </label>
           </el-col>
         </el-row>
         <el-row>
@@ -34,41 +35,42 @@
 
 <script>
 
-  import gol from "comp/GLOBAL"
+  import glb from "@comp/GLOBAL"
+  import commh from '@/assets/js/communicatHandler'
 
   export default {
     name: "save",
     data() {
       return {
-        title: '神奇的天路',
+        /**
+         * 标签
+         */
+        userTag: [],
+
+        /**
+         * 笔记部分
+         */
+        title: '',
         placeholder: '请输入...',
-        value: '- 非IE浏览器\n' +
-          '接口返回的数据格式为\n' +
-          '```\n' +
-          '<xml ...>\n' +
-          '  <string ...>\n' +
-          '    [{data},{data},{data}]\n' +
-          '  </string>\n' +
-          '</xml>\n' +
-          '```\n' +
-          '```\n' +
-          '//DOM解析器\n' +
-          'var parser = new DOMParser();\n' +
-          '//读取返回字符串\n' +
-          'var _xml = parser.parseFromString(data, "text/xml");\n' +
-          '//获取节点内容\n' +
-          'var jsonXml = _xml.getElementsByTagName("string")[0].innerHTML;\n' +
-          '//获得json数组\n' +
-          'var jsonArr = JSON.parse(jsonXml);'
+        value: ''
       }
     },
     mounted() {
       this.title = new Date().toLocaleString()
+      this.getUserTag()
     },
     methods: {
+      getUserTag() {
+        glb.get(this, '/note/user/tag', {}, (data) => {
+          console.log(data)
+          if (data.code === 401) {
+            commh.$emit('http401')
+          }
+        });
+      },
+
       save() {
-        gol.alert_success(this,'保存成功')
-        console.log(this.value)
+        gol.alert_success(this, '保存成功')
       }
     }
   }

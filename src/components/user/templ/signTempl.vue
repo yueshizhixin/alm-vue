@@ -57,7 +57,7 @@
 </template>
 
 <script>
-  import glb from "comp/GLOBAL"
+  import glb from "@comp/GLOBAL"
 
   export default {
     name: "signTempl",

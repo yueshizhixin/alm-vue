@@ -67,10 +67,10 @@
           </div>
           <div v-else-if="user.isSign===0">
             <el-col :md="{span:8,offset:0}">
-              <el-button class="button" icon="el-icon-plus" @click="signDigV=true;opType='up'"> 注册</el-button>
+              <el-button class="button" icon="el-icon-plus" @click="signUp()"> 注册</el-button>
             </el-col>
             <el-col :md="8">
-              <el-button class="button" icon="el-icon-arrow-right" @click="signDigV=true;opType='in'"> 登录</el-button>
+              <el-button class="button" icon="el-icon-arrow-right" @click="signIn()"> 登录</el-button>
             </el-col>
           </div>
         </el-row>
@@ -82,9 +82,10 @@
 </template>
 
 <script>
-  import glb from "comp/GLOBAL"
-  import SignTempl from "comp/user/templ/signTempl"
-  import {TweenLite} from 'gsap'
+  import glb from "@comp/GLOBAL"
+  import SignTempl from "@comp/user/templ/signTempl"
+  import {TweenLite} from 'gsap'//input框动画
+  import commh from '@/assets/js/communicatHandler'
 
   const searchWidthB = 250; //搜索框默认width
   const searchWidthF = 350; //搜索框focus width
@@ -116,6 +117,12 @@
     },
     mounted() {
       this.signFresh()
+      /**
+       * 组件通信
+       */
+      commh.$on("http401", () => {
+        this.signIn()
+      });
     },
     methods: {
       //路由控制
@@ -138,13 +145,22 @@
       /**
        * 注册登录
        */
+      //注册登录按钮激活模板
+      signUp() {
+        this.signDigV = true;
+        this.opType = 'up'
+      },
+      signIn() {
+        this.signDigV = true;
+        this.opType = 'in'
+      },
+      //sign模板事件
       signGotoUp() {
         this.opType = 'up'
       },
       signGotoIn() {
         this.opType = 'in'
       },
-      //注册模板事件
       signEve(data) {
         this.opType = data.opType
         this.signDigV = false
@@ -182,7 +198,6 @@
           }
         })
       },
-
 
       test() {
 

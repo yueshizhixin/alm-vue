@@ -12,8 +12,8 @@
 </template>
 
 <script>
-  import VueHeader from "comp/vueHeader";
-  import VueFooter from "comp/vueFooter";
+  import VueHeader from "@comp/vueHeader";
+  import VueFooter from "@comp/vueFooter";
 
   export default {
     name: 'App',

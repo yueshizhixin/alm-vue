@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-  import noteProfileTempl from "comp/note/templ/profile"
+  import noteProfileTempl from "@comp/note/templ/profile"
 
   export default {
     name: "noteList",
