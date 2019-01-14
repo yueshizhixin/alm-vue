@@ -4,12 +4,12 @@
       <el-col :md="3" style=" overflow-y:scroll;  height:calc(100vh - 100px);">
         <el-row v-for="item of userTag">
           <el-col :md="24">
-            <el-button class="aside-rightdivbutton">&nbsp;&nbsp;{{item}}</el-button>
+            <el-button class="aside-rightdivbutton">&nbsp;&nbsp;{{item.name}}</el-button>
           </el-col>
         </el-row>
       </el-col>
       <el-col :md="4" style=" overflow-y:scroll;  height:calc(100vh - 100px);">
-        <el-row v-for="x of 15">
+        <el-row v-for="x of 0">
           <el-col :md="24">
             <el-button class="aside-rightdivbutton">&nbsp;&nbsp;{{x}}</el-button>
           </el-col>
@@ -65,6 +65,9 @@
           console.log(data)
           if (data.code === 401) {
             commh.$emit('http401')
+          }
+          else if (data.code === 200) {
+            this.userTag=data.data
           }
         });
       },
