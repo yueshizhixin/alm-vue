@@ -178,6 +178,7 @@
             this.setSignStatus(1)
             console.log(data)
             this.user.headImg = data.data.headImg + glb.imgFormat.head
+            sessionStorage['userId']=data.data.id
           }
           else {
             this.setSignStatus(0)
