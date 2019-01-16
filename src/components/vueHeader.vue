@@ -1,19 +1,13 @@
 <template>
-  <div>
+  <div class="divMain">
     <el-row>
-      <el-col :md="4" style="height: 60px">
-        <span class="iconHeader">ALM</span>
-      </el-col>
-      <el-col :md="16">
+      <el-col :md="20">
         <el-row>
-          <el-col :md="14">
+          <el-col :md="8">
             <el-menu :default-active="menuActiveIndex" mode="horizontal" @select="menuHandler"
                      class="menu" active-text-color="#409eff" text-color="#666666" background-color="#ffffff">
-              <el-menu-item index="100" class="menuItem">首页
-              </el-menu-item>
               <el-menu-item index="300" class="menuItem">笔记
               </el-menu-item>
-
               <el-submenu index="400">
                 <template slot="title">功能</template>
                 <el-menu-item index="400-200" class="menuItemSub"><i class="menuItemSub iconfont icon-listblock">&nbsp;&nbsp;</i>LOW
@@ -41,26 +35,26 @@
         <el-row>
           <div v-if="user.isSign===1">
             <el-col :md="{span:5}">
-              <el-button class="button">
-                <el-badge :value="12" class="item badge" :max="10">
-                  <i class="iconfont icon-iccomm"></i>&nbsp;消息
-                </el-badge>
-              </el-button>
+              <!--<el-button class="button">-->
+              <!--<el-badge :value="12" class="item badge" :max="10">-->
+              <!--<i class="iconfont icon-iccomm"></i>&nbsp;消息-->
+              <!--</el-badge>-->
+              <!--</el-button>-->
             </el-col>
             <el-col :md="{span:5,offset:4}">
               <el-dropdown>
                 <img class="el-dropdown-link img-circle img-headHeader"
-                     :src="user.headImg"
+                     src="http://cdn.yueshizhixin.top/248986-106.jpg?imageView2/1/w/100/h/100"
                 >
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item><i class="iconfont icon-account">&nbsp;</i>信息&nbsp;&nbsp;&nbsp;</el-dropdown-item>
-                  <el-dropdown-item><i class="iconfont icon-set">&nbsp;</i>设置&nbsp;&nbsp;&nbsp;</el-dropdown-item>
-                  <el-dropdown-item><i class="iconfont icon-survey">&nbsp;</i>反馈&nbsp;&nbsp;&nbsp;</el-dropdown-item>
-                  <el-dropdown-item>
-                    <div @click="userQuit()">
-                      <i class="iconfont icon-back">&nbsp;</i>b退出&nbsp;&nbsp;&nbsp;
-                    </div>
-                  </el-dropdown-item>
+                  <!--<el-dropdown-item><i class="iconfont icon-account">&nbsp;</i>信息&nbsp;&nbsp;&nbsp;</el-dropdown-item>-->
+                  <!--<el-dropdown-item><i class="iconfont icon-set">&nbsp;</i>设置&nbsp;&nbsp;&nbsp;</el-dropdown-item>-->
+                  <!--<el-dropdown-item><i class="iconfont icon-survey">&nbsp;</i>反馈&nbsp;&nbsp;&nbsp;</el-dropdown-item>-->
+                  <!--<el-dropdown-item>-->
+                  <!--<div @click="userQuit()">-->
+                  <!--<i class="iconfont icon-back">&nbsp;</i>b退出&nbsp;&nbsp;&nbsp;-->
+                  <!--</div>-->
+                  <!--</el-dropdown-item>-->
                 </el-dropdown-menu>
               </el-dropdown>
             </el-col>
@@ -76,8 +70,6 @@
         </el-row>
       </el-col>
     </el-row>
-    <sign-templ :visi="signDigV" :sign="opType" @signGotoUp="signGotoUp" @signGotoIn="signGotoIn"
-                @signEve="signEve"></sign-templ>
   </div>
 </template>
 
@@ -112,7 +104,8 @@
       //搜索框左边距
       searchLeft() {
         let w = document.body.clientWidth;
-        return w * 4 / 24 + w * 16 / 24 * (10 / 24)
+        // return  w * 16 / 24 * (10 / 24)
+        return (w - 1199) / 2 + 1199 / 24 *6
       },
     },
     mounted() {
@@ -168,22 +161,22 @@
       },
       //修改状态
       setSignStatus(v) {
-        sessionStorage['isSign'] = v
-        this.user.isSign = v
+        // sessionStorage['isSign'] = v
+        // this.user.isSign = v
       },
       //检测登录
       signFresh() {
-        glb.post(this, '/user?tag=signFresh', {}, (data) => {
-          if (data.code === 200 && data.ok === 1) {
-            this.setSignStatus(1)
-            console.log(data)
-            this.user.headImg = data.data.headImg + glb.imgFormat.head
-            sessionStorage['userId']=data.data.id
-          }
-          else {
-            this.setSignStatus(0)
-          }
-        })
+        // glb.post(this, '/user?tag=signFresh', {}, (data) => {
+        //   if (data.code === 200 && data.ok === 1) {
+        //     this.setSignStatus(1)
+        //     console.log(data)
+        //     this.user.headImg = data.data.headImg + glb.imgFormat.head
+        //     sessionStorage['userId']=data.data.id
+        //   }
+        //   else {
+        //     this.setSignStatus(0)
+        //   }
+        // })
       },
 
 

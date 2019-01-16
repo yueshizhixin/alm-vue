@@ -24,18 +24,27 @@
                 <el-col :md="1" style="display: flex;align-items: center;max-width: 64px;min-width: 64px;">
                   <img style=";border-radius:50%;width: 48px" :src="item.authorImg">
                 </el-col>
-                <el-col :md="20" align="left">
+                <el-col :md="17" align="left">
                   <el-row><span class="note-author">{{item.author}}</span></el-row>
                   <el-row>
                     <span style="font-size: 14px;" class="note-time">{{item.time}}</span>
                   </el-row>
 
                 </el-col>
+
                 <el-col :md="3" align="right">
-                  <el-button size="small"   @click="$router.push({path: '/note/save/'+id})" icon="iconfont icon-edit">
-                    &nbsp;&nbsp;编辑
+
+                </el-col>
+
+                <el-col :md="3" align="right">
+                  <!--<el-button size="small" @click="$router.push({path: '/note/save/'+id})" icon="iconfont icon-edit">-->
+                  <!--&nbsp;&nbsp;编辑-->
+                  <!--</el-button>-->
+                  <el-button size="small" @click="$router.back(-1)" icon="el-icon-arrow-left">
+                    返回
                   </el-button>
                 </el-col>
+
               </el-row>
 
             </el-card>

@@ -3,22 +3,45 @@
     <transition name="el-zoom-in-top">
       <div v-show="aniShow" class="transition-box">
         <el-row style="z-index: 10">
-          <el-col :md="20">
+          <el-col :md="18">
             <note-profile-templ v-for="item of notes" :item="item" :self="self"></note-profile-templ>
           </el-col>
           <el-col :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
-            <div>
-              <el-button icon="iconfont icon-add" @click="$router.push({path: '/note/save/0'})" >&nbsp;&nbsp;新建笔记</el-button>
-              <el-button icon="iconfont icon-attachment" >&nbsp;&nbsp;我的收藏</el-button>
-              <el-button icon="iconfont icon-favorite">&nbsp;&nbsp;我的关注</el-button>
-            </div>
-            <div :style="{top:sideRightTop2+'px'}">
-              <el-button>&nbsp;&nbsp;go</el-button>
-              <el-button type="primary" plain>&nbsp;&nbsp;unity</el-button>
-              <el-button>&nbsp;&nbsp;vue</el-button>
-              <el-button>&nbsp;&nbsp;db</el-button>
-              <el-button>&nbsp;&nbsp;mysql</el-button>
-            </div>
+            <transition name="el-fade-in-linear">
+              <div v-show="aniShow2" class="transition-box">
+                <div>
+                  <el-row class="srdiv">
+                    <el-col :md="12">
+                      <img
+                        style="padding: 0 20px 0 20px;width: 100px;border-radius:50%;"
+                        src="http://cdn.yueshizhixin.top/248986-106.jpg?imageView2/1/w/500/h/500" class="image ">
+                    </el-col>
+                    <el-col :md="12">
+                      <div>
+                        <span style="color: #303133;font-size: 28px;    font-weight: 500;" class="">ALM</span>
+                      </div>
+                      <div>
+                        <span style="color: #909399; margin-top: 20px;font-size: 14px;" class="">人类为何而存在</span>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+                <div :style="{top:sideRightTop2+'px'} " class="srdiv">
+                  <el-button icon="el-icon-arrow-right">&nbsp;&nbsp;全部</el-button>
+                  <el-button type="primary" icon="el-icon-arrow-down">&nbsp;&nbsp;go</el-button>
+                  <el-button type="primary" plain>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                    class="el-icon-arrow-right"></i> go
+                  </el-button>
+                  <el-button type="primary" plain>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="el-icon-arrow-left"></i>go
+                  </el-button>
+                  <el-button icon="el-icon-arrow-left">&nbsp;&nbsp;unity</el-button>
+                  <el-button icon="el-icon-arrow-right">&nbsp;&nbsp;vue</el-button>
+                  <el-button icon="el-icon-arrow-right">&nbsp;&nbsp;db</el-button>
+                  <el-button icon="el-icon-arrow-right">&nbsp;&nbsp;mysql</el-button>
+                </div>
+              </div>
+
+            </transition>
           </el-col>
         </el-row>
       </div>
@@ -33,9 +56,11 @@
     components: {noteProfileTempl},
     data() {
       return {
+        sideRight: 0,//右侧导航栏
 
         self: true,//是否查看自己的笔记
         aniShow: false,//加载动画
+        aniShow2: false,//加载动画
         tagType: ['success', 'danger', 'info', '', 'warning'],
         notes: [
           {
@@ -118,28 +143,83 @@
             collectCount: '4096',
             isCollect: false,
           },
+          {
+            id: 12,
+            from: '来自标签:DOTA2',
+            author: '祁厅长',
+            authorImg: 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/100/h/100',
+            authorImg2: 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/250/h/120',
+            description: '我有高达250的APM',
+            tags: [{'tag': 'DOTA2'}, {'tag': '电竞'}],
+            title: '如何评价萨尔这个英雄?',
+            logotxt: '萨尔电之所以死亡还在电，是因为这个技能做出来的时候，萨尔还是可以中单的一个英雄，当时的萨尔，电永远75蓝耗，中路无限消耗，初始攻击也不低，血强，电是给你打钱的，你电死一个兵，其他兵得继续给你电吧？所以就这样设计了。',
+            time: '昨天 17:02',
+            agreeCount: '22',
+            isAgree: false,
+            commCount: '1024',
+            isComm: false,
+            shareCount: '2048',
+            isShare: false,
+            collectCount: '4096',
+            isCollect: false,
+          },
+          {
+            id: 22,
+            from: '来自标签:DOTA2',
+            author: '祁厅长',
+            authorImg: 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/100/h/100',
+            authorImg2: 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/250/h/120',
+            description: '我有高达250的APM',
+            tags: [{'tag': 'DOTA2'}, {'tag': '电竞'}],
+            title: '如何评价萨尔这个英雄?',
+            logotxt: '萨尔电之所以死亡还在电，是因为这个技能做出来的时候，萨尔还是可以中单的一个英雄，当时的萨尔，电永远75蓝耗，中路无限消耗，初始攻击也不低，血强，电是给你打钱的，你电死一个兵，其他兵得继续给你电吧？所以就这样设计了。',
+            time: '昨天 17:02',
+            agreeCount: '22',
+            isAgree: false,
+            commCount: '1024',
+            isComm: false,
+            shareCount: '2048',
+            isShare: false,
+            collectCount: '4096',
+            isCollect: false,
+          },
         ],
       }
     },
+    created() {
+
+    },
+    mounted() {
+      this.sideRight = this.sideRightM()
+      this.aniShow = true
+      this.notes.forEach(item => {
+        this.$set(item, 'authorMsgShow', false)
+      })
+      setTimeout(() => {
+        this.aniShow2 = true
+      }, 400)
+    },
     computed: {
-      //右侧导航栏
-      sideRight() {
-        //el-main pad 20px
-        let w = document.body.clientWidth
-        if (w > 1199) {
-          return (w - 1199 - 20 * 2) / 2 - 20 * 2.5 + 1199 / 24 * 20
-        }
-        else {
-          return w / 24 * 20
-        }
-        // return 0
-      },
+
       sideRightTop2() {
         //基础+pad*2+button*3+margin
         return 80 + 20 * 2 + 34 * 3 + 10
       }
     },
     methods: {
+      //右侧导航栏
+      sideRightM() {
+        //el-main pad 20px
+        let w = document.body.clientWidth
+        if (w > 1199) {
+
+          return (w - 1199 - 20 * 2) / 2 - 20 * 2.5 + 1199 / 24 * 20
+        }
+        else {
+          return w / 24 * 20
+        }
+      },
+
       imgMouseE(id) {
         let note = this.notes.find(note => note.id === id)
         note.authorMsgShow = true
@@ -148,18 +228,15 @@
         this.notes.find(note => note.id === id).authorMsgShow = false
       },
     },
-    mounted() {
-      this.aniShow = true
-      this.notes.forEach(item => {
-        this.$set(item, 'authorMsgShow', false)
-      })
-    },
-    created() {
-    }
   }
 </script>
 
 <style scoped>
+
+  [v-cloak] {
+    display: none;
+  }
+
   /**
     右侧列表
    */
@@ -168,7 +245,7 @@
     position: fixed;
   }
 
-  .side-right div {
+  .srdiv {
     background-color: white;
     padding: 20px 0;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
@@ -182,4 +259,11 @@
     text-align: left;
     margin-left: 0;
   }
+
+  .image {
+    width: calc(100% - 40px);
+    display: block;
+  }
+
+
 </style>

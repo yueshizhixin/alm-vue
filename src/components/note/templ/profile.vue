@@ -1,33 +1,7 @@
 <template>
   <div>
     <el-row :key="item.id">
-      <!--<el-col :md="2">&nbsp;</el-col>-->
-      <el-col :md="2" v-if="!self">
-        <div class="img-headNote" @mouseenter="imgMouseE()" @mouseleave="imgMouseL()">
-          <img :src="item.authorImg">
-          <el-collapse-transition>
-            <el-card v-if="item.authorMsgShow" class="img-headCard" :body-style="{ padding: '8px 6px' }">
-              <el-row>
-                <img :src="item.authorImg2" style="height: 100px;" class="image">
-              </el-row>
-              <el-row style="padding: 8px;">
-                <span class="note-author" style="font-weight: 500">{{item.author}}</span>
-                <br>
-                <span class="note-signature" style="font-size: 14px">{{item.description}}</span>
-              </el-row>
-              <el-row class="bottom clearfix" style="padding:2px 8px;margin-top: 0">
-                <el-col :md="12">
-                  <el-button type="primary" size="medium" icon="el-icon-plus">关注</el-button>
-                </el-col>
-                <el-col :md="12" style="text-align: right">
-                  <el-button type="info" size="medium" icon="el-icon-message">私信</el-button>
-                </el-col>
-              </el-row>
-            </el-card>
-          </el-collapse-transition>
-        </div>
-      </el-col>
-      <el-col :md="20" class="note-body">
+      <el-col :md="24" class="note-body">
         <el-card>
           <el-row>
             <el-col :md="12" v-if="!self">
