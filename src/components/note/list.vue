@@ -27,17 +27,32 @@
                   </el-row>
                 </div>
                 <div :style="{top:sideRightTop2+'px'} " class="srdiv">
-                  <el-button icon="el-icon-arrow-right">&nbsp;&nbsp;全部</el-button>
-                  <el-button type="primary" icon="el-icon-arrow-down">&nbsp;&nbsp;go</el-button>
-                  <el-button type="primary" plain>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
-                    class="el-icon-arrow-right"></i> go
-                  </el-button>
-                  <el-button type="primary" plain>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="el-icon-arrow-left"></i>go
-                  </el-button>
-                  <el-button icon="el-icon-arrow-left">&nbsp;&nbsp;unity</el-button>
-                  <el-button icon="el-icon-arrow-right">&nbsp;&nbsp;vue</el-button>
-                  <el-button icon="el-icon-arrow-right">&nbsp;&nbsp;db</el-button>
-                  <el-button icon="el-icon-arrow-right">&nbsp;&nbsp;mysql</el-button>
+                  <ul class="tagul">
+                    <li v-for="item of tags" @click="getNoteByTag(item.id,item.layer)"
+                        :class="{'lihoveron':item.hover===1,'lihoverout':item.hover===0}"
+                        class="tagli lihoveron">
+                      <div class="lidiv1"
+                           @mouseenter="mouseenterM(item.id,item.layer)"
+                           @mouseleave="mouseleaveM(item.id,item.layer)">
+                        <i v-show="item.open===0" class="el-icon-arrow-right">&nbsp;</i>
+                        <i v-show="item.open===1 && item.children.length===0" class="el-icon-arrow-left">&nbsp;</i>
+                        <i v-show="item.open===1 && item.children.length>0" class="el-icon-arrow-down">&nbsp;</i>
+                        {{item.name}}
+                      </div>
+                      <ul v-show="item.children.length>0 && item.open===1" v-for="x of item.children" class="tagul">
+                        <li class="tagli" @click="getNoteByTag(x.id,x.layer)"
+                            :class="{'lihoveron':x.hover===1,'lihoverout':x.hover===0}">
+                          <div class="lidiv2"
+                               @mouseenter="mouseenterM(x.id,x.layer)"
+                               @mouseleave="mouseleaveM(x.id,x.layer)">
+                            <i v-show="x.open===0" class="el-icon-arrow-right">&nbsp;&nbsp;</i>
+                            <i v-show="x.open===1" class="el-icon-arrow-left">&nbsp;&nbsp;</i>
+                            {{x.name}}
+                          </div>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
                 </div>
               </div>
 
@@ -49,6 +64,7 @@
   </div>
 </template>
 <script>
+  import glb from "@comp/GLOBAL"
   import noteProfileTempl from "@comp/note/templ/profile"
 
   export default {
@@ -62,6 +78,10 @@
         aniShow: false,//加载动画
         aniShow2: false,//加载动画
         tagType: ['success', 'danger', 'info', '', 'warning'],
+
+        tags: [],//所有标签
+        tagId: 0,//当前点击标签
+
         notes: [
           {
             id: 1,
@@ -83,124 +103,22 @@
             collectCount: '10k',
             isCollect: false,
           },
-          {
-            id: 3,
-            from: '来自关注:琉璃仙',
-            author: '琉璃仙',
-            authorImg: 'http://cdn.yueshizhixin.top/248986-106.jpg?imageView2/1/w/100/h/100',
-            authorImg2: 'http://cdn.yueshizhixin.top/248986-106.jpg?imageView2/1/w/250/h/120',
-            description: '吃遍天下美食',
-            tags: [{'tag': '修仙'}],
-            title: '步行街上都是好吃的!',
-            logotxt: '重庆步行街重庆步行街位于重庆解放碑,是重庆最为繁华的商圈之一,这里的步行街上卖的也是五花八门,吃喝玩乐保证畅快。',
-            time: '08-14 02:01',
-            agreeCount: '46',
-            isAgree: false,
-            commCount: '65',
-            isComm: true,
-            shareCount: '15',
-            isShare: false,
-            collectCount: '97',
-            isCollect: false,
-          },
-          {
-            id: 4,
-            from: '来自标签:修仙',
-            author: '枯琴真君',
-            authorImg: 'http://cdn.yueshizhixin.top/231751-106.jpg?imageView2/1/w/60/h/60',
-            authorImg2: 'http://cdn.yueshizhixin.top/231751-106.jpg?imageView2/1/w/250/h/120',
-            description: '修仙使人强大',
-            tags: [],
-            title: '修仙使人强大!',
-            logotxt: '我热衷于修仙已经很久了,现在对于修仙之法总算是有...规划这种东西只能学习和去领悟啊,强大的人能够制定',
-            time: '2017-10-15',
-            agreeCount: '4669',
-            isAgree: true,
-            commCount: '2929',
-            isComm: false,
-            shareCount: '1804',
-            isShare: true,
-            collectCount: '7717',
-            isCollect: true,
-          },
-          {
-            id: 2,
-            from: '来自标签:DOTA2',
-            author: '祁厅长',
-            authorImg: 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/100/h/100',
-            authorImg2: 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/250/h/120',
-            description: '我有高达250的APM',
-            tags: [{'tag': 'DOTA2'}, {'tag': '电竞'}],
-            title: '如何评价萨尔这个英雄?',
-            logotxt: '萨尔电之所以死亡还在电，是因为这个技能做出来的时候，萨尔还是可以中单的一个英雄，当时的萨尔，电永远75蓝耗，中路无限消耗，初始攻击也不低，血强，电是给你打钱的，你电死一个兵，其他兵得继续给你电吧？所以就这样设计了。',
-            time: '昨天 17:02',
-            agreeCount: '22',
-            isAgree: false,
-            commCount: '1024',
-            isComm: false,
-            shareCount: '2048',
-            isShare: false,
-            collectCount: '4096',
-            isCollect: false,
-          },
-          {
-            id: 12,
-            from: '来自标签:DOTA2',
-            author: '祁厅长',
-            authorImg: 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/100/h/100',
-            authorImg2: 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/250/h/120',
-            description: '我有高达250的APM',
-            tags: [{'tag': 'DOTA2'}, {'tag': '电竞'}],
-            title: '如何评价萨尔这个英雄?',
-            logotxt: '萨尔电之所以死亡还在电，是因为这个技能做出来的时候，萨尔还是可以中单的一个英雄，当时的萨尔，电永远75蓝耗，中路无限消耗，初始攻击也不低，血强，电是给你打钱的，你电死一个兵，其他兵得继续给你电吧？所以就这样设计了。',
-            time: '昨天 17:02',
-            agreeCount: '22',
-            isAgree: false,
-            commCount: '1024',
-            isComm: false,
-            shareCount: '2048',
-            isShare: false,
-            collectCount: '4096',
-            isCollect: false,
-          },
-          {
-            id: 22,
-            from: '来自标签:DOTA2',
-            author: '祁厅长',
-            authorImg: 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/100/h/100',
-            authorImg2: 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/250/h/120',
-            description: '我有高达250的APM',
-            tags: [{'tag': 'DOTA2'}, {'tag': '电竞'}],
-            title: '如何评价萨尔这个英雄?',
-            logotxt: '萨尔电之所以死亡还在电，是因为这个技能做出来的时候，萨尔还是可以中单的一个英雄，当时的萨尔，电永远75蓝耗，中路无限消耗，初始攻击也不低，血强，电是给你打钱的，你电死一个兵，其他兵得继续给你电吧？所以就这样设计了。',
-            time: '昨天 17:02',
-            agreeCount: '22',
-            isAgree: false,
-            commCount: '1024',
-            isComm: false,
-            shareCount: '2048',
-            isShare: false,
-            collectCount: '4096',
-            isCollect: false,
-          },
+
         ],
       }
     },
-    created() {
-
-    },
     mounted() {
       this.sideRight = this.sideRightM()
+      //全部所有动画
       this.aniShow = true
-      this.notes.forEach(item => {
-        this.$set(item, 'authorMsgShow', false)
-      })
+      //右侧动画显示
       setTimeout(() => {
         this.aniShow2 = true
-      }, 400)
+      }, 500)
+
+      this.getTags()
     },
     computed: {
-
       sideRightTop2() {
         //基础+pad*2+button*3+margin
         return 80 + 20 * 2 + 34 * 3 + 10
@@ -220,21 +138,141 @@
         }
       },
 
-      imgMouseE(id) {
-        let note = this.notes.find(note => note.id === id)
-        note.authorMsgShow = true
+      //hover效果
+      mouseenterM(id, layer) {
+        if (layer === 1) {
+          this.tags.forEach(x => {
+            if (x.id === id) {
+              x.hover = 1
+            }
+            else {
+              x.hover = 0
+            }
+            Array.from(x.children).forEach(y => {
+              y.hover = 0
+            })
+          })
+        } else if (layer === 2) {
+          this.tags.forEach(x => {
+            x.hover = 0
+            Array.from(x.children).forEach(y => {
+              if (y.id === id) {
+                y.hover = 1;
+              }
+              else {
+                y.hover = 0;
+              }
+            })
+          })
+        }
       },
-      imgMouseL(id) {
-        this.notes.find(note => note.id === id).authorMsgShow = false
+      mouseleaveM(id, layer) {
+        if (layer === 1) {
+          this.tags.find(x => x.id === id).hover = 0
+        }
+        else if (layer === 2) {
+          this.tags.forEach(x => {
+            let item = x.children.find(y => y.id === id)
+            if (item) {
+              item.hover = 0
+              return
+            }
+          })
+        }
       },
+
+      //获取所有标签
+      getTags() {
+        glb.get(this, '/tag', {}, (data) => {
+          console.log(data)
+          this.tags = []
+          if (data.code === 200) {
+            let all = {
+              id: 0,
+              layer: 1,
+              name: "全部",
+              parentId: 0,
+              sequence: 0,
+              children: [],
+              open: 0,
+              hover: 0,
+            }
+            this.tags.push(all)
+            let layer1Arr = data.data.filter(x => x.layer === 1)
+            let layer2Arr = data.data.filter(x => x.layer === 2)
+            layer2Arr.forEach(x => {
+              x.open = 0
+              x.hover = 0
+            })
+            layer1Arr.forEach(x1 => {
+              x1.children = (layer2Arr.filter(x2 => x2.parentId === x1.id) || [])
+              x1.open = 0
+              x1.hover = 0
+              this.tags.push(x1)
+            })
+            console.log(this.tags)
+          }
+        })
+      },
+
+      //根据标签获取笔记
+      getNoteByTag(id, layer) {
+        //第一层
+        if (layer === 1) {
+          let tag = this.tags.find(x => x.id === id)
+          this.tags.forEach(x => x.open = 0)
+          tag.open = 1
+        }
+
+
+        console.log('走接口')
+      },
+
+      test() {
+
+      }
     },
   }
 </script>
 
 <style scoped>
+  .tagli {
+    list-style: none;
+    color: #606266;
+    font-size: 14px;
+    font-weight: 500;
+  }
 
-  [v-cloak] {
-    display: none;
+  .tagul {
+    padding-left: 0;
+  }
+
+  .lihoveron {
+    background: #606266;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .lihoverout {
+    background: white;
+    color: #606266;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .lidiv1 {
+    padding: 10px 0 10px 20px;
+  }
+
+  .lidiv2 {
+    padding: 10px 0 10px 40px;
+  }
+
+  .liopen {
+    background: #606266;
+    color: white;
+    font-size: 14px;
   }
 
   /**
@@ -264,6 +302,5 @@
     width: calc(100% - 40px);
     display: block;
   }
-
 
 </style>
