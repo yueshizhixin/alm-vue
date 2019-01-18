@@ -3,8 +3,9 @@
     <transition name="el-zoom-in-top">
       <div v-show="aniShow" class="transition-box">
         <el-row style="z-index: 10">
-          <el-col :md="18">
+          <el-col :md="18" id="notes">
             <note-profile-templ v-for="item of notes" :item="item" :self="self"></note-profile-templ>
+            <input type="button" class="addMoreBtn" @click="getMoreNote" value="加载更多"/>
           </el-col>
           <el-col :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
             <transition name="el-fade-in-linear">
@@ -103,7 +104,26 @@
             collectCount: '10k',
             isCollect: false,
           },
-
+          {
+            id: 2,
+            from: '来自关注:和泉纱雾',
+            author: '和泉纱雾',
+            authorImg: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/100/h/100',
+            authorImg2: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/250/h/120',
+            description: '学习使人落后',
+            tags: [{'tag': '动漫'}, {'tag': '日本'}, {'tag': '二次元'}, {'tag': '樱花'}, {'tag': '和泉纱雾'}],
+            title: '如何评价《秒速5厘米》这部动漫?',
+            logotxt: '秒速5厘米想要传达的是  仅仅相爱并不能打破一切阻隔  爱情并不像说起来那么简单  爱的力量在现实面前常常显得异常渺小。  不能天天在一起 不代表不想念；  天天都能见面  不代表心的距离也如身体距离那么近。',
+            time: '今天 14:45',
+            agreeCount: '8k',
+            isAgree: true,
+            commCount: '16k',
+            isComm: false,
+            shareCount: '36',
+            isShare: true,
+            collectCount: '10k',
+            isCollect: false,
+          },
         ],
       }
     },
@@ -115,8 +135,10 @@
       setTimeout(() => {
         this.aniShow2 = true
       }, 500)
+      this.getMoreNote()
+      // this.getTags()
+      // this.getMoreAuto()//自动加载
 
-      this.getTags()
     },
     computed: {
       sideRightTop2() {
@@ -130,7 +152,6 @@
         //el-main pad 20px
         let w = document.body.clientWidth
         if (w > 1199) {
-
           return (w - 1199 - 20 * 2) / 2 - 20 * 2.5 + 1199 / 24 * 20
         }
         else {
@@ -224,14 +245,58 @@
           tag.open = 1
         }
 
-
         console.log('走接口')
+      },
+
+      //自动加载更多
+
+
+      //获取更多笔记
+      getMoreNote() {
+        for (let i = 0; i < 5; i++) {
+          this.notes.push({
+            id: 2,
+            from: '来自关注:和泉纱雾',
+            author: '和泉纱雾',
+            authorImg: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/100/h/100',
+            authorImg2: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/250/h/120',
+            description: '学习使人落后',
+            tags: [{'tag': '动漫'}, {'tag': '日本'}, {'tag': '二次元'}, {'tag': '樱花'}, {'tag': '和泉纱雾'}],
+            title: '如何评价《秒速5厘米》这部动漫?',
+            logotxt: '秒速5厘米想要传达的是  仅仅相爱并不能打破一切阻隔  爱情并不像说起来那么简单  爱的力量在现实面前常常显得异常渺小。  不能天天在一起 不代表不想念；  天天都能见面  不代表心的距离也如身体距离那么近。',
+            time: '今天 14:45',
+            agreeCount: '8k',
+            isAgree: true,
+            commCount: '16k',
+            isComm: false,
+            shareCount: '36',
+            isShare: true,
+            collectCount: '10k',
+            isCollect: false,
+          },)
+        }
+
       },
 
       test() {
 
       }
     },
+  }
+  getMoreAuto()
+  function getMoreAuto() {
+    console.log('getmore1')
+    console.log(window)
+    window.addEventListener('scroll', (e) => {
+      console.log(e)
+      let d = document.getElementById('notes')
+      var scrollTop = window.pageYOffset;
+      var scrollHeight = d.offsetHeight;
+      var windowHeight = document.body.clientHeight;
+      if (scrollTop + windowHeight >= scrollHeight) {
+        d.style.height = parseInt(d.style.height) + 1000 + "px"
+      }
+    });
   }
 </script>
 
@@ -303,4 +368,14 @@
     display: block;
   }
 
+  /*加载更多*/
+  .addMoreBtn {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    font-weight: normal;
+    border: 0;
+    background-color: white;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1)
+  }
 </style>
