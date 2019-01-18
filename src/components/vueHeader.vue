@@ -28,10 +28,49 @@
               <el-button slot="append" icon="el-icon-search" style="font-size: 20px;"></el-button>
             </el-input>
           </el-col>
+          <el-col v-if="isSign===1" :md="6"
+                  style="margin-top:17px;color: rgb(102, 102, 102);right:0;position: fixed;float: right;">
+            <div>
+              <span>ALM</span>
+            </div>
+          </el-col>
         </el-row>
       </el-col>
 
     </el-row>
+
+    <!--注册登录-->
+    <el-dialog center :visible.sync="dialogFormVisible"
+               :close-on-click-modal="false"
+               :modal-append-to-body="false"
+               style="width: 800px;left: calc(50% - 400px);"
+    >
+      <el-form>
+        <el-form-item>
+          <el-input v-model="user.acc" autocomplete="off" placeholder="账号"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input type="password" v-model="user.pwd" autocomplete="off" placeholder="密码"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-row>
+            <el-col :md="16">
+              <label>
+                <el-input v-model="user.captcha" autocomplete="off" placeholder="验证码"></el-input>
+              </label>
+            </el-col>
+            <el-col :md="8" style="text-align: right">
+              <img @click="getCaptcha()" id="imgCaptcha" style="width: 100px;height: 39px;" src=""/>
+            </el-col>
+          </el-row>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" style="width: 100%" @click="signIn()">登&nbsp;&nbsp;&nbsp;录
+        </el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -49,8 +88,13 @@
         serachWidth: searchWidthB,//搜索框长度
         menuActiveIndex: '0',//菜单默认选择索引
 
-        signDigV: false,//显示注册登录
-        opType: '',//注册还是登录
+        isSign: -1,//是否登录
+        dialogFormVisible: false,//登录框
+        user: {
+          acc: '',
+          pwd: '',
+          captcha: '',
+        },
 
         tags: [],//所有标签
 
@@ -65,6 +109,7 @@
       },
     },
     mounted() {
+      this.signFresh()
     },
     methods: {
       //路由控制
@@ -82,6 +127,40 @@
       },
       searchBlur() {
         TweenLite.to(this.$data, 0.5, {serachWidth: searchWidthB});
+      },
+
+      /**
+       * 注册登录
+       */
+      getCaptcha() {
+        document.getElementById("imgCaptcha").src = glb.preUrl + '/captcha/img?' + Math.random()
+      },
+      //登录
+      signIn() {
+        glb.post(this, '/user/tag=signIn', this.user, (data) => {
+          if (data.code === 200) {
+            console.log(data)
+            if (data.ok === 1) {
+              this.dialogFormVisible = false
+            }
+            glb.alert_info(this, data.msg)
+          }
+        })
+
+      },
+      //刷新用户
+      signFresh() {
+        glb.post(this, '/user/tag=signFresh', {}, (data) => {
+          if (data.code === 200) {
+            console.log(data)
+            if (data.ok === 0) {
+              this.dialogFormVisible = true
+              setTimeout(() => {
+                this.getCaptcha()
+              }, 200)
+            }
+          }
+        })
       },
 
       test() {

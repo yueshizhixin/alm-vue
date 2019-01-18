@@ -2,22 +2,15 @@
   <div>
     <el-row>
       <el-col :md="3" style=" overflow-y:scroll;  height:calc(100vh - 100px);">
-        <el-row v-for="item of userTag">
+        <el-row v-for="item of tags">
           <el-col :md="24">
-            <el-button :key="item.id" @click="getNoteOfTag(item.id)" class="aside-rightdivbutton">
-              &nbsp;&nbsp;{{item.name}}
+            <el-button :key="item.id" class="aside-rightdivbutton">
+              <span v-if="item.layer===2">&nbsp;&nbsp;</span>&nbsp;&nbsp;{{item.name}}
             </el-button>
           </el-col>
         </el-row>
       </el-col>
-      <el-col :md="4" style=" overflow-y:scroll;  height:calc(100vh - 100px);">
-        <el-row v-for="item of noteThumb">
-          <el-col :md="24">
-            <el-button @click="showNote(item.id)" class="aside-rightdivbutton">&nbsp;&nbsp;{{item.title}}</el-button>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :md="17">
+      <el-col :md="18">
         <el-row>
           <el-col :md="24">
             <label>
@@ -32,6 +25,7 @@
         </el-row>
       </el-col>
     </el-row>
+
   </div>
 </template>
 
@@ -47,7 +41,7 @@
         /**
          * 标签
          */
-        userTag: [],
+        tags: [],
 
         /**
          * 笔记部分
@@ -64,27 +58,19 @@
     },
     mounted() {
       this.note.title = new Date().toLocaleString()
-      this.getUserTag()
+      this.getTags()
     },
     methods: {
-      //获取用户标签
-      getUserTag() {
-        glb.get(this, '/user/' + sessionStorage['userId'] + '/tag', {}, (data) => {
+      getTags() {
+        glb.get(this, '/tag', {}, (data) => {
           console.log(data)
+          this.tags = []
           if (data.code === 200) {
-            this.userTag = data.data
-          }
-        });
-      },
 
-      //获取笔记by标签
-      getNoteOfTag(id) {
-        glb.get(this, '/user/tag/' + id, {}, (data) => {
-          console.log(data)
-          if (data.code === 200) {
-            this.noteThumb = data.data
+            this.tags.push(...data.data)
+            console.log(this.tags)
           }
-        });
+        })
       },
 
       //显示某个笔记
@@ -147,5 +133,44 @@
 
   .inputShadow {
     box-shadow: 0 0px 4px rgba(0, 0, 0, 0.157), 0 0px 4px rgba(0, 0, 0, 0.227)
+  }
+
+  .tagli {
+    list-style: none;
+    color: #606266;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .tagul {
+    padding-left: 0;
+  }
+
+  .lihoveron {
+    background: #606266;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .lihoverout {
+    background: white;
+    color: #606266;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .lidiv1 {
+    padding: 10px 0 10px 20px;
+  }
+
+  .lidiv2 {
+    padding: 10px 0 10px 40px;
+  }
+
+  .liopen {
+    background: #606266;
+    color: white;
+    font-size: 14px;
   }
 </style>

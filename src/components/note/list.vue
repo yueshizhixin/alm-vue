@@ -29,10 +29,9 @@
                 </div>
                 <div :style="{top:sideRightTop2+'px'} " class="srdiv">
                   <ul class="tagul">
-                    <li v-for="item of tags" @click="getNoteByTag(item.id,item.layer)"
-                        :class="{'lihoveron':item.hover===1,'lihoverout':item.hover===0}"
-                        class="tagli lihoveron">
-                      <div class="lidiv1"
+                    <li v-for="item of tags" class="tagli lihoveron"
+                        :class="{'lihoveron':item.hover===1,'lihoverout':item.hover===0,'liopen':item.open===1 && !item.children.find(x=>x.open===1)}">
+                      <div class="lidiv1" @click="getNoteByTag(item.id,item.layer)"
                            @mouseenter="mouseenterM(item.id,item.layer)"
                            @mouseleave="mouseleaveM(item.id,item.layer)">
                         <i v-show="item.open===0" class="el-icon-arrow-right">&nbsp;</i>
@@ -41,9 +40,9 @@
                         {{item.name}}
                       </div>
                       <ul v-show="item.children.length>0 && item.open===1" v-for="x of item.children" class="tagul">
-                        <li class="tagli" @click="getNoteByTag(x.id,x.layer)"
-                            :class="{'lihoveron':x.hover===1,'lihoverout':x.hover===0}">
-                          <div class="lidiv2"
+                        <li class="tagli"
+                            :class="{'lihoveron':x.hover===1,'lihoverout':x.hover===0,'liopen':x.open===1}">
+                          <div class="lidiv2" @click="getNoteByTag(x.id,x.layer)"
                                @mouseenter="mouseenterM(x.id,x.layer)"
                                @mouseleave="mouseleaveM(x.id,x.layer)">
                             <i v-show="x.open===0" class="el-icon-arrow-right">&nbsp;&nbsp;</i>
@@ -104,26 +103,7 @@
             collectCount: '10k',
             isCollect: false,
           },
-          {
-            id: 2,
-            from: '来自关注:和泉纱雾',
-            author: '和泉纱雾',
-            authorImg: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/100/h/100',
-            authorImg2: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/250/h/120',
-            description: '学习使人落后',
-            tags: [{'tag': '动漫'}, {'tag': '日本'}, {'tag': '二次元'}, {'tag': '樱花'}, {'tag': '和泉纱雾'}],
-            title: '如何评价《秒速5厘米》这部动漫?',
-            logotxt: '秒速5厘米想要传达的是  仅仅相爱并不能打破一切阻隔  爱情并不像说起来那么简单  爱的力量在现实面前常常显得异常渺小。  不能天天在一起 不代表不想念；  天天都能见面  不代表心的距离也如身体距离那么近。',
-            time: '今天 14:45',
-            agreeCount: '8k',
-            isAgree: true,
-            commCount: '16k',
-            isComm: false,
-            shareCount: '36',
-            isShare: true,
-            collectCount: '10k',
-            isCollect: false,
-          },
+
         ],
       }
     },
@@ -136,7 +116,7 @@
         this.aniShow2 = true
       }, 500)
       this.getMoreNote()
-      // this.getTags()
+      this.getTags()
       // this.getMoreAuto()//自动加载
 
     },
@@ -238,14 +218,31 @@
 
       //根据标签获取笔记
       getNoteByTag(id, layer) {
+        console.log('id=', id, 'layer', layer)
         //第一层
         if (layer === 1) {
-          let tag = this.tags.find(x => x.id === id)
-          this.tags.forEach(x => x.open = 0)
+          let tag = this.tags.find(x => x.id === id);
+          this.tags.forEach(x => x.open = 0);
+          this.tags.forEach(x => {
+            x.children.forEach(y => {
+              y.open = 0
+            })
+          });
           tag.open = 1
+        } else if (layer === 2) {
+          this.tags.forEach(x => {
+            x.open = 0;
+            x.children.forEach(y => {
+              y.open = 0;
+              if (y.id === id) {
+                y.open = 1
+                x.open = 1
+              }
+            })
+          })
         }
-
-        console.log('走接口')
+        console.log(this.tags)
+        console.log('走接口');
       },
 
       //自动加载更多
@@ -284,6 +281,7 @@
     },
   }
   getMoreAuto()
+
   function getMoreAuto() {
     console.log('getmore1')
     console.log(window)
