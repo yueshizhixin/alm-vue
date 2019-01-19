@@ -207,6 +207,9 @@
         }
       }
     },
+    created() {
+      sessionStorage['needSign'] = null
+    },
     mounted() {
       this.aniShow = true
       this.getId()

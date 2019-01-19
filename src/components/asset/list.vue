@@ -111,6 +111,9 @@
       }
 
     },
+    created() {
+      sessionStorage['needSign'] = null
+    },
     mounted() {
       //动画
       this.aniShow = true
@@ -187,7 +190,6 @@
 
       //标签点击
       clcikTagStyle(id, layer) {
-        console.log('id=', id, 'layer', layer)
         //第一层
         if (layer === 1) {
           let tag = this.tags.find(x => x.id === id);

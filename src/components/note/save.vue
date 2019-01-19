@@ -1,16 +1,38 @@
 <template>
   <div>
     <el-row>
-      <el-col :md="3" style=" overflow-y:scroll;  height:calc(100vh - 100px);">
-        <el-row v-for="item of tags">
+      <el-col :md="4" style=" overflow-y:scroll;  height:calc(100vh - 100px);">
+        <el-row>
           <el-col :md="24">
-            <el-button :key="item.id" class="aside-rightdivbutton">
-              <span v-if="item.layer===2">&nbsp;&nbsp;</span>&nbsp;&nbsp;{{item.name}}
-            </el-button>
+            <ul class="tagul">
+              <li v-for="item of tags" class="tagli lihoveron"
+                  :class="{'lihoveron':item.hover===1,'lihoverout':item.hover===0,'liopen':item.open===1 && !item.children.find(x=>x.open===1)}">
+                <div class="lidiv1" @click="clcikTagStyle(item.id,item.layer)"
+                     @mouseenter="mouseenterM(item.id,item.layer)"
+                     @mouseleave="mouseleaveM(item.id,item.layer)">
+                  <i v-show="item.open===0" class="el-icon-arrow-right">&nbsp;</i>
+                  <i v-show="item.open===1 && item.children.length===0" class="el-icon-arrow-left">&nbsp;</i>
+                  <i v-show="item.open===1 && item.children.length>0" class="el-icon-arrow-down">&nbsp;</i>
+                  {{item.name}}
+                </div>
+                <ul v-show="item.children.length>0 && item.open===1" v-for="x of item.children" class="tagul">
+                  <li class="tagli"
+                      :class="{'lihoveron':x.hover===1,'lihoverout':x.hover===0,'liopen':x.open===1}">
+                    <div class="lidiv2" @click="clcikTagStyle(x.id,x.layer)"
+                         @mouseenter="mouseenterM(x.id,x.layer)"
+                         @mouseleave="mouseleaveM(x.id,x.layer)">
+                      <i v-show="x.open===0" class="el-icon-arrow-right">&nbsp;&nbsp;</i>
+                      <i v-show="x.open===1" class="el-icon-arrow-left">&nbsp;&nbsp;</i>
+                      {{x.name}}
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           </el-col>
         </el-row>
       </el-col>
-      <el-col :md="18">
+      <el-col :md="20">
         <el-row>
           <el-col :md="24">
             <label>
@@ -49,37 +71,158 @@
         noteThumb: [],//某标签下笔记缩略
 
         note: {
+          id: -1,
           title: '',
           placeholder: '请输入...',
-          content: ''
+          content: '',
+          tagId1: 0,
+          tagName1: '',
+          tagId2: 0,
+          tagName2: '',
         }
 
       }
     },
+    created() {
+      sessionStorage['needSign'] = 1
+    },
     mounted() {
+      this.note.id = Number(this.$route.params.id)
+      if (Number.isNaN(this.note.id) || this.note.id < 0) {
+        this.$router.push({path: '/note'})
+      }
+      this.note.id = Number(this.$route.params.id)
       this.note.title = new Date().toLocaleString()
       this.getTags()
+      if (this.note.id > 0) {
+        this.getNote()
+      }
     },
     methods: {
+      //hover效果
+      mouseenterM(id, layer) {
+        if (layer === 1) {
+          this.tags.forEach(x => {
+            if (x.id === id) {
+              x.hover = 1
+            }
+            else {
+              x.hover = 0
+            }
+            Array.from(x.children).forEach(y => {
+              y.hover = 0
+            })
+          })
+        } else if (layer === 2) {
+          this.tags.forEach(x => {
+            x.hover = 0
+            Array.from(x.children).forEach(y => {
+              if (y.id === id) {
+                y.hover = 1;
+              }
+              else {
+                y.hover = 0;
+              }
+            })
+          })
+        }
+      },
+      mouseleaveM(id, layer) {
+        if (layer === 1) {
+          this.tags.find(x => x.id === id).hover = 0
+        }
+        else if (layer === 2) {
+          this.tags.forEach(x => {
+            let item = x.children.find(y => y.id === id)
+            if (item) {
+              item.hover = 0
+              return
+            }
+          })
+        }
+      },
+      //标签点击
+      clcikTagStyle(id, layer) {
+        this.note.tagId1 = 0
+        this.note.tagId2 = 0
+        this.note.tagName1 = ''
+        this.note.tagName2 = ''
+        //第一层
+        if (layer === 1) {
+          let tag = this.tags.find(x => x.id === id);
+          this.tags.forEach(x => x.open = 0);
+          this.tags.forEach(x => {
+            x.children.forEach(y => {
+              y.open = 0
+            })
+          });
+          tag.open = 1
+          this.note.tagId1 = tag.id
+          this.note.tagName1 = tag.name
+        } else if (layer === 2) {
+          this.tags.forEach(x => {
+            x.open = 0;
+            x.children.forEach(y => {
+              y.open = 0;
+              if (y.id === id) {
+                y.open = 1
+                x.open = 1
+                this.note.tagId1 = x.id
+                this.note.tagName1 = x.name
+                this.note.tagId2 = y.id
+                this.note.tagName2 = y.name
+              }
+            })
+          })
+        }
+      },
+
+      //获取所有标签
       getTags() {
         glb.get(this, '/tag', {}, (data) => {
-          console.log(data)
           this.tags = []
           if (data.code === 200) {
-
-            this.tags.push(...data.data)
-            console.log(this.tags)
+            let layer1Arr = data.data.filter(x => x.layer === 1)
+            let layer2Arr = data.data.filter(x => x.layer === 2)
+            layer2Arr.forEach(x => {
+              x.open = 0
+              x.hover = 0
+            })
+            layer1Arr.forEach(x1 => {
+              x1.children = (layer2Arr.filter(x2 => x2.parentId === x1.id) || [])
+              x1.open = 0
+              x1.hover = 0
+              this.tags.push(x1)
+            })
           }
         })
       },
 
       //显示某个笔记
-      showNote(id) {
-        this.note = this.noteThumb.find(x => x.id === id)
+      getNote(id) {
+        glb.get(this, '/note/' + this.note.id, {}, (data) => {
+          if (data.code === 200 && data.ok === 1) {
+            this.note = data.data
+          }
+          else {
+            this.$router.push({path: '/'})
+          }
+        })
       },
 
+      //保存
       save() {
-        glb.alert_success(this, '保存成功')
+        glb.post(this, '/note/' + this.note.id, this.note, (data) => {
+          glb.alert_info(this, data.msg);
+          if (data.code === 200) {
+            if (data.ok === 1 && this.note.id === 0) {
+              this.note.id = data.data.id
+              this.$router.push({path: '/note/save/' + data.data.id})
+            }
+          }
+
+        })
+
       }
     }
   }

@@ -107,9 +107,10 @@
         ],
       }
     },
+    created() {
+      sessionStorage['needSign'] = 0
+    },
     mounted() {
-      this.getMoreNote()
-      this.getMoreNote()
       //动画
       this.aniShow = true
       setTimeout(() => {
@@ -119,52 +120,18 @@
       //右侧
       this.sideRight = this.sideRightM()
 
-      // window.addEventListener('scroll', () => {
-      //   console.log('getMoreAuto')
-      //   let item = document.getElementById('notes')
-      //   // let scrollTop = window.scrollY
-      //   // let scrollHeight = item.offsetHeight;
-      //   // let windowHeight = document.body.clientHeight;
-      //   // var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      //   let scrollTop = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset
-      //   this.$nextTick(() => {
-      //     // console.log('获取1',document.getElementById("item1").scrollTop)
-      //     // console.log('获取2',document.getElementById("item2").scrollTop)
-      //     console.log('获取3', document.getElementById("item3").scrollTop)
-      //     console.log('获取4', document.getElementById("item4").scrollTop)
-      //     console.log('获取5', document.querySelector('.divMain').scrollTop)
-      //     // scrollTop=document.getElementById("item").scrollTop
-      //   });
-      //   let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-      //   let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-      //   console.log('scrollTop', scrollTop)
-      //   console.log('scrollHeight', scrollHeight)
-      //   console.log('windowHeight', windowHeight)
-      //   // console.log('document.documentElement.scrollTop', document.documentElement.scrollTop || document.body.scrollTop)
-      //   // console.log('document.body.scrollTop', window.document.body.scrollTop)
-      //   // console.log('window.pageYOffset', window.pageYOffset)
-      //   // if (scrollTop + windowHeight >= scrollHeight - 100) {
-      //   //   console.log('自动加载')
-      //   //   // item.style.height = parseInt(item.style.height) + 1000 + "px"
-      //   //   this.getMoreNote()
-      //   // }
-      // }, true)
+      this.getTags()
 
-      // this.getTags()
-
-    }
-    ,
+    },
     destroyed() {
       window.removeEventListener('scroll', this.getMoreAuto)
-    }
-    ,
+    },
     computed: {
       sideRightTop2() {
         //基础+pad*2+button*3+margin
         return 80 + 20 * 2 + 34 * 3 + 10
       }
-    }
-    ,
+    },
     methods: {
 
       //右侧导航栏
@@ -177,8 +144,7 @@
         else {
           return w / 24 * 20
         }
-      }
-      ,
+      },
 
       //hover效果
       mouseenterM(id, layer) {
@@ -207,8 +173,7 @@
             })
           })
         }
-      }
-      ,
+      },
       mouseleaveM(id, layer) {
         if (layer === 1) {
           this.tags.find(x => x.id === id).hover = 0
@@ -222,13 +187,11 @@
             }
           })
         }
-      }
-      ,
+      },
 
       //获取所有标签
       getTags() {
         glb.get(this, '/tag', {}, (data) => {
-          console.log(data)
           this.tags = []
           if (data.code === 200) {
             let all = {
@@ -254,15 +217,12 @@
               x1.hover = 0
               this.tags.push(x1)
             })
-            console.log(this.tags)
           }
         })
-      }
-      ,
+      },
 
       //根据标签获取笔记
       getNoteByTag(id, layer) {
-        console.log('id=', id, 'layer', layer)
         //第一层
         if (layer === 1) {
           let tag = this.tags.find(x => x.id === id);
@@ -285,38 +245,8 @@
             })
           })
         }
-        console.log(this.tags)
         console.log('走接口');
-      }
-      ,
-
-      //自动加载更多
-      getMoreAuto() {
-        // console.log('getMoreAuto')
-        // let item = document.getElementById('notes')
-        // // let scrollTop = window.pageYOffset
-        // // let scrollHeight = item.offsetHeight;
-        // // let windowHeight = document.body.clientHeight;
-        // var scrollTop =
-        //   window.pageYOffset ||
-        //   document.documentElement.scrollTop ||
-        //   document.body.scrollTop;
-        // // var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        // var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-        // var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-        // console.log('scrollTop', scrollTop)
-        // console.log('scrollHeight', scrollHeight)
-        // console.log('windowHeight', windowHeight)
-        // console.log('document.documentElement.scrollTop', document.documentElement.scrollTop || document.body.scrollTop)
-        // console.log('document.body.scrollTop', window.document.body.scrollTop)
-        // console.log('window.pageYOffset', window.pageYOffset)
-        // if (scrollTop + windowHeight >= scrollHeight - 100) {
-        //   console.log('自动加载')
-        //   // item.style.height = parseInt(item.style.height) + 1000 + "px"
-        //   this.getMoreNote()
-        // }
-      }
-      ,
+      },
 
       //获取更多笔记
       getMoreNote() {
@@ -342,15 +272,13 @@
             isCollect: false,
           },)
         }
-      }
-      ,
+      },
 
 
       test() {
 
       }
-    }
-    ,
+    },
   }
 
 

@@ -51,7 +51,8 @@
           <el-row>
             <el-col :md="16">
               <label>
-                <el-input v-model="user.captcha" autocomplete="off" placeholder="验证码"></el-input>
+                <el-input @keyup.enter.native="signIn" v-model="user.captcha" autocomplete="off"
+                          placeholder="验证码"></el-input>
               </label>
             </el-col>
             <el-col :md="8" style="text-align: right">
@@ -104,7 +105,9 @@
       },
     },
     mounted() {
-      this.signFresh()
+      if (Number(sessionStorage['needSign']) === 1) {
+        this.signFresh()
+      }
     },
     methods: {
       //路由控制
@@ -132,30 +135,28 @@
       },
       //登录
       signIn() {
-        // glb.post(this, '/user/tag=signIn', this.user, (data) => {
-        //   if (data.code === 200) {
-        //     console.log(data)
-        //     if (data.ok === 1) {
-        //       this.dialogFormVisible = false
-        //     }
-        //     glb.alert_info(this, data.msg)
-        //   }
-        // })
+        glb.post(this, '/user/tag=signIn', this.user, (data) => {
+          if (data.code === 200) {
+            if (data.ok === 1) {
+              this.dialogFormVisible = false
+            }
+            glb.alert_info(this, data.msg)
+          }
+        })
 
       },
       //刷新用户
       signFresh() {
-        // glb.post(this, '/user/tag=signFresh', {}, (data) => {
-        //   if (data.code === 200) {
-        //     console.log(data)
-        //     if (data.ok === 0) {
-        //       this.dialogFormVisible = true
-        //       setTimeout(() => {
-        //         this.getCaptcha()
-        //       }, 200)
-        //     }
-        //   }
-        // })
+        glb.post(this, '/user/tag=signFresh', {}, (data) => {
+          if (data.code === 200) {
+            if (data.ok === 0) {
+              this.dialogFormVisible = true
+              setTimeout(() => {
+                this.getCaptcha()
+              }, 200)
+            }
+          }
+        })
       },
 
       test() {
