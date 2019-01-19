@@ -1,9 +1,9 @@
 <template>
-  <div class="divMain">
-    <transition name="el-zoom-in-top">
-      <div v-show="aniShow" class="transition-box">
-        <el-row style="z-index: 10">
-          <el-col :md="18" id="notes">
+  <div class="divMain" id="item1">
+    <transition name="el-zoom-in-top" id="item2">
+      <div v-show="aniShow" class="transition-box" id="item3">
+        <el-row style="z-index: 10" id="item4">
+          <el-col :md="18">
             <note-profile-templ v-for="item of notes" :item="item" :self="self"></note-profile-templ>
             <input type="button" class="addMoreBtn" @click="getMoreNote" value="加载更多"/>
           </el-col>
@@ -108,25 +108,65 @@
       }
     },
     mounted() {
-      this.sideRight = this.sideRightM()
-      //全部所有动画
+      this.getMoreNote()
+      this.getMoreNote()
+      //动画
       this.aniShow = true
-      //右侧动画显示
       setTimeout(() => {
         this.aniShow2 = true
-      }, 500)
-      this.getMoreNote()
-      this.getTags()
-      // this.getMoreAuto()//自动加载
+      }, glb.time.aniShow2)
 
-    },
+      //右侧
+      this.sideRight = this.sideRightM()
+
+      // window.addEventListener('scroll', () => {
+      //   console.log('getMoreAuto')
+      //   let item = document.getElementById('notes')
+      //   // let scrollTop = window.scrollY
+      //   // let scrollHeight = item.offsetHeight;
+      //   // let windowHeight = document.body.clientHeight;
+      //   // var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      //   let scrollTop = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset
+      //   this.$nextTick(() => {
+      //     // console.log('获取1',document.getElementById("item1").scrollTop)
+      //     // console.log('获取2',document.getElementById("item2").scrollTop)
+      //     console.log('获取3', document.getElementById("item3").scrollTop)
+      //     console.log('获取4', document.getElementById("item4").scrollTop)
+      //     console.log('获取5', document.querySelector('.divMain').scrollTop)
+      //     // scrollTop=document.getElementById("item").scrollTop
+      //   });
+      //   let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      //   let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+      //   console.log('scrollTop', scrollTop)
+      //   console.log('scrollHeight', scrollHeight)
+      //   console.log('windowHeight', windowHeight)
+      //   // console.log('document.documentElement.scrollTop', document.documentElement.scrollTop || document.body.scrollTop)
+      //   // console.log('document.body.scrollTop', window.document.body.scrollTop)
+      //   // console.log('window.pageYOffset', window.pageYOffset)
+      //   // if (scrollTop + windowHeight >= scrollHeight - 100) {
+      //   //   console.log('自动加载')
+      //   //   // item.style.height = parseInt(item.style.height) + 1000 + "px"
+      //   //   this.getMoreNote()
+      //   // }
+      // }, true)
+
+      // this.getTags()
+
+    }
+    ,
+    destroyed() {
+      window.removeEventListener('scroll', this.getMoreAuto)
+    }
+    ,
     computed: {
       sideRightTop2() {
         //基础+pad*2+button*3+margin
         return 80 + 20 * 2 + 34 * 3 + 10
       }
-    },
+    }
+    ,
     methods: {
+
       //右侧导航栏
       sideRightM() {
         //el-main pad 20px
@@ -137,7 +177,8 @@
         else {
           return w / 24 * 20
         }
-      },
+      }
+      ,
 
       //hover效果
       mouseenterM(id, layer) {
@@ -166,7 +207,8 @@
             })
           })
         }
-      },
+      }
+      ,
       mouseleaveM(id, layer) {
         if (layer === 1) {
           this.tags.find(x => x.id === id).hover = 0
@@ -180,7 +222,8 @@
             }
           })
         }
-      },
+      }
+      ,
 
       //获取所有标签
       getTags() {
@@ -214,7 +257,8 @@
             console.log(this.tags)
           }
         })
-      },
+      }
+      ,
 
       //根据标签获取笔记
       getNoteByTag(id, layer) {
@@ -243,10 +287,36 @@
         }
         console.log(this.tags)
         console.log('走接口');
-      },
+      }
+      ,
 
       //自动加载更多
-
+      getMoreAuto() {
+        // console.log('getMoreAuto')
+        // let item = document.getElementById('notes')
+        // // let scrollTop = window.pageYOffset
+        // // let scrollHeight = item.offsetHeight;
+        // // let windowHeight = document.body.clientHeight;
+        // var scrollTop =
+        //   window.pageYOffset ||
+        //   document.documentElement.scrollTop ||
+        //   document.body.scrollTop;
+        // // var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        // var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        // var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+        // console.log('scrollTop', scrollTop)
+        // console.log('scrollHeight', scrollHeight)
+        // console.log('windowHeight', windowHeight)
+        // console.log('document.documentElement.scrollTop', document.documentElement.scrollTop || document.body.scrollTop)
+        // console.log('document.body.scrollTop', window.document.body.scrollTop)
+        // console.log('window.pageYOffset', window.pageYOffset)
+        // if (scrollTop + windowHeight >= scrollHeight - 100) {
+        //   console.log('自动加载')
+        //   // item.style.height = parseInt(item.style.height) + 1000 + "px"
+        //   this.getMoreNote()
+        // }
+      }
+      ,
 
       //获取更多笔记
       getMoreNote() {
@@ -272,30 +342,18 @@
             isCollect: false,
           },)
         }
+      }
+      ,
 
-      },
 
       test() {
 
       }
-    },
+    }
+    ,
   }
-  getMoreAuto()
 
-  function getMoreAuto() {
-    console.log('getmore1')
-    console.log(window)
-    window.addEventListener('scroll', (e) => {
-      console.log(e)
-      let d = document.getElementById('notes')
-      var scrollTop = window.pageYOffset;
-      var scrollHeight = d.offsetHeight;
-      var windowHeight = document.body.clientHeight;
-      if (scrollTop + windowHeight >= scrollHeight) {
-        d.style.height = parseInt(d.style.height) + 1000 + "px"
-      }
-    });
-  }
+
 </script>
 
 <style scoped>

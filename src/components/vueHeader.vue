@@ -14,18 +14,13 @@
                   POLY
                 </el-menu-item>
               </el-submenu>
-              <el-submenu index="500">
-                <template slot="title">资源</template>
-                <el-menu-item index="500-100" class="menuItemSub"><i
-                  class="menuItemSub iconfont icon-pic">&nbsp;&nbsp;</i>壁纸
-                </el-menu-item>
-              </el-submenu>
+              <el-menu-item index="500" class="menuItem">资源</el-menu-item>
             </el-menu>
           </el-col>
 
           <el-col :md="10" class="search" :style="{left:searchLeft+'px !important',width:serachWidth+'px'}">
             <el-input placeholder="搜索" @focus="searchFocus" @blur="searchBlur">
-              <el-button slot="append" icon="el-icon-search" style="font-size: 20px;"></el-button>
+              <!--<el-button slot="append" icon="el-icon-search" style="font-size: 20px;"></el-button>-->
             </el-input>
           </el-col>
           <el-col v-if="isSign===1" :md="6"
@@ -119,7 +114,7 @@
         else if (key === '300') this.$router.push({path: '/note'});
         else if (key === '400-100') this.$router.push({path: '/func/crawler'});
         else if (key === '400-200') this.$router.push({path: '/func/low-poly'});
-        else if (key === '500-100') this.$router.push({path: '/asset/bg'})
+        else if (key === '500') this.$router.push({path: '/asset'})
       },
       //搜索框
       searchFocus() {
@@ -137,30 +132,30 @@
       },
       //登录
       signIn() {
-        glb.post(this, '/user/tag=signIn', this.user, (data) => {
-          if (data.code === 200) {
-            console.log(data)
-            if (data.ok === 1) {
-              this.dialogFormVisible = false
-            }
-            glb.alert_info(this, data.msg)
-          }
-        })
+        // glb.post(this, '/user/tag=signIn', this.user, (data) => {
+        //   if (data.code === 200) {
+        //     console.log(data)
+        //     if (data.ok === 1) {
+        //       this.dialogFormVisible = false
+        //     }
+        //     glb.alert_info(this, data.msg)
+        //   }
+        // })
 
       },
       //刷新用户
       signFresh() {
-        glb.post(this, '/user/tag=signFresh', {}, (data) => {
-          if (data.code === 200) {
-            console.log(data)
-            if (data.ok === 0) {
-              this.dialogFormVisible = true
-              setTimeout(() => {
-                this.getCaptcha()
-              }, 200)
-            }
-          }
-        })
+        // glb.post(this, '/user/tag=signFresh', {}, (data) => {
+        //   if (data.code === 200) {
+        //     console.log(data)
+        //     if (data.ok === 0) {
+        //       this.dialogFormVisible = true
+        //       setTimeout(() => {
+        //         this.getCaptcha()
+        //       }, 200)
+        //     }
+        //   }
+        // })
       },
 
       test() {

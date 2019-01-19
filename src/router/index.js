@@ -1,12 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-//首页
-// import index from '../components/index'
-
-//思想
-import thoughtList from '../components/thought/list'
-
 //笔记
 import note_list from '../components/note/list'
 import note_view from '../components/note/view'
@@ -17,8 +11,7 @@ import funcIndex from '../components/func/view'
 import funcCrawler from '../components/func/crawler/crawler'
 import funcLowPoly from '../components/func/low-poly/low_poly'
 
-import asset_view from '../components/asset/view'
-import asset_img from '../components/asset/img/view'
+import asset_list from '../components/asset/list'
 
 Vue.use(Router);
 
@@ -32,11 +25,6 @@ export default new Router({
       path: '/index',
       component: note_list
     },
-    //思想
-    {
-      path: '/thoughts',
-      component: thoughtList,
-    },
     //笔记
     {
       path: '/note',
@@ -48,7 +36,7 @@ export default new Router({
     },
     {
       path: '/note/save/:id',
-      component:note_save,
+      component: note_save,
     },
     //功能
     {
@@ -68,13 +56,7 @@ export default new Router({
     //资源
     {
       path: '/asset',
-      component: asset_view,
-      children: [{
-        //爬虫
-        path: 'bg',
-        component: asset_img,
-      },
-      ],
+      component: asset_list,
     },
   ]
 })

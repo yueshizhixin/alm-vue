@@ -4,7 +4,7 @@
       <el-header class="vueHeader">
         <vue-header></vue-header>
       </el-header>
-      <el-main class="vueMain divbg1">
+      <el-main id="main" class="vueMain divbg1">
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -17,7 +17,35 @@
 
   export default {
     name: 'App',
-    components: {VueFooter, VueHeader}
+    components: {VueFooter, VueHeader},
+
+    data() {
+      return {
+        headImg: [],//头像
+        tips: [],//提示
+      }
+    },
+    mounted() {
+      // document.getElementById('main').style.height=document.getElementById('main').style.height+1000+'px'
+      // window.addEventListener('scroll', () => {
+      //   console.log('app的')
+      //   let scrollTop = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset
+      //   let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      //   let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+      //   console.log('scrollTop', scrollTop)
+      //   console.log('scrollHeight', scrollHeight)
+      //   console.log('windowHeight', windowHeight)
+      //   if (scrollTop + windowHeight >= scrollHeight - 200) {
+      //     console.log('自动加载')
+      //     // document.getElementById('main').style.height=document.getElementById('main').style.height+1000+'px'
+      //     // item.style.height = parseInt(item.style.height) + 1000 + "px"
+      //     // this.getMoreNote()
+      //   }
+      // }, true)
+    },
+    methods: {},
+
+
   }
 
 </script>
@@ -35,7 +63,7 @@
   .vueHeader {
     top: 0;
     font-weight: 700;
-    box-shadow:0 1px 6px rgba(26,26,26,.1);
+    box-shadow: 0 1px 6px rgba(26, 26, 26, .1);
   }
 
   .vueFooter {

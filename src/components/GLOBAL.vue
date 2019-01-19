@@ -8,11 +8,17 @@
     regStrNormal: /^[0-9a-zA-Z]{6,16}$/,
     regTipNormal: '请按规则填写',
 
+    // 前缀地址
     preUrl: 'http://127.0.0.1:8080/api/v1',
 
+    //图像格式化
     imgFormat: {
       head: '?imageView2/1/w/100/h/100',
+    },
 
+    //统一时间
+    time: {
+      aniShow2: 500,
     },
 
     /**
