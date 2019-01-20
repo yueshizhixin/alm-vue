@@ -8,6 +8,12 @@
     regStrNormal: /^[0-9a-zA-Z]{6,16}$/,
     regTipNormal: '请按规则填写',
 
+    num: {
+      pre0(num, n) {
+        return (Array(n).join(0) + num).slice(-n);
+      }
+    },
+
     // 前缀地址
     preUrl: 'http://127.0.0.1:8080/api/v1',
 
@@ -16,15 +22,40 @@
       head: '?imageView2/1/w/100/h/100',
     },
 
+    //分页
+    page: {
+      offset: 1,//当前页码
+      limit: 10,
+      haxNext: true,
+      isLoading: false,//是否正在加载
+    },
+
     //统一时间
     time: {
       aniShow2: 500,
+      //统一格式
+      format(time) {
+        let oneday = 24 * 60 * 60 * 1000;
+        let now = new Date()
+        let today = new Date(now.getFullYear() + '-' + (Number(now.getMonth()) + 1) + '-' + now.getDate())
+        let yestoday = new Date(today.getTime() - oneday)
+        let timedate = new Date(time);
+        if (timedate >= today) {
+          return '今天 ' + this.pre0(timedate.getHours(), 2) + ':' + this.pre0(timedate.getMinutes(), 2) + ":" + this.pre0(timedate.getSeconds(), 2)
+        } else if (timedate >= yestoday && timedate < today) {
+          return '昨天 ' + this.pre0(timedate.getHours(), 2) + ':' + this.pre0(timedate.getMinutes(), 2) + ":" + this.pre0(timedate.getSeconds(), 2)
+        } else {
+          return time
+        }
+      },
+      pre0(num, n) {
+        return (Array(n).join(0) + num).slice(-n);
+      }
     },
 
     /**
      * 统一请求
      */
-
     post(item, url, data, suc) {
       this.totalAxios(item, url, data, suc, 'post')
     },

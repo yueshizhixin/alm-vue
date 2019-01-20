@@ -1,6 +1,7 @@
 /*div背景颜色级别*/
 .divbg1 {
   background-color: #f6f6f6;
+
 }
 
 .divbg2 {
@@ -19,12 +20,19 @@
   最大尺寸
  */
 .divMain {
+  /*max-width: 1199px;*/
+  /*margin-left: auto;*/
+  /*margin-right: auto;*/
+  overflow: auto;
+  height: calc(100% - 60px);
+  padding: 20px;
+  /*overflow: hidden;*/
+}
+
+.myrow {
   max-width: 1199px;
   margin-left: auto;
   margin-right: auto;
-  /*overflow: auto;*/
-  /*height: 80vh;*/
-  /*overflow: hidden;*/
 }
 
 /*
@@ -103,16 +111,15 @@
   font-size: 16px;
 }
 
-
 /**
   dialog统一样式
  */
-.dia-comm,.sign-dia-comm{
+.dia-comm, .sign-dia-comm {
   max-width: 660px;
   min-width: 660px;
 }
 
-.sign-dia-comm{
+.sign-dia-comm {
   /*background:url("http://cdn.yueshizhixin.top/231751-106.jpg");*/
 
 }

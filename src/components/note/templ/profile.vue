@@ -3,38 +3,7 @@
     <el-row :key="item.id">
       <el-col :md="24" class="note-body">
         <el-card>
-          <el-row>
-            <el-col :md="12" v-if="!self">
-                    <span style="color: #909399;font-size: 16px;">
-                      {{item.from}}
-                    </span>
-              <br>
-              <span class="note-author">{{item.author}}</span>
-              <span class="note-signature">
-                        {{item.description}}
-                    </span>
-
-            </el-col>
-            <el-col :md="12" align="right" v-if="!self">
-              <el-tag v-for="(p,i) of item.tags" :key="i" style="margin-left: 7px;"
-                      :type="tagType[Math.floor((Math.random()*5))]">
-                {{p.tag}}
-              </el-tag>
-            </el-col>
-          </el-row>
-
-
-          <el-row style="margin-top: 9px" v-if="!self">
-            <el-col :md="18">
-                    <span class="note-tile">
-                      {{item.title}}
-                    </span>
-            </el-col>
-            <el-col :md="6" align="right">
-              <span class="note-time" v-if="!self">{{item.time}}</span>
-            </el-col>
-          </el-row>
-          <el-row style="margin-top: 6px" v-else>
+          <el-row style="margin-top: 6px">
             <el-col :md="12">
                     <span class="note-tile">
                       {{item.title}}
@@ -42,70 +11,36 @@
             </el-col>
             <el-col :md="12" align="right">
               <el-tag v-for="(p,i) of item.tags" :key="i" style="margin-left: 7px;"
-                      :type="tagType[Math.floor((Math.random()*5))]">
-
-                {{p.tag}}
+                      :type="tagType[Math.floor((Math.random()*5))]"> {{p}}
               </el-tag>
             </el-col>
           </el-row>
-          <el-row :style="{'margin-top': selfMarTop+'px'}">
+          <el-row style="margin-top:9px">
             <el-col :md="24">
                     <span style="color: #303133;font-size: 16px;" @click="$router.push({path: '/note/'+item.id})">
-                        {{item.logotxt}}
+                        {{item.profile}}
                     </span>
             </el-col>
           </el-row>
           <el-row style="margin-top: 9px">
             <el-col :md="4" :sm="4">
-              <div v-if="item.isAgree && !self">
-                <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-less">&nbsp;&nbsp;{{item.agreeCount}}</el-button>
-                <div>
-
-                </div>
-              </div>
-              <div v-else>
-                <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{item.agreeCount}}</el-button>
-              </div>
-
+              <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{item.agreeCount}}</el-button>
             </el-col>
             <el-col :md="4" :sm="4">
-              <div v-if="item.isComm && !self">
-                <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-iccomm">&nbsp;&nbsp;{{item.commCount}}</el-button>
-              </div>
-              <div v-else>
-                <el-button class="bn-note-op" icon="iconfont icon-iccomm">&nbsp;&nbsp;{{item.commCount}}
-                </el-button>
-              </div>
+              <el-button class="bn-note-op" icon="iconfont icon-iccomm">&nbsp;&nbsp;{{item.commCount}}
+              </el-button>
             </el-col>
             <el-col :md="4" :sm="4">
-
-              <div v-if="item.isShare && !self">
-                <el-button class="bn-note-op" type="primary" plain
-                           icon="iconfont icon-kuailianshishujujiegou">
-                  &nbsp;&nbsp;{{item.shareCount}}
-                </el-button>
-              </div>
-              <div v-else>
-                <el-button class="bn-note-op" icon="iconfont icon-kuailianshishujujiegou">&nbsp;&nbsp;{{item.shareCount}}
-                </el-button>
-              </div>
+              <el-button class="bn-note-op" icon="iconfont icon-kuailianshishujujiegou">&nbsp;&nbsp;{{item.shareCount}}
+              </el-button>
             </el-col>
             <el-col :md="4" :sm="4">
-
-              <div v-if="item.isCollect && !self">
-                <el-button class="bn-note-op" type="primary" plain icon="iconfont icon-favorite">&nbsp;&nbsp;{{item.collectCount}}</el-button>
-              </div>
-              <div v-else>
-                <el-button class="bn-note-op" icon="iconfont icon-favorite">&nbsp;&nbsp;{{item.collectCount}}
-                </el-button>
-              </div>
+              <el-button class="bn-note-op" icon="iconfont icon-favorite">&nbsp;&nbsp;{{item.collectCount}}
+              </el-button>
             </el-col>
-            <el-col :md="4" :sm="4">&nbsp;</el-col>
-            <el-col :md="4" :sm="4" v-if="!self">
-              <el-button  class="bn-note-op" icon="iconfont icon-close">&nbsp;不看</el-button>
-            </el-col>
-            <el-col :md="4" :sm="4" v-else style="margin-top: 8px;">
-              <span class="note-time" >{{item.time}}</span>
+            <el-col :md="2" :sm="2">&nbsp;</el-col>
+            <el-col :md="5" :sm="5" style="margin-top: 8px;text-align: right">
+              <span class="note-time">{{this.glb.time.format(item.updateTime)}}</span>
             </el-col>
           </el-row>
         </el-card>
@@ -116,34 +51,34 @@
 </template>
 
 <script>
+  import glb from "@comp/GLOBAL"
+
   export default {
     //笔记item,所有笔记,是否查看自己的笔记
     props: {
-      item:Object,
-      self:Boolean,
+      item: Object,
+      self: Boolean,
     },
     name: "profile",
     data() {
       return {
+        glb: glb,
         tagType: ['success', 'danger', 'info', '', 'warning'],
       }
     },
-    computed:{
-      selfMarTop(){
-        if(self) return 5;
-        else return 9;
-      }
+    computed: {},
+    mounted() {
+      this.item.agreeCount = this.randomNum()
+      this.item.commCount = this.randomNum()
+      this.item.shareCount = this.randomNum()
+      this.item.collectCount = this.randomNum()
     },
     methods: {
-      imgMouseE(id) {
-        if (this.self) return;
-        this.item.authorMsgShow = true
-      },
-      imgMouseL(id) {
-        if (this.self) return;
-        this.item.authorMsgShow = false
-      },
-    },
+      randomNum() {
+        return Math.floor(Math.random() * 1000)
+      }
+    }
+    ,
   }
 </script>
 

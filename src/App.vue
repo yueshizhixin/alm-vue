@@ -4,8 +4,11 @@
       <el-header class="vueHeader">
         <vue-header></vue-header>
       </el-header>
+
       <el-main id="main" class="vueMain divbg1">
-        <router-view></router-view>
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
       </el-main>
     </el-container>
   </div>
@@ -25,27 +28,31 @@
         tips: [],//提示
       }
     },
-    mounted() {
-      // document.getElementById('main').style.height=document.getElementById('main').style.height+1000+'px'
-      // window.addEventListener('scroll', () => {
-      //   console.log('app的')
-      //   let scrollTop = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset
-      //   let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-      //   let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-      //   console.log('scrollTop', scrollTop)
-      //   console.log('scrollHeight', scrollHeight)
-      //   console.log('windowHeight', windowHeight)
-      //   if (scrollTop + windowHeight >= scrollHeight - 200) {
-      //     console.log('自动加载')
-      //     // document.getElementById('main').style.height=document.getElementById('main').style.height+1000+'px'
-      //     // item.style.height = parseInt(item.style.height) + 1000 + "px"
-      //     // this.getMoreNote()
-      //   }
-      // }, true)
+    created() {
+      this.dataInit()
     },
-    methods: {},
-
-
+    mounted() {
+    },
+    methods: {
+      dataInit() {
+        if (sessionStorage['data']) return
+        console.log('set-data')
+        sessionStorage['data'] = 1
+        sessionStorage['author'] = 'ALM'
+        sessionStorage['authorImg'] = 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/300/h/300'
+        sessionStorage['headImg'] = JSON.stringify([
+          'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/300/h/300',
+          'http://cdn.yueshizhixin.top/231813-106.jpg?imageView2/1/w/300/h/300',
+          'http://cdn.yueshizhixin.top/231751-106.jpg?imageView2/1/w/300/h/300',
+          'http://cdn.yueshizhixin.top/44215-106.jpg?imageView2/1/w/300/h/300',
+          'http://cdn.yueshizhixin.top/249873-106.jpg?imageView2/1/w/300/h/300',
+        ])
+        sessionStorage['tip'] = JSON.stringify([
+          `<span class='tip'>塞下秋来风景异</span><span class='tip'>衡阳雁去无留意</span>`,
+          `<span class='tip'>周虽旧邦</span><span class='tip'>其命维新</span>`,
+        ])
+      },
+    },
   }
 
 </script>
@@ -81,5 +88,10 @@
     z-index: 9;
   }
 
-
+  .tip {
+    color: #909399;
+    font-size: 14px;
+    display: inline-block;
+    width: 100%;
+  }
 </style>

@@ -1,19 +1,13 @@
 <template>
-  <div class="divMain">
+  <div style="height: 60px !important;max-width: 1199px;margin-left: auto;margin-right: auto;">
     <el-row>
       <el-col :md="20">
         <el-row>
-          <el-col :md="8">
+          <el-col :md="4">
             <el-menu :default-active="menuActiveIndex" mode="horizontal" @select="menuHandler"
                      class="menu" active-text-color="#409eff" text-color="#666666" background-color="#ffffff">
               <el-menu-item index="300" class="menuItem">笔记
               </el-menu-item>
-              <el-submenu index="400">
-                <template slot="title">功能</template>
-                <el-menu-item index="400-200" class="menuItemSub"><i class="menuItemSub iconfont icon-listblock">&nbsp;&nbsp;</i>LOW
-                  POLY
-                </el-menu-item>
-              </el-submenu>
               <el-menu-item index="500" class="menuItem">资源</el-menu-item>
             </el-menu>
           </el-col>
@@ -101,7 +95,7 @@
       searchLeft() {
         let w = document.body.clientWidth;
         // return  w * 16 / 24 * (10 / 24)
-        return (w - 1199) / 2 + 1199 / 24 * 6
+        return (w - 1199) / 2 + 1199 / 24 * 4
       },
     },
     mounted() {

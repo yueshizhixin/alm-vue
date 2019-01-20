@@ -1,11 +1,11 @@
 <template>
-  <div class="divMain" id="item1">
-    <transition name="el-zoom-in-top" id="item2">
-      <div v-show="aniShow" class="transition-box" id="item3">
-        <el-row style="z-index: 10" id="item4">
+  <div class="divMain" id="divMain">
+    <transition name="el-zoom-in-top">
+      <div v-show="aniShow" class="transition-box">
+        <el-row style="z-index: 10 " class="myrow">
           <el-col :md="18">
-            <note-profile-templ v-for="item of notes" :item="item" :self="self"></note-profile-templ>
-            <input type="button" class="addMoreBtn" @click="getMoreNote" value="加载更多"/>
+            <note-profile-templ v-for="item of notes" :item="item" :self="true"></note-profile-templ>
+            <input v-show="page.isLoading===1" type="button" class="addMoreBtn" value="加载中..."/>
           </el-col>
           <el-col :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
             <transition name="el-fade-in-linear">
@@ -15,14 +15,17 @@
                     <el-col :md="12">
                       <img
                         style="padding: 0 20px 0 20px;width: 100px;border-radius:50%;"
-                        src="http://cdn.yueshizhixin.top/248986-106.jpg?imageView2/1/w/500/h/500" class="image ">
+                        :src="headImg" class="image ">
                     </el-col>
                     <el-col :md="12">
-                      <div>
-                        <span style="color: #303133;font-size: 28px;    font-weight: 500;" class="">ALM</span>
+                      <div style="margin-top:5px;">
+                        <span style="color: #303133;font-size: 28px;font-weight: 500;">
+                          {{author}}
+                        </span>
                       </div>
                       <div>
-                        <span style="color: #909399; margin-top: 20px;font-size: 14px;" class="">人类为何而存在</span>
+                        <div v-html="tip" style="margin-top: 7px;"></div>
+
                       </div>
                     </el-col>
                   </el-row>
@@ -55,7 +58,6 @@
                   </ul>
                 </div>
               </div>
-
             </transition>
           </el-col>
         </el-row>
@@ -73,44 +75,28 @@
     data() {
       return {
         sideRight: 0,//右侧导航栏
+        headImg: '',
+        tip: '',
+        author: '',
 
-        self: true,//是否查看自己的笔记
         aniShow: false,//加载动画
         aniShow2: false,//加载动画
         tagType: ['success', 'danger', 'info', '', 'warning'],
 
         tags: [],//所有标签
         tagId: 0,//当前点击标签
+        page: glb.page,
 
-        notes: [
-          {
-            id: 1,
-            from: '来自关注:和泉纱雾',
-            author: '和泉纱雾',
-            authorImg: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/100/h/100',
-            authorImg2: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/250/h/120',
-            description: '学习使人落后',
-            tags: [{'tag': '动漫'}, {'tag': '日本'}, {'tag': '二次元'}, {'tag': '樱花'}, {'tag': '和泉纱雾'}],
-            title: '如何评价《秒速5厘米》这部动漫?',
-            logotxt: '秒速5厘米想要传达的是  仅仅相爱并不能打破一切阻隔  爱情并不像说起来那么简单  爱的力量在现实面前常常显得异常渺小。  不能天天在一起 不代表不想念；  天天都能见面  不代表心的距离也如身体距离那么近。',
-            time: '今天 14:45',
-            agreeCount: '8k',
-            isAgree: true,
-            commCount: '16k',
-            isComm: false,
-            shareCount: '36',
-            isShare: true,
-            collectCount: '10k',
-            isCollect: false,
-          },
-
-        ],
+        notes: [],
       }
     },
     created() {
+      console.log('note/list created')
       sessionStorage['needSign'] = 0
+      this.dataInit()
     },
     mounted() {
+      console.log('note/list mounted')
       //动画
       this.aniShow = true
       setTimeout(() => {
@@ -121,10 +107,8 @@
       this.sideRight = this.sideRightM()
 
       this.getTags()
-
-    },
-    destroyed() {
-      window.removeEventListener('scroll', this.getMoreAuto)
+      this.getMoreNote()
+      this.scroll()
     },
     computed: {
       sideRightTop2() {
@@ -133,7 +117,6 @@
       }
     },
     methods: {
-
       //右侧导航栏
       sideRightM() {
         //el-main pad 20px
@@ -144,6 +127,13 @@
         else {
           return w / 24 * 20
         }
+      },
+      dataInit() {
+        let headImg = JSON.parse(sessionStorage['headImg'])
+        this.headImg = headImg[Math.floor(Math.random() * headImg.length)]
+        let tip = JSON.parse(sessionStorage['tip'])
+        this.tip = tip[Math.floor(Math.random() * tip.length)]
+        this.author = sessionStorage['author']
       },
 
       //hover效果
@@ -250,30 +240,45 @@
 
       //获取更多笔记
       getMoreNote() {
-        for (let i = 0; i < 5; i++) {
-          this.notes.push({
-            id: 2,
-            from: '来自关注:和泉纱雾',
-            author: '和泉纱雾',
-            authorImg: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/100/h/100',
-            authorImg2: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/1/w/250/h/120',
-            description: '学习使人落后',
-            tags: [{'tag': '动漫'}, {'tag': '日本'}, {'tag': '二次元'}, {'tag': '樱花'}, {'tag': '和泉纱雾'}],
-            title: '如何评价《秒速5厘米》这部动漫?',
-            logotxt: '秒速5厘米想要传达的是  仅仅相爱并不能打破一切阻隔  爱情并不像说起来那么简单  爱的力量在现实面前常常显得异常渺小。  不能天天在一起 不代表不想念；  天天都能见面  不代表心的距离也如身体距离那么近。',
-            time: '今天 14:45',
-            agreeCount: '8k',
-            isAgree: true,
-            commCount: '16k',
-            isComm: false,
-            shareCount: '36',
-            isShare: true,
-            collectCount: '10k',
-            isCollect: false,
-          },)
+        if (!this.page.haxNext || this.page.isLoading) {
+          return
         }
+        console.log('自动加载')
+        this.page.isLoading = true
+        glb.get(this, '/note?offset=' + this.page.offset + '&limit=' + this.page.limit, {}, (data) => {
+          data.data.forEach(x => {
+            x.tags = []
+            if (x.tagName1) {
+              x.tags.push(x.tagName1)
+            }
+            if (x.tagName2) {
+              x.tags.push(x.tagName2)
+            }
+            sessionStorage['note/' + x.id] = JSON.stringify(x)
+          })
+          let len = Array.from(data.data).length
+          if (len < this.page.limit || len === 0) {
+            this.page.haxNext = false
+          }
+          this.notes.push(...data.data);
+          this.page.offset++
+          this.page.isLoading = false
+        });
+
       },
 
+      scroll() {
+        window.addEventListener('scroll', () => {
+          let scrollTop = document.getElementById('divMain').scrollTop
+          let scrollHeight = document.getElementById('divMain').scrollHeight
+          let clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+          // sessionStorage['scrollTop']=scrollTop
+          if (scrollTop + clientHeight >= scrollHeight - 200) {
+            this.getMoreNote()
+          }
+        }, true)
+      }
+      ,
 
       test() {
 
@@ -361,5 +366,11 @@
     border: 0;
     background-color: white;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1)
+  }
+
+  .tip {
+    color: #909399;
+    margin-top: 20px;
+    font-size: 14px;
   }
 </style>

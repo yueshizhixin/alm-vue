@@ -68,7 +68,6 @@
         /**
          * 笔记部分
          */
-        noteThumb: [],//某标签下笔记缩略
 
         note: {
           id: -1,
@@ -79,7 +78,10 @@
           tagName1: '',
           tagId2: 0,
           tagName2: '',
-        }
+          profile: '',
+        },
+
+        profileMaxLength: 100,//缩略最大长度
 
       }
     },
@@ -203,6 +205,19 @@
         glb.get(this, '/note/' + this.note.id, {}, (data) => {
           if (data.code === 200 && data.ok === 1) {
             this.note = data.data
+            if (this.note.tagId1 > 0) {
+              this.tags.find(x => x.id === this.note.tagId1).open = 1
+            }
+            if (this.note.tagId2 > 0) {
+              this.tags.forEach(x => {
+                x.children.forEach(y => {
+                  if (y.id === this.note.tagId2) {
+                    y.open = 1
+                  }
+                })
+              })
+            }
+
           }
           else {
             this.$router.push({path: '/'})
@@ -212,6 +227,14 @@
 
       //保存
       save() {
+        if (this.note.tagId1 === 0) {
+          glb.alert_info(this, '请选择标签')
+          return
+        }
+        this.note.profile = this.note.content.replace(/[^\u4e00-\u9fa5\s]/gi, "");
+        if (this.note.profile && this.note.profile.length > this.profileMaxLength) {
+          this.note.profile = this.note.profile.substring(0, this.profileMaxLength)
+        }
         glb.post(this, '/note/' + this.note.id, this.note, (data) => {
           glb.alert_info(this, data.msg);
           if (data.code === 200) {

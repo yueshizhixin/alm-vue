@@ -2,7 +2,7 @@
   <div class="divMain">
     <transition name="el-zoom-in-top">
       <div v-show="aniShow" class="transition-box">
-        <el-row>
+        <el-row class="myrow">
           <el-col :md="18" id="notes">
             <el-row>
               <el-col :md="5" :sm="12" :xs="24" v-for="(o, i) in songs" :key="i" :offset="i%4===0 ? 0 : 1">
