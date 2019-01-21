@@ -1,25 +1,30 @@
 <template>
-  <div class="divMain">
+  <div class="divMain" id="asset-litt-divMain">
     <transition name="el-zoom-in-top">
       <div v-show="aniShow" class="transition-box">
         <el-row class="myrow">
-          <el-col :md="18" id="notes">
+          <el-col :md="20" id="notes">
             <el-row>
-              <el-col :md="5" :sm="12" :xs="24" v-for="(o, i) in songs" :key="i" :offset="i%4===0 ? 0 : 1">
-                <el-card :body-style="{ padding: '0px' }">
-                  <img :src="o.url" class="image">
-                  <div style="padding: 14px;">
-                    <span>好吃的汉堡</span>
-                    <div class="bottom clearfix">
-                      <time class="time">风的清</time>
-                      <el-button type="text" class="button">选择</el-button>
-                    </div>
-                  </div>
-                  <div v-if="i%4===3"><br></div>
-                </el-card>
-              </el-col>
+              <div :md="24" v-for="(item, index) in data" :key="index"
+                   class="bg-div">
+                <img :src="item.url" class="bg-div-img">
+                <div style="margin: 8px 14px 8px 14px;font-size: 17px">
+                  <el-row>
+                    <el-col>
+                      那个人啊打发
+                    </el-col>
+                  </el-row>
+                  <el-row style="margin-top: 12px">
+                    <el-col :md="18" style="color: #909399;font-size: 14px">
+                      2018-18-25 21:14:15
+                    </el-col>
+                    <el-col :md="6">
+                      <button style="width: 100%;border: 0;background-color: white">原图</button>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div>
             </el-row>
-            <input type="button" class="addMoreBtn" value="加载更多"/>
           </el-col>
 
           <el-col :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
@@ -29,15 +34,18 @@
                   <el-row class="srdiv">
                     <el-col :md="12">
                       <img
-                        style="padding: 0 20px 0 20px;border-radius:50%; width: calc(100% - 40px);   display: block;"
-                        src="http://cdn.yueshizhixin.top/248986-106.jpg?imageView2/1/w/500/h/500" class="image ">
+                        style="padding: 0 20px 0 20px;width: 100px;border-radius:50%;"
+                        :src="headImg" class="image ">
                     </el-col>
                     <el-col :md="12">
-                      <div>
-                        <span style="color: #303133;font-size: 28px;    font-weight: 500;" class="">ALM</span>
+                      <div style="margin-top:5px;">
+                        <span style="color: #303133;font-size: 28px;font-weight: 500;">
+                          {{author}}
+                        </span>
                       </div>
                       <div>
-                        <span style="color: #909399; margin-top: 20px;font-size: 14px;" class="">人类为何而存在</span>
+                        <div v-html="tip" style="margin-top: 7px;"></div>
+
                       </div>
                     </el-col>
                   </el-row>
@@ -88,31 +96,33 @@
     name: "list",
     data() {
       return {
+        headImg: '',
+        tip: '',
+        author: '',
         aniShow: false,//动画显示
         aniShow2: false,//动画显示
-
         sideRight: 0,//右侧
 
         tags: [],//所有标签
 
-        songs: [
-          {url: 'http://cdn.yueshizhixin.top/299243-106.jpg?imageView2/2/h/200'},
-          {url: 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/2/h/200'},
-          {url: 'http://cdn.yueshizhixin.top/92595-106.jpg?imageView2/2/h/200'},
-          {url: 'http://cdn.yueshizhixin.top/231813-106.jpg?imageView2/2/h/200'},
-          {url: 'http://cdn.yueshizhixin.top/232131-106.jpg?imageView2/2/h/200'},
-          {url: 'http://cdn.yueshizhixin.top/44215-106.jpg?imageView2/2/h/200'},
-          {url: 'http://cdn.yueshizhixin.top/231751-106.jpg?imageView2/2/h/200'},
-          // {url: 'http://cdn.yueshizhixin.top/213777-106.jpg?imageView2/2/h/200'},
-          {url: 'http://cdn.yueshizhixin.top/248986-106.jpg?imageView2/2/h/200'},
-          {url: 'http://cdn.yueshizhixin.top/249873-106.jpg?imageView2/2/h/200'},
-          {url: 'http://cdn.yueshizhixin.top/259354-106.jpg?imageView2/2/h/200'},
+        data: [
+          {url: 'http://cdn.yueshizhixin.top/299243-106.jpg' + glb.imgFormat.bgSmall},
+          {url: 'http://cdn.yueshizhixin.top/41795-106.jpg' + glb.imgFormat.bgSmall},
+          {url: 'http://cdn.yueshizhixin.top/92595-106.jpg' + glb.imgFormat.bgSmall},
+          {url: 'http://cdn.yueshizhixin.top/231813-106.jpg' + glb.imgFormat.bgSmall},
+          {url: 'http://cdn.yueshizhixin.top/232131-106.jpg' + glb.imgFormat.bgSmall},
+          {url: 'http://cdn.yueshizhixin.top/44215-106.jpg' + glb.imgFormat.bgSmall},
+          {url: 'http://cdn.yueshizhixin.top/231751-106.jpg' + glb.imgFormat.bgSmall},
+          {url: 'http://cdn.yueshizhixin.top/248986-106.jpg' + glb.imgFormat.bgSmall},
+          {url: 'http://cdn.yueshizhixin.top/249873-106.jpg' + glb.imgFormat.bgSmall},
+          {url: 'http://cdn.yueshizhixin.top/259354-106.jpg' + glb.imgFormat.bgSmall},
         ]
       }
 
     },
     created() {
       sessionStorage['needSign'] = null
+      this.dataInit()
     },
     mounted() {
       //动画
@@ -125,6 +135,12 @@
       this.sideRight = this.sideRightM()
 
       this.getTags()
+
+      document.getElementById('asset-litt-divMain').addEventListener('scroll', this.scroll, true)
+    },
+    destroyed() {
+      console.log('note/asset destroyed')
+      document.getElementById('asset-litt-divMain').removeEventListener('scroll', this.scroll)
     },
     computed: {
       sideRightTop2() {
@@ -143,6 +159,13 @@
         else {
           return w / 24 * 20
         }
+      },
+      dataInit() {
+        let headImg = JSON.parse(sessionStorage['headImg'])
+        this.headImg = headImg[Math.floor(Math.random() * headImg.length)]
+        let tip = JSON.parse(sessionStorage['tip'])
+        this.tip = tip[Math.floor(Math.random() * tip.length)]
+        this.author = sessionStorage['author']
       },
 
       //hover效果
@@ -217,28 +240,17 @@
 
       //获取所有标签
       getTags() {
-        this.tags = []
-        let data = [{
-          id: 1,
-          layer: 1,
-          name: "壁纸",
-          parentId: 0,
-          sequence: 10,
-          children: [],
-          open: 0,
-          hover: 0,
-        }, {
-          id: 2,
-          layer: 1,
-          name: "头像",
-          parentId: 0,
-          sequence: 1,
-          children: [],
-          open: 0,
-          hover: 0,
-        },]
-        this.tags.push(...data)
+        this.tags = JSON.parse(sessionStorage['assetTag'])
       },
+
+      scroll() {
+        console.log('asset-list scroll')
+      },
+
+      test() {
+
+      }
+
     }
   }
 </script>
@@ -301,6 +313,25 @@
     width: 100%;
     text-align: left;
     margin-left: 0;
+  }
+
+  /**
+   * 背景图
+   */
+  .bg-div, .bg-div-img {
+    width: 260px;
+  }
+
+  .bg-div {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
+    background-color: white;
+    margin: 0 50px 40px 0;
+    float: left;
+    border: 1px solid ghostwhite;
+  }
+
+  .bg-div-img {
+
   }
 
 </style>

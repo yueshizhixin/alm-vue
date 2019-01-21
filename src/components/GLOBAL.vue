@@ -19,7 +19,8 @@
 
     //图像格式化
     imgFormat: {
-      head: '?imageView2/1/w/100/h/100',
+      head: '?imageView2/1/w/300/h/300',
+      bgSmall: '?imageView2/2/w/480/h/270'
     },
 
     //分页

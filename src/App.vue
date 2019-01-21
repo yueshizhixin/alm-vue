@@ -17,6 +17,7 @@
 <script>
   import VueHeader from "@comp/vueHeader";
   import VueFooter from "@comp/vueFooter";
+  import glb from "@comp/GLOBAL"
 
   export default {
     name: 'App',
@@ -39,18 +40,37 @@
         console.log('set-data')
         sessionStorage['data'] = 1
         sessionStorage['author'] = 'ALM'
-        sessionStorage['authorImg'] = 'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/300/h/300'
+        sessionStorage['authorImg'] = 'http://cdn.yueshizhixin.top/41795-106.jpg' + glb.imgFormat.head
         sessionStorage['headImg'] = JSON.stringify([
-          'http://cdn.yueshizhixin.top/41795-106.jpg?imageView2/1/w/300/h/300',
-          'http://cdn.yueshizhixin.top/231813-106.jpg?imageView2/1/w/300/h/300',
-          'http://cdn.yueshizhixin.top/231751-106.jpg?imageView2/1/w/300/h/300',
-          'http://cdn.yueshizhixin.top/44215-106.jpg?imageView2/1/w/300/h/300',
-          'http://cdn.yueshizhixin.top/249873-106.jpg?imageView2/1/w/300/h/300',
+          'http://cdn.yueshizhixin.top/41795-106.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/231813-106.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/231751-106.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/44215-106.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/249873-106.jpg' + glb.imgFormat.head,
         ])
         sessionStorage['tip'] = JSON.stringify([
           `<span class='tip'>塞下秋来风景异</span><span class='tip'>衡阳雁去无留意</span>`,
           `<span class='tip'>周虽旧邦</span><span class='tip'>其命维新</span>`,
         ])
+        sessionStorage['assetTag'] = JSON.stringify([{
+          id: 1,
+          layer: 1,
+          name: "壁纸",
+          parentId: 0,
+          sequence: 10,
+          children: [],
+          open: 0,
+          hover: 0,
+        }, {
+          id: 2,
+          layer: 1,
+          name: "头像",
+          parentId: 0,
+          sequence: 1,
+          children: [],
+          open: 0,
+          hover: 0,
+        },])
       },
     },
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="divMain" id="divMain">
+  <div class="divMain" id="note-list-divMain">
     <transition name="el-zoom-in-top">
       <div v-show="aniShow" class="transition-box">
         <el-row style="z-index: 10 " class="myrow">
@@ -106,10 +106,15 @@
       //右侧
       this.sideRight = this.sideRightM()
 
-      this.getTags()
-      this.getMoreNote()
-      this.scroll()
+      // this.getTags()
+      // this.getMoreNote()
+      document.getElementById('note-list-divMain').addEventListener('scroll', this.scroll, true)
     },
+    destroyed() {
+      console.log('note/list destroyed')
+      document.getElementById('note-list-divMain').removeEventListener('scroll', this.scroll)
+    },
+
     computed: {
       sideRightTop2() {
         //基础+pad*2+button*3+margin
@@ -268,17 +273,15 @@
       },
 
       scroll() {
-        window.addEventListener('scroll', () => {
-          let scrollTop = document.getElementById('divMain').scrollTop
-          let scrollHeight = document.getElementById('divMain').scrollHeight
-          let clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
-          // sessionStorage['scrollTop']=scrollTop
-          if (scrollTop + clientHeight >= scrollHeight - 200) {
-            this.getMoreNote()
-          }
-        }, true)
-      }
-      ,
+        console.log('note-list scroll')
+        let scrollTop = document.getElementById('divMain').scrollTop
+        let scrollHeight = document.getElementById('divMain').scrollHeight
+        let clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        // sessionStorage['scrollTop']=scrollTop
+        if (scrollTop + clientHeight >= scrollHeight - 200) {
+          this.getMoreNote()
+        }
+      },
 
       test() {
 
