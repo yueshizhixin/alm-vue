@@ -5,7 +5,7 @@
         <vue-header></vue-header>
       </el-header>
 
-      <el-main id="main" class="vueMain divbg1">
+      <el-main class="vueMain divbg1">
         <keep-alive>
           <router-view></router-view>
         </keep-alive>

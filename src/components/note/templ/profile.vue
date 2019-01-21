@@ -57,7 +57,6 @@
     //笔记item,所有笔记,是否查看自己的笔记
     props: {
       item: Object,
-      self: Boolean,
     },
     name: "profile",
     data() {

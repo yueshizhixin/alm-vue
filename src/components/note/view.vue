@@ -29,7 +29,7 @@
                 </el-col>
 
                 <el-col :md="3" align="right">
-                  <el-button size="small" @click="$router.back(-1)" icon="el-icon-arrow-left"></el-button>
+                  <el-button size="small" @click="gotoNote" icon="el-icon-arrow-left"></el-button>
                 </el-col>
 
               </el-row>
@@ -56,6 +56,7 @@
 
 <script>
   import glb from "@comp/GLOBAL"
+  import commh from '@/assets/js/communicatHandler'
 
   export default {
     name: "note_view",
@@ -89,11 +90,21 @@
       sessionStorage['needSign'] = null
     },
     mounted() {
+    },
+    activated() {
       this.aniShow = true
       this.getNote()
-
+    },
+    deactivated() {
+      this.aniShow = false
     },
     methods: {
+      //转到首页
+      gotoNote() {
+        this.$router.push({path: '/note'})
+      },
+
+      //获取笔记
       getNote() {
         this.id = Number(this.$route.params.id)
         let item = sessionStorage['note/' + this.id]

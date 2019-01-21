@@ -1,5 +1,5 @@
 <template>
-  <div class="divMain" id="asset-litt-divMain">
+  <div class="divMain" id="asset-list-divMain">
     <transition name="el-zoom-in-top">
       <div v-show="aniShow" class="transition-box">
         <el-row class="myrow">
@@ -8,19 +8,20 @@
               <div :md="24" v-for="(item, index) in data" :key="index"
                    class="bg-div">
                 <img :src="item.url" class="bg-div-img">
-                <div style="margin: 8px 14px 8px 14px;font-size: 17px">
+                <div style="margin: 4px 12px 6px 12px;font-size: 17px">
                   <el-row>
                     <el-col>
                       那个人啊打发
                     </el-col>
                   </el-row>
-                  <el-row style="margin-top: 12px">
-                    <el-col :md="18" style="color: #909399;font-size: 14px">
+                  <el-row style="margin-top: 0;">
+                    <el-col :md="18" style="color: #909399;font-size: 14px;margin-top: 6px;">
                       2018-18-25 21:14:15
                     </el-col>
-                    <el-col :md="6">
-                      <button style="width: 100%;border: 0;background-color: white">原图</button>
-                    </el-col>
+                    <!--<el-col :md="6" style="text-align: right;margin-top: 3px;">-->
+                    <!--<a href="http://www.baidu.com" target="new" class="a-btn">-->
+                    <!--原图</a>-->
+                    <!--</el-col>-->
                   </el-row>
                 </div>
               </div>
@@ -136,11 +137,11 @@
 
       this.getTags()
 
-      document.getElementById('asset-litt-divMain').addEventListener('scroll', this.scroll, true)
+      document.getElementById('asset-list-divMain').addEventListener('scroll', this.scroll, true)
     },
     destroyed() {
       console.log('note/asset destroyed')
-      document.getElementById('asset-litt-divMain').removeEventListener('scroll', this.scroll)
+      document.getElementById('asset-list-divMain').removeEventListener('scroll', this.scroll)
     },
     computed: {
       sideRightTop2() {
@@ -325,13 +326,19 @@
   .bg-div {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
     background-color: white;
-    margin: 0 50px 40px 0;
+    margin: 0 40px 30px 0;
     float: left;
-    border: 1px solid ghostwhite;
+    border: 5px solid ghostwhite;
   }
 
-  .bg-div-img {
-
+  .a-btn {
+    padding-top: 0;
+    font-size: 16px;
+    color: #3a8ee6;
+    width: 100%;
+    border: 0;
+    background-color: white;
+    text-decoration: none;
   }
 
 </style>

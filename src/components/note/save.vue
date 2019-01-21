@@ -54,7 +54,6 @@
 <script>
 
   import glb from "@comp/GLOBAL"
-  import commh from '@/assets/js/communicatHandler'
 
   export default {
     name: "save",

@@ -4,7 +4,9 @@
       <div v-show="aniShow" class="transition-box">
         <el-row style="z-index: 10 " class="myrow">
           <el-col :md="18">
-            <note-profile-templ v-for="item of notes" :item="item" :self="true"></note-profile-templ>
+            <div @click="setScrollTop">
+              <note-profile-templ v-for="item of notes" :item="item"></note-profile-templ>
+            </div>
             <input v-show="page.isLoading===1" type="button" class="addMoreBtn" value="加载中..."/>
           </el-col>
           <el-col :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
@@ -84,8 +86,9 @@
         tagType: ['success', 'danger', 'info', '', 'warning'],
 
         tags: [],//所有标签
-        tagId: 0,//当前点击标签
-        page: glb.page,
+        tagId1: 0,//当前点击标签
+        tagId2: 0,//当前点击标签
+        page: JSON.parse(JSON.stringify(glb.page)),
 
         notes: [],
       }
@@ -97,6 +100,7 @@
     },
     mounted() {
       console.log('note/list mounted')
+
       //动画
       this.aniShow = true
       setTimeout(() => {
@@ -106,9 +110,13 @@
       //右侧
       this.sideRight = this.sideRightM()
 
-      // this.getTags()
-      // this.getMoreNote()
+      this.getTags()
+      this.getMoreNote()
       document.getElementById('note-list-divMain').addEventListener('scroll', this.scroll, true)
+    },
+    activated() {
+      console.log('note/list activated')
+      document.getElementById('note-list-divMain').scrollTop = parseInt(sessionStorage['scrollTop']) || 0
     },
     destroyed() {
       console.log('note/list destroyed')
@@ -212,6 +220,7 @@
               x1.hover = 0
               this.tags.push(x1)
             })
+            this.tags.find(x => x.id === 0).open = 1
           }
         })
       },
@@ -219,6 +228,8 @@
       //根据标签获取笔记
       getNoteByTag(id, layer) {
         //第一层
+        this.tagId1 = 0
+        this.tagId2 = 0
         if (layer === 1) {
           let tag = this.tags.find(x => x.id === id);
           this.tags.forEach(x => x.open = 0);
@@ -228,6 +239,12 @@
             })
           });
           tag.open = 1
+          this.tagId1 = tag.id
+          //如果有第二层 返回
+          if (tag.children.length > 0) {
+            console.log('有子层 不改变')
+            return
+          }
         } else if (layer === 2) {
           this.tags.forEach(x => {
             x.open = 0;
@@ -236,11 +253,21 @@
               if (y.id === id) {
                 y.open = 1
                 x.open = 1
+                this.tagId1 = x.id
+                this.tagId2 = y.id
               }
             })
           })
         }
-        console.log('走接口');
+        if (this.tagId1 === Number(sessionStorage['note-list-pre-tagId1'] || 0)
+          && this.tagId2 === Number(sessionStorage['note-list-pre-tagId2'] || 0)
+        ) {
+          console.log('与上次相同')
+          return
+        }
+        this.page = JSON.parse(JSON.stringify(glb.page))
+        console.log(this.page)
+        this.getMoreNote()
       },
 
       //获取更多笔记
@@ -249,8 +276,20 @@
           return
         }
         console.log('自动加载')
+
+        console.log(this.tagId1, this.tagId2)
+        console.log(sessionStorage['note-list-pre-tagId1'] || 0, sessionStorage['note-list-pre-tagId2'] || 0)
+
+        if (this.tagId1 !== Number(sessionStorage['note-list-pre-tagId1'] || 0)
+          || this.tagId2 !== Number(sessionStorage['note-list-pre-tagId2'] || 0)
+        ) {
+          console.log('标签改变')
+          this.notes = []
+        }
+        sessionStorage['note-list-pre-tagId1'] = this.tagId1
+        sessionStorage['note-list-pre-tagId2'] = this.tagId2
         this.page.isLoading = true
-        glb.get(this, '/note?offset=' + this.page.offset + '&limit=' + this.page.limit, {}, (data) => {
+        glb.get(this, '/note?offset=' + this.page.offset + '&limit=' + this.page.limit + '&tagId1=' + this.tagId1 + '&tagId2=' + this.tagId2, {}, (data) => {
           data.data.forEach(x => {
             x.tags = []
             if (x.tagName1) {
@@ -272,13 +311,16 @@
 
       },
 
+      setScrollTop() {
+        sessionStorage['scrollTop'] = document.getElementById('note-list-divMain').scrollTop
+      },
+
       scroll() {
-        console.log('note-list scroll')
-        let scrollTop = document.getElementById('divMain').scrollTop
-        let scrollHeight = document.getElementById('divMain').scrollHeight
+        // console.log('note-list scroll')
+        let scrollTop = document.getElementById('note-list-divMain').scrollTop
+        let scrollHeight = document.getElementById('note-list-divMain').scrollHeight
         let clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
-        // sessionStorage['scrollTop']=scrollTop
-        if (scrollTop + clientHeight >= scrollHeight - 200) {
+        if (scrollTop + clientHeight >= scrollHeight - 300) {
           this.getMoreNote()
         }
       },
