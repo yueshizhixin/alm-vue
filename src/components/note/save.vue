@@ -1,9 +1,13 @@
 <template>
-  <div>
+  <div style="padding: 20px;">
     <el-row>
       <el-col :md="4" style=" overflow-y:scroll;  height:calc(100vh - 100px);">
         <el-row>
           <el-col :md="24">
+            <button @click="addTag"
+                    style="width: 100%;height: 36px; border: 0;background: white;font-size: 15px;margin-bottom:10px;color:#606266;">
+              <i class="el-icon-plus"></i>&nbsp;添加
+            </button>
             <ul class="tagul">
               <li v-for="item of tags" class="tagli lihoveron"
                   :class="{'lihoveron':item.hover===1,'lihoverout':item.hover===0,'liopen':item.open===1 && !item.children.find(x=>x.open===1)}">
@@ -42,11 +46,32 @@
         </el-row>
         <el-row>
           <el-col :md="24">
-            <mavon-editor :placeholder="note.placeholder" @save="save" v-model="note.content"/>
+            <mavon-editor style="max-height: 680px;overflow: auto" :placeholder="note.placeholder" @save="save"
+                          v-model="note.content"/>
           </el-col>
         </el-row>
       </el-col>
     </el-row>
+
+    <!--添加标签-->
+    <el-dialog center :visible.sync="dialogFormVisible"
+               :close-on-click-modal="false"
+               :modal-append-to-body="false"
+               style="width: 800px;left: calc(50% - 400px);"
+    >
+      <el-form>
+        <el-form-item>
+          <el-input autocomplete="off" placeholder="账号"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input autocomplete="off" placeholder="密码"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" style="width: 100%" @click="saveTag">添&nbsp;&nbsp;&nbsp;加
+        </el-button>
+      </div>
+    </el-dialog>
 
   </div>
 </template>
@@ -63,7 +88,7 @@
          * 标签
          */
         tags: [],
-
+        dialogFormVisible: false,//添加标签
         /**
          * 笔记部分
          */
@@ -177,7 +202,13 @@
           })
         }
       },
-
+      //添加标签
+      addTag() {
+        this.dialogFormVisible = true
+      },
+      saveTag() {
+        this.dialogFormVisible = false
+      },
       //获取所有标签
       getTags() {
         glb.get(this, '/tag', {}, (data) => {
@@ -200,7 +231,7 @@
       },
 
       //显示某个笔记
-      getNote(id) {
+      getNote() {
         glb.get(this, '/note/' + this.note.id, {}, (data) => {
           if (data.code === 200 && data.ok === 1) {
             this.note = data.data
@@ -283,21 +314,18 @@
     background-color: #fff;
     background-image: none;
     border-radius: 4px;
-    border: 1px solid #dcdfe6;
-    -webkit-box-sizing: border-box;
+    border: 0 solid #dcdfe6;
     box-sizing: border-box;
     color: #606266;
     display: inline-block;
     line-height: 40px;
     outline: 0;
     padding: 0 15px;
-    -webkit-transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
-    transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
     width: 100%;
   }
 
   .inputShadow {
-    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.157), 0 0px 4px rgba(0, 0, 0, 0.227)
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
   }
 
   .tagli {
