@@ -18,6 +18,11 @@
     preUrl: 'http://127.0.0.1:8080/api/v1',
     // preUrl: 'http://123.206.21.86:8080/note/api/v1',
 
+    //联系我
+    goto_me() {
+      window.open('https://github.com/yueshizhixin','new')
+    },
+
     //图像格式化
     imgFormat: {
       head: '?imageView2/1/w/300/h/300',
@@ -125,6 +130,8 @@
         showClose: true,
       });
     },
+
+
   }
 
 

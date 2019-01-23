@@ -15,9 +15,9 @@
                 <div>
                   <el-row class="srdiv">
                     <el-col :md="12">
-                      <img
-                        style="padding: 0 20px 0 20px;width: 100px;border-radius:50%;"
-                        :src="headImg" class="image ">
+                      <img @click="glb.goto_me"
+                           style="padding: 0 20px 0 20px;width: 100px;border-radius:50%;"
+                           :src="headImg" class="image ">
                     </el-col>
                     <el-col :md="12">
                       <div style="margin-top:5px;">
@@ -76,6 +76,7 @@
     components: {noteProfileTempl},
     data() {
       return {
+        glb: glb,
         sideRight: 0,//右侧导航栏
         headImg: '',
         tip: '',

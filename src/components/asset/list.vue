@@ -34,7 +34,7 @@
                 <div>
                   <el-row class="srdiv">
                     <el-col :md="12">
-                      <img
+                      <img @click="glb.goto_me"
                         style="padding: 0 20px 0 20px;width: 100px;border-radius:50%;"
                         :src="headImg" class="image ">
                     </el-col>
@@ -97,6 +97,7 @@
     name: "list",
     data() {
       return {
+        glb: glb,
         headImg: '',
         tip: '',
         author: '',

@@ -46,8 +46,10 @@
         </el-row>
         <el-row>
           <el-col :md="24">
-            <mavon-editor style="max-height: 680px;overflow: auto" :placeholder="note.placeholder" @save="save"
-                          v-model="note.content"/>
+            <mavon-editor style="max-height: 680px;overflow: auto" :placeholder="note.placeholder"
+                          v-model="note.content"
+                          @save="save" @imgAdd="imgAdd"
+            />
           </el-col>
         </el-row>
       </el-col>
@@ -60,12 +62,15 @@
                style="width: 800px;left: calc(50% - 400px);"
     >
       <el-form>
-        <el-form-item>
-          <el-input autocomplete="off" placeholder="账号"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-input autocomplete="off" placeholder="密码"></el-input>
-        </el-form-item>
+        <el-select v-model="addTagData.layer" style="width: 100%;">
+          <el-option value="1" label="一级标签"/>
+          <el-option value="2" label="二级标签"/>
+        </el-select>
+        <el-select v-show="addTagData.layer==='2'" v-model="addTagData.tagId1" style="margin-top: 30px;width: 100%;">
+          <el-option v-for="item of tags" :value="item.id" :label="item.name"/>
+        </el-select>
+        <el-input v-model="addTagData.tagName" autocomplete="off" placeholder="标签" style="margin-top: 30px;"></el-input>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" style="width: 100%" @click="saveTag">添&nbsp;&nbsp;&nbsp;加
@@ -79,6 +84,7 @@
 <script>
 
   import glb from "@comp/GLOBAL"
+  import * as qiniu from 'qiniu-js'
 
   export default {
     name: "save",
@@ -89,6 +95,11 @@
          */
         tags: [],
         dialogFormVisible: false,//添加标签
+        addTagData: {
+          layer: "1",
+          tagId1: 1,
+          tagName: ''
+        },
         /**
          * 笔记部分
          */
@@ -207,7 +218,14 @@
         this.dialogFormVisible = true
       },
       saveTag() {
-        this.dialogFormVisible = false
+        glb.post(this, '/tag', this.addTagData, (data) => {
+          if (data.code === 401) {
+            glb.alert_info(this, '请登录')
+            return
+          }
+          this.getTags()
+          this.dialogFormVisible = false
+        })
       },
       //获取所有标签
       getTags() {
@@ -275,7 +293,41 @@
           }
 
         })
+      },
+      //图片保存
+      imgAdd(fileName, data) {
+        console.log(fileName);
+        console.log(data)
+        let token = "CDNC5vpu3euhxMmZSkIO7DSAjKVMzxK0ob4rT1Q9:EitOYoioBAxDclQ6t53ys_DeTF4=:eyJpbnNlcnRPbmx5IjoxLCJzY29wZSI6ImFsbS15c3p4IiwiZGVhZGxpbmUiOjE1NDgyNTQyNjB9"
+        let observer = {
+          next(res) {
+            console.log('observer.next')
+          },
+          error(err) {
+            console.log('observer.error')
+          },
+          complete(res) {
+            console.log('observer.complete')
+          }
+        }
+        let file = data
+        let key = 'a.png'
+        let config = {
+          useCdnDomain: true,
+          region: qiniu.region.z1
+        };
+        let putExtra = {
+          fname: "",
+          params: {},
+          mimeType: [] || null
+        };
 
+        let observable = qiniu.upload(file, key, token, putExtra, config)
+        let subscription = observable.subscribe(observer) // 上传开始
+
+      },
+
+      test() {
       }
     }
   }
