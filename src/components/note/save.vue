@@ -46,7 +46,7 @@
         </el-row>
         <el-row>
           <el-col :md="24">
-            <mavon-editor style="max-height: 680px;overflow: auto" :placeholder="note.placeholder"
+            <mavon-editor ref="md" style="max-height: 680px;overflow: auto" :placeholder="note.placeholder"
                           v-model="note.content"
                           @save="save" @imgAdd="imgAdd"
             />
@@ -84,7 +84,7 @@
 <script>
 
   import glb from "@comp/GLOBAL"
-  import * as qiniu from 'qiniu-js'
+
 
   export default {
     name: "save",
@@ -296,35 +296,9 @@
       },
       //图片保存
       imgAdd(fileName, data) {
-        console.log(fileName);
-        console.log(data)
-        let token = "CDNC5vpu3euhxMmZSkIO7DSAjKVMzxK0ob4rT1Q9:EitOYoioBAxDclQ6t53ys_DeTF4=:eyJpbnNlcnRPbmx5IjoxLCJzY29wZSI6ImFsbS15c3p4IiwiZGVhZGxpbmUiOjE1NDgyNTQyNjB9"
-        let observer = {
-          next(res) {
-            console.log('observer.next')
-          },
-          error(err) {
-            console.log('observer.error')
-          },
-          complete(res) {
-            console.log('observer.complete')
-          }
-        }
-        let file = data
-        let key = 'a.png'
-        let config = {
-          useCdnDomain: true,
-          region: qiniu.region.z1
-        };
-        let putExtra = {
-          fname: "",
-          params: {},
-          mimeType: [] || null
-        };
-
-        let observable = qiniu.upload(file, key, token, putExtra, config)
-        let subscription = observable.subscribe(observer) // 上传开始
-
+        glb.noteImgUpload(this, fileName, data, (url) => {
+          this.$refs.md.$img2Url(fileName, glb.cdn.url + url)
+        })
       },
 
       test() {

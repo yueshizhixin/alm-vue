@@ -3,6 +3,9 @@
 </template>
 
 <script>
+
+  import * as qiniu from 'qiniu-js'
+
   export default {
     name: "GLOBAL",
     regStrNormal: /^[0-9a-zA-Z]{6,16}$/,
@@ -20,13 +23,7 @@
 
     //联系我
     goto_me() {
-      window.open('https://github.com/yueshizhixin','new')
-    },
-
-    //图像格式化
-    imgFormat: {
-      head: '?imageView2/1/w/300/h/300',
-      bgSmall: '?imageView2/2/w/480/h/270'
+      window.open('https://github.com/yueshizhixin', 'new')
     },
 
     //分页
@@ -58,6 +55,71 @@
       pre0(num, n) {
         return (Array(n).join(0) + num).slice(-n);
       }
+    },
+
+    /**
+     * 图片相关
+     */
+
+    //图像格式化
+    imgFormat: {
+      head: '?imageView2/1/w/300/h/300',
+      bgSmall: '?imageView2/2/w/480/h/270'
+    },
+    cdn: {
+      url: 'http://cdn.yueshizhixin.top/',
+    },
+    noteImgUpload(t, fileName, data, callback) {
+      this.imgUpload(t, fileName, data, callback, 'note/')
+    },
+    bgUpload(t, fileName, data, callback) {
+      this.imgUpload(t, fileName, data, callback, 'asset/bg/')
+    },
+    headUpload(t, fileName, data, callback) {
+      this.imgUpload(t, fileName, data, callback, 'asset/head/')
+    },
+    imgUpload(t, fileName, data, callback, preUrl) {
+      t.$axios.get('/cdn/token', {})
+        .then((res) => {
+          if (res.status === 200) {
+            let token = JSON.parse(res.data).data
+            let observer = {
+              next(res) {
+                console.log('observer.next')
+              },
+              error(err) {
+                console.log('observer.error')
+                if (err) {
+                  t.$message({
+                    message: err.message,
+                    showClose: true,
+                  });
+                }
+              },
+              complete(res) {
+                console.log('observer.complete')
+                if (res.key) {
+                  callback(res.key)
+                }
+              }
+            }
+            let file = data
+            let key = preUrl + new Date().getTime() + '_' + data.name
+            let config = {
+              useCdnDomain: true,
+              region: qiniu.region.z1
+            };
+            let putExtra = {
+              fname: "",
+              params: {},
+              mimeType: [] || null
+            };
+
+            let observable = qiniu.upload(file, key, token, putExtra, config)
+            observable.subscribe(observer) // 上传开始
+          }
+        }).catch((e) => {
+      })
     },
 
     /**
