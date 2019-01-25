@@ -6,22 +6,17 @@
           <el-col :md="20" id="notes">
             <el-row>
               <div :md="24" v-for="(item, index) in data" :key="index"
-                   class="bg-div">
+                   class="bg-div hvr-grow">
                 <img :src="item.url" class="bg-div-img">
                 <div style="margin: 4px 12px 6px 12px;font-size: 17px">
-                  <el-row>
-                    <el-col>
-                      那个人啊打发
-                    </el-col>
-                  </el-row>
                   <el-row style="margin-top: 0;">
                     <el-col :md="18" style="color: #909399;font-size: 14px;margin-top: 6px;">
                       2018-18-25 21:14:15
                     </el-col>
-                    <!--<el-col :md="6" style="text-align: right;margin-top: 3px;">-->
-                    <!--<a href="http://www.baidu.com" target="new" class="a-btn">-->
-                    <!--原图</a>-->
-                    <!--</el-col>-->
+                    <el-col :md="6" style="text-align: right;margin-top: 0px;">
+                    <a href="http://www.baidu.com" target="new" class="a-btn">
+                    <i class="el-icon-right"></i></a>
+                    </el-col>
                   </el-row>
                 </div>
               </div>
@@ -340,6 +335,24 @@
     border: 0;
     background-color: white;
     text-decoration: none;
+  }
+
+  /* Grow */
+  .hvr-grow {
+    display: inline-block;
+    vertical-align: middle;
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    transition-duration: 0.3s;
+    transition-property: transform;
+  }
+
+  .hvr-grow:hover,
+  .hvr-grow:focus,
+  .hvr-grow:active {
+    transform: scale(1.1);
   }
 
 </style>
