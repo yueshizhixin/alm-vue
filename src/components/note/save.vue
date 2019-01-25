@@ -283,6 +283,7 @@
         if (this.note.profile && this.note.profile.length > this.profileMaxLength) {
           this.note.profile = this.note.profile.substring(0, this.profileMaxLength)
         }
+        this.note.profile += '...'
         glb.post(this, '/note/' + this.note.id, this.note, (data) => {
           glb.alert_info(this, data.msg);
           if (data.code === 200) {

@@ -15,9 +15,8 @@
                 <div>
                   <el-row class="srdiv">
                     <el-col :md="12">
-                      <img @click="glb.goto_me"
-                           style="padding: 0 20px 0 20px;width: 100px;border-radius:50%;"
-                           :src="headImg" class="image ">
+                      <img @click="glb.goto_me" :src="headImg" class="image hvr-grow"
+                           style="padding: 0 20px 0 20px;width: 100px;border-radius:50%;">
                     </el-col>
                     <el-col :md="12">
                       <div style="margin-top:5px;">
@@ -27,7 +26,6 @@
                       </div>
                       <div>
                         <div v-html="tip" style="margin-top: 7px;"></div>
-
                       </div>
                     </el-col>
                   </el-row>
@@ -299,7 +297,11 @@
             if (x.tagName2) {
               x.tags.push(x.tagName2)
             }
-            sessionStorage['note/' + x.id] = JSON.stringify(x)
+            x.agreeCount = this.randomNum()
+            x.commCount = this.randomNum()
+            x.shareCount = this.randomNum()
+            x.collectCount = this.randomNum()
+            // sessionStorage['note/' + x.id] = JSON.stringify(x)
           })
           let len = Array.from(data.data).length
           if (len < this.page.limit || len === 0) {
@@ -308,6 +310,7 @@
           this.notes.push(...data.data);
           this.page.offset++
           this.page.isLoading = false
+          console.log(data)
         });
 
       },
@@ -326,6 +329,9 @@
         }
       },
 
+      randomNum() {
+        return Math.floor(Math.random() * 1000)
+      },
       test() {
 
       }

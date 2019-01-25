@@ -14,8 +14,8 @@
                       2018-18-25 21:14:15
                     </el-col>
                     <el-col :md="6" style="text-align: right;margin-top: 0px;">
-                    <a href="http://www.baidu.com" target="new" class="a-btn">
-                    <i class="el-icon-right"></i></a>
+                      <a href="http://www.baidu.com" target="new" class="a-btn">
+                        <i class="el-icon-right"></i></a>
                     </el-col>
                   </el-row>
                 </div>
@@ -29,9 +29,8 @@
                 <div>
                   <el-row class="srdiv">
                     <el-col :md="12">
-                      <img @click="glb.goto_me"
-                        style="padding: 0 20px 0 20px;width: 100px;border-radius:50%;"
-                        :src="headImg" class="image ">
+                      <img @click="glb.goto_me" :src="headImg" class="image hvr-grow"
+                           style="padding: 0 20px 0 20px;width: 100px;border-radius:50%;">
                     </el-col>
                     <el-col :md="12">
                       <div style="margin-top:5px;">
@@ -335,24 +334,6 @@
     border: 0;
     background-color: white;
     text-decoration: none;
-  }
-
-  /* Grow */
-  .hvr-grow {
-    display: inline-block;
-    vertical-align: middle;
-    transform: translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    backface-visibility: hidden;
-    -moz-osx-font-smoothing: grayscale;
-    transition-duration: 0.3s;
-    transition-property: transform;
-  }
-
-  .hvr-grow:hover,
-  .hvr-grow:focus,
-  .hvr-grow:active {
-    transform: scale(1.1);
   }
 
 </style>

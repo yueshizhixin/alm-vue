@@ -4,12 +4,12 @@
       <el-col :md="24" class="note-body">
         <el-card>
           <el-row style="margin-top: 6px">
-            <el-col :md="12">
-                    <span class="note-tile">
+            <el-col :md="18">
+                    <span class="note-tile" @click="$router.push({path: '/note/'+item.id})">
                       {{item.title}}
                     </span>
             </el-col>
-            <el-col :md="12" align="right">
+            <el-col :md="6" align="right">
               <el-tag v-for="(p,i) of item.tags" :key="i" style="margin-left: 7px;"
                       :type="tagType[Math.floor((Math.random()*5))]"> {{p}}
               </el-tag>
@@ -67,10 +67,10 @@
     },
     computed: {},
     mounted() {
-      this.item.agreeCount = this.randomNum()
-      this.item.commCount = this.randomNum()
-      this.item.shareCount = this.randomNum()
-      this.item.collectCount = this.randomNum()
+      // this.item.agreeCount = this.randomNum()
+      // this.item.commCount = this.randomNum()
+      // this.item.shareCount = this.randomNum()
+      // this.item.collectCount = this.randomNum()
     },
     methods: {
       randomNum() {
