@@ -51,7 +51,6 @@
         sessionStorage['tip'] = JSON.stringify([
           `<span class='tip'>浊酒一杯家万里</span><span class='tip'>燕然未勒归无计</span>`,
           `<span class='tip'>大漠孤烟直</span><span class='tip'>长河落日圆</span>`,
-          `<span class='tip'>凡 日月所照</span><span class='tip'>江河所至 皆为汉土</span>`,
           `<span class='tip'>周虽旧邦</span><span class='tip'>其命维新</span>`,
         ])
         sessionStorage['assetTag'] = JSON.stringify([{

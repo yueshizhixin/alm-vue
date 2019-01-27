@@ -73,7 +73,7 @@
     </transition>
 
     <go-back-btn :show="go_x_btn_show"></go-back-btn>
-    <go-top-btn :show="go_x_btn_show" :refId="vueId"></go-top-btn>
+    <go-top-btn :show="go_x_btn_show" :refId="vueId" ></go-top-btn>
   </div>
 </template>
 

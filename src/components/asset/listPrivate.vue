@@ -40,6 +40,7 @@
                       </div>
                       <div>
                         <div v-html="tip" style="margin-top: 7px;"></div>
+
                       </div>
                     </el-col>
                   </el-row>
@@ -87,10 +88,10 @@
   import glb from "@comp/GLOBAL"
 
   export default {
-    name: "list",
+    name: "listPrivate",
     data() {
       return {
-        vueId: 'asset-list-divMain',
+        vueId: 'asset-list-private-divMain',
         glb: glb,
         headImg: '',
         tip: '',
@@ -107,7 +108,7 @@
 
     },
     created() {
-      sessionStorage['needSign'] = null
+      sessionStorage['needSign'] = 1
       this.dataInit()
     },
     mounted() {
@@ -157,116 +158,29 @@
 
       //hover效果
       mouseenterM(id, layer) {
-        if (layer === 1) {
-          this.tags.forEach(x => {
-            if (x.id === id) {
-              x.hover = 1
-            }
-            else {
-              x.hover = 0
-            }
-            Array.from(x.children).forEach(y => {
-              y.hover = 0
-            })
-          })
-        } else if (layer === 2) {
-          this.tags.forEach(x => {
-            x.hover = 0
-            Array.from(x.children).forEach(y => {
-              if (y.id === id) {
-                y.hover = 1;
-              }
-              else {
-                y.hover = 0;
-              }
-            })
-          })
-        }
       },
       mouseleaveM(id, layer) {
-        if (layer === 1) {
-          this.tags.find(x => x.id === id).hover = 0
-        }
-        else if (layer === 2) {
-          this.tags.forEach(x => {
-            let item = x.children.find(y => y.id === id)
-            if (item) {
-              item.hover = 0
-              return
-            }
-          })
-        }
       },
-
       //标签点击
       clcikTagStyle(id, layer) {
-        this.data=[]
-        this.tagId1 = 0
-        this.tagId2 = 0
-        //第一层
-        if (layer === 1) {
-          let tag = this.tags.find(x => x.id === id);
-          this.tags.forEach(x => x.open = 0);
-          this.tags.forEach(x => {
-            x.children.forEach(y => {
-              y.open = 0
-            })
-          });
-          tag.open = 1
-          this.tagId1 = tag.id
-          //如果有第二层 返回
-          if (tag.children.length > 0) {
-            console.log('有子层 不改变')
-            return
-          }
-        } else if (layer === 2) {
-          this.tags.forEach(x => {
-            x.open = 0;
-            x.children.forEach(y => {
-              y.open = 0;
-              if (y.id === id) {
-                y.open = 1
-                x.open = 1
-                this.tagId1 = x.id
-                this.tagId2 = y.id
-              }
-            })
-          })
-        }
-        this.getData()
       },
-
       //获取所有标签
       getTags() {
-        this.tags = JSON.parse(sessionStorage['assetTag'])
-        this.tags.find(x => x.id === 1).open = 1
-        this.tagId1 = 1
       },
 
       //获取图片
       getData() {
-        if (this.tagId1 === 1) {
-          glb.get(this, '/asset/bg', {}, (data) => {
-            let d = JSON.parse(data.data)
-            d.sort((x, y) => {
-              return y.putTime - x.putTime
-            })
-            this.data = d
+        glb.get(this, '/asset/private', {}, (data) => {
+          let d = JSON.parse(data.data)
+          d.sort((x, y) => {
+            return y.putTime - x.putTime
           })
-        } else if (this.tagId1 === 2) {
-          glb.get(this, '/asset/head', {}, (data) => {
-            let d = JSON.parse(data.data)
-            d.sort((x, y) => {
-              return y.putTime - x.putTime
-            })
-            this.data = d
-          })
-        }
-
+          this.data = d
+        })
       },
 
       scroll() {
-        console.log('asset-list scroll')
+        console.log('asset-list private scroll')
       },
 
       test() {

@@ -8,6 +8,7 @@ import note_save from '../components/note/save'
 
 //资源
 import asset_list from '../components/asset/list'
+import asset_list_private from '../components/asset/listPrivate'
 
 Vue.use(Router);
 
@@ -38,6 +39,10 @@ export default new Router({
     {
       path: '/asset',
       component: asset_list,
+    },
+    {
+      path: '/asset/private',
+      component: asset_list_private,
     },
   ]
 })

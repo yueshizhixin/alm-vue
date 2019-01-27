@@ -18,7 +18,7 @@
 <style scoped>
   .btn {
     position: absolute;
-    right: 180px;
+    right: 40px;
     bottom: 95px;
     border: 0;
     background: white;

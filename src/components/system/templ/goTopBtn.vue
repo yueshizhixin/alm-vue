@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button v-if="show" type="button" class="btn" @click="gotoTop">
+    <button v-if="show" type="button" class="btn" @click="gotoTop" >
       <i class="iconfont icon-up" style="font-size: 26px;"></i>
     </button>
   </div>
@@ -24,8 +24,8 @@
 <style scoped>
   .btn {
     position: absolute;
-    right: 180px;
     bottom: 40px;
+    right: 40px;
     border: 0;
     background: white;
     width: 45px;

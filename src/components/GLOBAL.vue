@@ -8,6 +8,7 @@
 
   export default {
     name: "GLOBAL",
+
     regStrNormal: /^[0-9a-zA-Z]{6,16}$/,
     regTipNormal: '请按规则填写',
 
@@ -52,6 +53,22 @@
           return time
         }
       },
+      qiniuFormat(time){
+        let str=String(time)
+        time=Number(str.substring(0,str.length-4))
+        let oneday = 24 * 60 * 60 * 1000;
+        let now = new Date()
+        let today = new Date(now.getFullYear() + '-' + (Number(now.getMonth()) + 1) + '-' + now.getDate())
+        let yestoday = new Date(today.getTime() - oneday)
+        let timedate = new Date(time);
+        if (timedate >= today) {
+          return '今天 ' + this.pre0(timedate.getHours(), 2) + ':' + this.pre0(timedate.getMinutes(), 2) + ":" + this.pre0(timedate.getSeconds(), 2)
+        } else if (timedate >= yestoday && timedate < today) {
+          return '昨天 ' + this.pre0(timedate.getHours(), 2) + ':' + this.pre0(timedate.getMinutes(), 2) + ":" + this.pre0(timedate.getSeconds(), 2)
+        } else {
+          return time
+        }
+      },
       pre0(num, n) {
         return (Array(n).join(0) + num).slice(-n);
       }
@@ -64,7 +81,10 @@
     //图像格式化
     imgFormat: {
       head: '?imageView2/1/w/300/h/300',
-      bgSmall: '?imageView2/2/w/480/h/270'
+      bgSmall: '?imageView2/2/w/480/h/270',
+      bgFormat(item,url) {
+        return item.cdn.url + url + item.imgFormat.bgSmall
+      }
     },
     cdn: {
       url: 'http://cdn.yueshizhixin.top/',

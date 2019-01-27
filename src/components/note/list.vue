@@ -63,17 +63,20 @@
         </el-row>
       </div>
     </transition>
+    <go-top-btn :show="go_x_btn_show" :refId="'note-list-divMain'" ></go-top-btn>
   </div>
 </template>
 <script>
   import glb from "@comp/GLOBAL"
   import noteProfileTempl from "@comp/note/templ/profile"
+  import goTopBtn from "@comp/system/templ/goTopBtn"
 
   export default {
     name: "noteList",
-    components: {noteProfileTempl},
+    components: {noteProfileTempl, goTopBtn},
     data() {
       return {
+        go_x_btn_show: false,
         glb: glb,
         sideRight: 0,//右侧导航栏
         headImg: '',
@@ -276,13 +279,9 @@
         }
         console.log('自动加载')
 
-        console.log(this.tagId1, this.tagId2)
-        console.log(sessionStorage['note-list-pre-tagId1'] || 0, sessionStorage['note-list-pre-tagId2'] || 0)
-
         if (this.tagId1 !== Number(sessionStorage['note-list-pre-tagId1'] || 0)
           || this.tagId2 !== Number(sessionStorage['note-list-pre-tagId2'] || 0)
         ) {
-          console.log('标签改变')
           this.notes = []
         }
         sessionStorage['note-list-pre-tagId1'] = this.tagId1
@@ -326,6 +325,9 @@
         let clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
         if (scrollTop + clientHeight >= scrollHeight - 300) {
           this.getMoreNote()
+        }
+        if (!this.go_x_btn_show && scrollTop >= 150) {
+          this.go_x_btn_show = true
         }
       },
 
