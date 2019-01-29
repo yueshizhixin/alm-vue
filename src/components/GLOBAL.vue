@@ -66,7 +66,9 @@
         } else if (timedate >= yestoday && timedate < today) {
           return '昨天 ' + this.pre0(timedate.getHours(), 2) + ':' + this.pre0(timedate.getMinutes(), 2) + ":" + this.pre0(timedate.getSeconds(), 2)
         } else {
-          return time
+          if(Number.isInteger(time)){
+            return new Date(time).format('yyyy-MM-dd HH:mm:ss')
+          }
         }
       },
       pre0(num, n) {
@@ -84,7 +86,10 @@
       bgSmall: '?imageView2/2/w/480/h/270',
       bgFormat(item,url) {
         return item.cdn.url + url + item.imgFormat.bgSmall
-      }
+      },
+      headFormat(item,url) {
+        return item.cdn.url + url + item.imgFormat.head
+      },
     },
     cdn: {
       url: 'http://cdn.yueshizhixin.top/',

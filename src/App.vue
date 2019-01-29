@@ -42,11 +42,21 @@
         sessionStorage['author'] = 'ALM'
         sessionStorage['authorImg'] = 'http://cdn.yueshizhixin.top/41795-106.jpg' + glb.imgFormat.head
         sessionStorage['headImg'] = JSON.stringify([
-          'http://cdn.yueshizhixin.top/41795-106.jpg' + glb.imgFormat.head,
-          'http://cdn.yueshizhixin.top/231813-106.jpg' + glb.imgFormat.head,
-          'http://cdn.yueshizhixin.top/231751-106.jpg' + glb.imgFormat.head,
-          'http://cdn.yueshizhixin.top/44215-106.jpg' + glb.imgFormat.head,
-          'http://cdn.yueshizhixin.top/249873-106.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/head/59ff1851e7bce736a953bba2.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/head/Screenshot_2017-10-27-14-13-08.png' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/head/keaizhengyi109951163251967696.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/head/最美不过古风（女声）_3404088002179098.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/head/超好听の二次元日文歌_109951162972995997.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/head/东方幻想乡✿但愿长醉不复醒【柔和抒情篇】_3223768092923362.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/head/【欢乐十足】充满魔性易中毒,%20洗脑の歌_1422768057693556.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/head/mmexport1511942735139.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/head/萝莉%20中文%20软妹%20萌音%20小清新_18665309395053576.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/head/hdImg_4f52d78d2032c839cc1619959306f07c15306644927.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/head/日系%20%20%20元气萌音，元气过完每一天_3265549606134487.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/head/mmexport1524299918578.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/bg/231813-106.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/bg/305995-106.jpg' + glb.imgFormat.head,
+          'http://cdn.yueshizhixin.top/asset/bg/299243-106.jpg' + glb.imgFormat.head,
         ])
         sessionStorage['tip'] = JSON.stringify([
           `<span class='tip'>浊酒一杯家万里</span><span class='tip'>燕然未勒归无计</span>`,
@@ -66,6 +76,15 @@
           id: 2,
           layer: 1,
           name: "头像",
+          parentId: 0,
+          sequence: 1,
+          children: [],
+          open: 0,
+          hover: 0,
+        }, {
+          id: 3,
+          layer: 1,
+          name: "其他",
           parentId: 0,
           sequence: 1,
           children: [],

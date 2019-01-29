@@ -6,11 +6,13 @@
           <el-col :md="20" id="notes">
             <el-row>
               <div :md="24" v-for="(item, index) in data" :key="index"
-                   class="bg-div hvr-grow">
-                <img :src="glb.imgFormat.bgFormat(glb,item.key)" class="bg-div-img">
-                <div style="margin: 4px 12px 6px 12px;font-size: 17px">
+                   class="hvr-grow" :class="{'bg-div':(tagId1===1 || tagId1===3),'head-div':tagId1===2}">
+                <img v-if="tagId1===1" :src="glb.imgFormat.bgFormat(glb,item.key)" class="bg-div-img">
+                <img v-if="tagId1===2" :src="glb.imgFormat.headFormat(glb,item.key)" class="head-div-img">
+                <img v-if="tagId1===3" :src="glb.imgFormat.bgFormat(glb,item.key)" class="bg-div-img">
+                <div style="margin: 0 12px 2px 12px;font-size: 17px">
                   <el-row style="margin-top: 0;">
-                    <el-col :md="18" style="color: #909399;font-size: 14px;margin-top: 6px;">
+                    <el-col :md="18" style="min-height:24px;color: #909399;font-size: 14px;margin-top: 4px;">
                       {{glb.time.qiniuFormat(item.putTime)}}
                     </el-col>
                     <el-col :md="6" style="text-align: right;margin-top: 0px;">
@@ -79,18 +81,22 @@
 
       </div>
     </transition>
+    <go-top-btn :show="go_x_btn_show" :refId="vueId"></go-top-btn>
   </div>
 </template>
 
 <script>
 
   import glb from "@comp/GLOBAL"
+  import goTopBtn from "@comp/system/templ/goTopBtn"
 
   export default {
     name: "list",
+    components: {goTopBtn},
     data() {
       return {
         vueId: 'asset-list-divMain',
+        go_x_btn_show: false,
         glb: glb,
         headImg: '',
         tip: '',
@@ -200,9 +206,10 @@
 
       //标签点击
       clcikTagStyle(id, layer) {
-        this.data=[]
+        this.data = []
         this.tagId1 = 0
         this.tagId2 = 0
+        this.go_x_btn_show=false
         //第一层
         if (layer === 1) {
           let tag = this.tags.find(x => x.id === id);
@@ -261,12 +268,26 @@
             })
             this.data = d
           })
+        } else if (this.tagId1 === 3) {
+          glb.get(this, '/asset/other', {}, (data) => {
+            let d = JSON.parse(data.data)
+            d.sort((x, y) => {
+              return y.putTime - x.putTime
+            })
+            this.data = d
+          })
         }
 
       },
 
       scroll() {
         console.log('asset-list scroll')
+        let scrollTop = document.getElementById(this.vueId).scrollTop
+        let scrollHeight = document.getElementById(this.vueId).scrollHeight
+        let clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        if (!this.go_x_btn_show && scrollTop >= 150) {
+          this.go_x_btn_show = true
+        }
       },
 
       test() {
@@ -339,16 +360,33 @@
   /**
    * 背景图
    */
-  .bg-div, .bg-div-img {
+  .bg-div-img {
     width: 260px;
+    height: 146px;
+  }
+
+  .head-div-img {
+    width: 170px;
+    height: 170px;
+  }
+
+  .div-img {
+    width: 400px;
+  }
+
+  .head-div, .bg-div {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
+    background-color: white;
+    float: left;
+    border: 4px solid ghostwhite;
   }
 
   .bg-div {
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
-    background-color: white;
-    margin: 0 40px 30px 0;
-    float: left;
-    border: 4px solid ghostwhite;
+    margin: 0 35px 35px 0
+  }
+
+  .head-div {
+    margin: 0 50px 50px 0
   }
 
   .a-btn {
