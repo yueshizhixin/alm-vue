@@ -1,5 +1,5 @@
 <template>
-  <div class="divMain" id="note-list-divMain">
+  <div :class="{'divMain':!glb.isMobile(),'mobile-divMain':glb.isMobile()}" id="note-list-divMain">
     <transition name="el-zoom-in-top">
       <div v-show="aniShow" class="transition-box">
         <el-row style="z-index: 10 " class="myrow">
@@ -9,7 +9,7 @@
             </div>
             <input v-show="page.isLoading===1" type="button" class="addMoreBtn" value="加载中..."/>
           </el-col>
-          <el-col :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
+          <el-col v-if="!glb.isMobile()" :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
             <transition name="el-fade-in-linear">
               <div v-show="aniShow2" class="transition-box">
                 <div>

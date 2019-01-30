@@ -6,10 +6,10 @@
           <el-col :md="20" id="notes">
             <el-row>
                 <div  v-viewer="options" :md="24" v-for="(item, index) in data" :key="index"
-                     class="hvr-grow" :class="{'bg-div':(tagId1===1 || tagId1===3),'head-div':tagId1===2}">
-                  <img v-if="tagId1===1" :src="glb.imgFormat.bgFormat(glb,item.key)" :data-source="glb.cdn.url+item.key"  class="bg-div-img">
-                  <img v-if="tagId1===2" :src="glb.imgFormat.headFormat(glb,item.key)" class="head-div-img">
-                  <img v-if="tagId1===3" :src="glb.imgFormat.bgFormat(glb,item.key)" class="bg-div-img">
+                     class="hvr-grow" :class="{'bg-div':(tagId1===1 || tagId1===3),'head-div':tagId1===2,'mobile-div':glb.isMobile()}">
+                  <img v-if="tagId1===1" :src="glb.imgFormat.bgFormat(glb,item.key)" :data-source="glb.cdn.url+item.key" :key="glb.cdn.url+item.key"  class="bg-div-img" :class="{'mobile-img':glb.isMobile()}">
+                  <img v-if="tagId1===2" :src="glb.imgFormat.headFormat(glb,item.key)" :data-source="glb.cdn.url+item.key" :key="glb.cdn.url+item.key" class="head-div-img">
+                  <img v-if="tagId1===3" :src="glb.imgFormat.bgFormat(glb,item.key)" :data-source="glb.cdn.url+item.key" :key="glb.cdn.url+item.key" class="bg-div-img">
                   <div style="margin: 0 12px 2px 12px;font-size: 17px">
                     <el-row style="margin-top: 0;">
                       <el-col :md="18" style="min-height:24px;color: #909399;font-size: 14px;margin-top: 4px;">
@@ -25,7 +25,7 @@
             </el-row>
           </el-col>
 
-          <el-col :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
+          <el-col v-if="!glb.isMobile()" :md="4" class="side-right" :style="{left:sideRight+'px !important'}">
             <transition name="el-fade-in-linear">
               <div v-show="aniShow2" class="transition-box">
                 <div>
@@ -410,6 +410,15 @@
 
   .head-div {
     margin: 0 50px 50px 0
+  }
+
+  .mobile-div{
+    margin: 0 0 30px 0 !important;
+  }
+
+  .mobile-img{
+    width: 100% !important;
+    height: auto !important;
   }
 
   .a-btn {

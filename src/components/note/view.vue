@@ -1,5 +1,5 @@
 <template>
-  <div class="divMain" :id="vueId">
+  <div :class="{'divMain':!glb.isMobile(),'mobile-divMain':glb.isMobile()}" :id="vueId">
     <transition name="el-zoom-in-top">
       <div v-show="aniShow" class="transition-box">
         <el-row class="myrow">
@@ -23,14 +23,14 @@
                       </span>
                     </el-col>
                     <!--标签-->
-                    <el-col :md="12" align="right">
+                    <el-col v-if="!glb.isMobile()" :md="12" align="right">
                       <el-tag v-for="(p,i) of item.tags" :key="i" style="margin-left: 7px;"
                               :type="tagType[Math.floor((Math.random()*5))]"> {{p}}
                       </el-tag>
                     </el-col>
                   </el-row>
 
-                  <el-row style="position: absolute;bottom: 0;right: 0;left:89px;">
+                  <el-row v-if="!glb.isMobile()" style="position: absolute;bottom: 0;right: 0;left:89px;">
 
                     <el-col :md="20">
                       <!--作者-->

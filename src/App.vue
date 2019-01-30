@@ -62,6 +62,8 @@
           `<span class='tip'>浊酒一杯家万里</span><span class='tip'>燕然未勒归无计</span>`,
           `<span class='tip'>大漠孤烟直</span><span class='tip'>长河落日圆</span>`,
           `<span class='tip'>周虽旧邦</span><span class='tip'>其命维新</span>`,
+          `<span class='tip'>大海的香气</span><span class='tip'>迟来的后悔</span>`,
+          `<span class='tip'>塞下秋来风景异</span><span class='tip'>衡阳雁去无留意</span>`,
         ])
         sessionStorage['assetTag'] = JSON.stringify([{
           id: 1,

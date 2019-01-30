@@ -12,7 +12,8 @@
             </el-menu>
           </el-col>
 
-          <el-col :md="10" class="search" :style="{left:searchLeft+'px !important',width:serachWidth+'px'}">
+          <el-col v-if="!glb.isMobile()" :md="10" class="search"
+                  :style="{left:searchLeft+'px !important',width:serachWidth+'px'}">
             <el-input placeholder="搜索" @focus="searchFocus" @blur="searchBlur">
               <!--<el-button slot="append" icon="el-icon-search" style="font-size: 20px;"></el-button>-->
             </el-input>
@@ -75,6 +76,7 @@
     name: "vueHeader",
     data() {
       return {
+        glb: glb,
         serachWidth: searchWidthB,//搜索框长度
         menuActiveIndex: '0',//菜单默认选择索引
 

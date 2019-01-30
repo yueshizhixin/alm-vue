@@ -19,7 +19,7 @@
 /*
   最大尺寸
  */
-.divMain {
+.divMain ,.mobile-divMain{
   /*max-width: 1199px;*/
   /*margin-left: auto;*/
   /*margin-right: auto;*/
@@ -27,6 +27,10 @@
   height: calc(100% - 60px);
   padding: 20px;
   /*overflow: hidden;*/
+}
+
+.mobile-divMain{
+  padding: 10px 0 0 0 !important;
 }
 
 .myrow {

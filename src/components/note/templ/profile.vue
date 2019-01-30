@@ -9,7 +9,7 @@
                       {{item.title}}
                     </span>
             </el-col>
-            <el-col :md="6" align="right">
+            <el-col :md="6" :align="{'right':!glb.isMobile(),'left':glb.isMobile()}" :class="{'mobile-tag':glb.isMobile()}">
               <el-tag v-for="(p,i) of item.tags" :key="i" style="margin-left: 7px;"
                       :type="tagType[Math.floor((Math.random()*5))]"> {{p}}
               </el-tag>
@@ -22,7 +22,7 @@
                     </span>
             </el-col>
           </el-row>
-          <el-row style="margin-top: 9px">
+          <el-row v-if="!glb.isMobile()" style="margin-top: 9px">
             <el-col :md="4" :sm="4">
               <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{item.agreeCount}}</el-button>
             </el-col>
@@ -101,5 +101,13 @@
 
   .clearfix:after {
     clear: both
+  }
+
+  /**
+    手机
+   */
+  .mobile-tag{
+    margin-top: 9px;
+    margin-left: -8px;
   }
 </style>

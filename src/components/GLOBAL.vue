@@ -9,6 +9,14 @@
   export default {
     name: "GLOBAL",
 
+    isMobile(){
+      let ua = navigator.userAgent
+      let ipad = ua.match(/(iPad).*OS\s([\d_]+)/)
+      let isIphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/)
+      let isAndroid = ua.match(/(Android)\s+([\d.]+)/)
+      return isIphone || isAndroid
+    },
+
     regStrNormal: /^[0-9a-zA-Z]{6,16}$/,
     regTipNormal: '请按规则填写',
 

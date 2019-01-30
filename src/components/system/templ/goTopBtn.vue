@@ -1,18 +1,26 @@
 <template>
   <div>
-    <button v-if="show" type="button" class="btn" @click="gotoTop" >
+    <button v-if="show && !glb.isMobile()" type="button" class="btn" @click="gotoTop">
       <i class="iconfont icon-up" style="font-size: 26px;"></i>
     </button>
   </div>
 </template>
 
 <script>
+
+  import glb from "@comp/GLOBAL"
+
   export default {
     props: {
       show: Boolean,
       refId: String,
     },
     name: "goTopBtn",
+    data() {
+      return {
+        glb: glb,
+      }
+    },
     methods: {
       gotoTop() {
         document.getElementById(this.refId).scrollTop = 0
