@@ -31,6 +31,7 @@
 
 .mobile-divMain{
   padding: 10px 0 0 0 !important;
+  height: calc(100vh - 60px) !important;
 }
 
 .myrow {
