@@ -1,27 +1,27 @@
-<template>
+<template xmlns:v-gallery="http://www.w3.org/1999/xhtml">
   <div class="divMain" :id="vueId">
     <transition name="el-zoom-in-top">
       <div v-show="aniShow" class="transition-box">
         <el-row class="myrow">
           <el-col :md="20" id="notes">
             <el-row>
-              <div :md="24" v-for="(item, index) in data" :key="index"
-                   class="hvr-grow" :class="{'bg-div':(tagId1===1 || tagId1===3),'head-div':tagId1===2}">
-                <img v-if="tagId1===1" :src="glb.imgFormat.bgFormat(glb,item.key)" class="bg-div-img">
-                <img v-if="tagId1===2" :src="glb.imgFormat.headFormat(glb,item.key)" class="head-div-img">
-                <img v-if="tagId1===3" :src="glb.imgFormat.bgFormat(glb,item.key)" class="bg-div-img">
-                <div style="margin: 0 12px 2px 12px;font-size: 17px">
-                  <el-row style="margin-top: 0;">
-                    <el-col :md="18" style="min-height:24px;color: #909399;font-size: 14px;margin-top: 4px;">
-                      {{glb.time.qiniuFormat(item.putTime)}}
-                    </el-col>
-                    <el-col :md="6" style="text-align: right;margin-top: 0px;">
-                      <a href="http://www.baidu.com" target="new" class="a-btn">
-                        <i class="el-icon-right"></i></a>
-                    </el-col>
-                  </el-row>
+                <div  v-viewer="options" :md="24" v-for="(item, index) in data" :key="index"
+                     class="hvr-grow" :class="{'bg-div':(tagId1===1 || tagId1===3),'head-div':tagId1===2}">
+                  <img v-if="tagId1===1" :src="glb.imgFormat.bgFormat(glb,item.key)" :data-source="glb.cdn.url+item.key"  class="bg-div-img">
+                  <img v-if="tagId1===2" :src="glb.imgFormat.headFormat(glb,item.key)" class="head-div-img">
+                  <img v-if="tagId1===3" :src="glb.imgFormat.bgFormat(glb,item.key)" class="bg-div-img">
+                  <div style="margin: 0 12px 2px 12px;font-size: 17px">
+                    <el-row style="margin-top: 0;">
+                      <el-col :md="18" style="min-height:24px;color: #909399;font-size: 14px;margin-top: 4px;">
+                        {{glb.time.qiniuFormat(item.putTime)}}
+                      </el-col>
+                      <el-col :md="6" style="text-align: right;margin-top: 0px;">
+                        <a href="http://www.baidu.com" target="new" class="a-btn">
+                          <i class="el-icon-right"></i></a>
+                      </el-col>
+                    </el-row>
+                  </div>
                 </div>
-              </div>
             </el-row>
           </el-col>
 
@@ -87,6 +87,16 @@
 
 <script>
 
+  import 'viewerjs/dist/viewer.css'
+  import Viewer from 'v-viewer'
+  import Vue from 'vue'
+  Vue.use(Viewer, {
+    debug: false,
+    defaultOptions: {
+      zIndex: 9999
+    }
+  })
+
   import glb from "@comp/GLOBAL"
   import goTopBtn from "@comp/system/templ/goTopBtn"
 
@@ -105,10 +115,19 @@
         aniShow2: false,//动画显示
         sideRight: 0,//右侧
 
+        /**
+         * v-viewer
+         */
+        options: {
+          toolbar: true,
+          url: 'data-source'
+        },
+
         tags: [],//所有标签
         tagId1: 0,//当前点击标签
         tagId2: 0,//当前点击标签
-        data: []
+        data: [],
+        imgArr: [],
       }
 
     },
@@ -209,7 +228,7 @@
         this.data = []
         this.tagId1 = 0
         this.tagId2 = 0
-        this.go_x_btn_show=false
+        this.go_x_btn_show = false
         //第一层
         if (layer === 1) {
           let tag = this.tags.find(x => x.id === id);
@@ -252,6 +271,7 @@
 
       //获取图片
       getData() {
+        this.imgArr=[]
         if (this.tagId1 === 1) {
           glb.get(this, '/asset/bg', {}, (data) => {
             let d = JSON.parse(data.data)
@@ -259,6 +279,9 @@
               return y.putTime - x.putTime
             })
             this.data = d
+            this.data.forEach(x=>{
+              this.imgArr.push(glb.cdn.url+x.key)
+            })
           })
         } else if (this.tagId1 === 2) {
           glb.get(this, '/asset/head', {}, (data) => {
