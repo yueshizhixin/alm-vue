@@ -30,11 +30,11 @@
                     </el-col>
                   </el-row>
 
-                  <el-row v-if="!glb.isMobile()" style="position: absolute;bottom: 0;right: 0;left:89px;">
+                  <el-row  style="position: absolute;bottom: 0;right: 0;left:89px;">
 
                     <el-col :md="20">
                       <!--作者-->
-                      <el-row>
+                      <el-row v-if="!glb.isMobile()">
                         <el-col :md="18">
                           <span class="note-author">{{item.author}}</span>
                         </el-col>
@@ -46,7 +46,7 @@
                       </el-row>
                     </el-col>
                     <!--返回按鈕-->
-                    <el-col :md="4" align="right">
+                    <el-col v-if="!glb.isMobile()" :md="4" align="right">
                       <el-button size="small" @click="gotoNote" icon="el-icon-arrow-left"
                                  style="position: absolute;bottom: 0;right:0;"></el-button>
                     </el-col>

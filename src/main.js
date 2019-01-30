@@ -6,22 +6,10 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import '../static/css/comm.css'
-// import '../static/js/comm.js'
 import axios from 'axios'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import qs from 'qs';
-
-// import preview from 'vue-photo-preview'
-// import 'vue-photo-preview/dist/skin.css'
-// Vue.use(preview)
-// import vuePicturePreview from 'vue-picture-preview'
-// Vue.use(vuePicturePreview)
-
-// import gallery from 'img-vuer'
-// Vue.use(gallery, {
-//   swipeThreshold: 150  // default 100 ,new in 0.12.0
-// })
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
@@ -31,8 +19,8 @@ Vue.use(mavonEditor)
 
 axios.defaults.withCredentials = true
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-// axios.defaults.baseURL = 'http://127.0.0.1:8080/api/v1';
-axios.defaults.baseURL = 'http://123.206.21.86/note/api/v1';
+axios.defaults.baseURL = 'http://127.0.0.1:8080/api/v1';
+// axios.defaults.baseURL = 'http://123.206.21.86/note/api/v1';
 axios.defaults.transformRequest = (data => {
   return qs.stringify(data)
 })

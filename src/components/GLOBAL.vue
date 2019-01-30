@@ -27,8 +27,8 @@
     },
 
     // 前缀地址
-    // preUrl: 'http://127.0.0.1:8080/api/v1',
-    preUrl: 'http://123.206.21.86/note/api/v1',
+    preUrl: 'http://127.0.0.1:8080/api/v1',
+    // preUrl: 'http://123.206.21.86/note/api/v1',
 
     //联系我
     goto_me() {

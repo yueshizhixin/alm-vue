@@ -9,7 +9,7 @@
                       {{item.title}}
                     </span>
             </el-col>
-            <el-col :md="6" :align="{'right':!glb.isMobile(),'left':glb.isMobile()}" :class="{'mobile-tag':glb.isMobile()}">
+            <el-col :md="6" style="text-align: right" :class="{'mobile-tag':glb.isMobile()}">
               <el-tag v-for="(p,i) of item.tags" :key="i" style="margin-left: 7px;"
                       :type="tagType[Math.floor((Math.random()*5))]"> {{p}}
               </el-tag>
@@ -109,5 +109,6 @@
   .mobile-tag{
     margin-top: 9px;
     margin-left: -8px;
+    text-align: left !important;
   }
 </style>
