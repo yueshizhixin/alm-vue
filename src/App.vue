@@ -40,7 +40,7 @@
         console.log('set-data')
         sessionStorage['data'] = 1
         sessionStorage['author'] = 'ALM'
-        sessionStorage['authorImg'] = 'http://cdn.yueshizhixin.top/41795-106.jpg' + glb.imgFormat.head
+        sessionStorage['authorImg'] = 'http://cdn.yueshizhixin.top/asset/head/%E8%B6%85%E5%A5%BD%E5%90%AC%E3%81%AE%E4%BA%8C%E6%AC%A1%E5%85%83%E6%97%A5%E6%96%87%E6%AD%8C_109951162972995997.jpg' + glb.imgFormat.head
         sessionStorage['headImg'] = JSON.stringify([
           'http://cdn.yueshizhixin.top/asset/head/59ff1851e7bce736a953bba2.jpg' + glb.imgFormat.head,
           'http://cdn.yueshizhixin.top/asset/head/Screenshot_2017-10-27-14-13-08.png' + glb.imgFormat.head,
