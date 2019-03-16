@@ -5,7 +5,7 @@
         <el-card>
           <el-row style="margin-top: 6px">
             <el-col :md="18">
-                    <span class="note-tile" @click="$router.push({path: '/note/'+item.id})">
+                    <span class="note-tile" style="cursor: pointer;" @click="$router.push({path: '/note/'+item.id})">
                       {{item.title}}
                     </span>
             </el-col>
@@ -17,7 +17,7 @@
           </el-row>
           <el-row style="margin-top:9px">
             <el-col :md="24">
-                    <span style="color: #303133;font-size: 16px;" @click="$router.push({path: '/note/'+item.id})">
+                    <span style="color: #303133;font-size: 16px;cursor: pointer;" @click="$router.push({path: '/note/'+item.id})">
                         {{item.profile}}
                     </span>
             </el-col>

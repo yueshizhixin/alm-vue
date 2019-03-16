@@ -19,6 +19,7 @@
   .btn {
     position: absolute;
     right: 40px;
+    cursor: pointer;
     bottom: 95px;
     border: 0;
     background: white;

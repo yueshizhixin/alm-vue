@@ -35,6 +35,7 @@
     bottom: 40px;
     right: 40px;
     border: 0;
+    cursor: pointer;
     background: white;
     width: 45px;
     height: 45px;

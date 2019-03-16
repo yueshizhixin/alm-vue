@@ -61,7 +61,7 @@
                       <ul v-show="item.children.length>0 && item.open===1" v-for="x of item.children" class="tagul">
                         <li class="tagli"
                             :class="{'lihoveron':x.hover===1,'lihoverout':x.hover===0,'liopen':x.open===1}">
-                          <div class="lidiv2" @click="clcikTagStyle(x.id,x.layer)"
+                          <div style="cursor: pointer;" class="lidiv2" @click="clcikTagStyle(x.id,x.layer)"
                                @mouseenter="mouseenterM(x.id,x.layer)"
                                @mouseleave="mouseleaveM(x.id,x.layer)">
                             <i v-show="x.open===0" class="el-icon-arrow-right">&nbsp;&nbsp;</i>

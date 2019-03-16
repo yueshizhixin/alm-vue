@@ -16,7 +16,7 @@
                   <el-row class="srdiv">
                     <el-col :md="12">
                       <img @click="glb.goto_me" :src="headImg" class="image hvr-grow"
-                           style="padding: 0 20px 0 20px;width: 100px;border-radius:50%;">
+                           style="padding: 0 20px 0 20px;width: 100px;cursor: pointer;border-radius:50%;">
                     </el-col>
                     <el-col :md="12">
                       <div style="margin-top:5px;">
@@ -32,7 +32,7 @@
                 </div>
                 <div :style="{top:sideRightTop2+'px'} " class="srdiv">
                   <ul class="tagul">
-                    <li v-for="item of tags" class="tagli lihoveron"
+                    <li v-for="item of tags" class="tagli lihoveron" style="cursor: pointer;"
                         :class="{'lihoveron':item.hover===1,'lihoverout':item.hover===0,'liopen':item.open===1 && !item.children.find(x=>x.open===1)}">
                       <div class="lidiv1" @click="getNoteByTag(item.id,item.layer)"
                            @mouseenter="mouseenterM(item.id,item.layer)"
