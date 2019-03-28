@@ -17,9 +17,9 @@
           </el-row>
           <el-row style="margin-top:9px">
             <el-col :md="24">
-                    <span style="color: #303133;font-size: 16px;cursor: pointer;" @click="$router.push({path: '/note/'+item.id})">
+                    <div class="note-profile" @click="$router.push({path: '/note/'+item.id})">
                         {{item.profile}}
-                    </span>
+                    </div>
             </el-col>
           </el-row>
           <el-row v-if="!glb.isMobile()" style="margin-top: 9px">
@@ -67,15 +67,11 @@
     },
     computed: {},
     mounted() {
-      // this.item.agreeCount = this.randomNum()
-      // this.item.commCount = this.randomNum()
-      // this.item.shareCount = this.randomNum()
-      // this.item.collectCount = this.randomNum()
     },
     methods: {
       randomNum() {
         return Math.floor(Math.random() * 1000)
-      }
+      },
     }
     ,
   }
@@ -101,6 +97,13 @@
 
   .clearfix:after {
     clear: both
+  }
+
+  .note-tile:hover{
+    color: #303133cc;
+  }
+  .note-profile:hover{
+    color: #303133cc;
   }
 
   /**

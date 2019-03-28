@@ -321,6 +321,10 @@
 </script>
 
 <style scoped>
+  ul.tagul li{
+    cursor: pointer;
+  }
+
   .tagli {
     list-style: none;
     color: #606266;

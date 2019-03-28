@@ -3,12 +3,12 @@
     <el-row>
       <el-col :md="20">
         <el-row>
-          <el-col :md="4">
+          <el-col :md="6">
             <el-menu :default-active="menuActiveIndex" mode="horizontal" @select="menuHandler"
                      class="menu" active-text-color="#409eff" text-color="#666666" background-color="#ffffff">
-              <el-menu-item index="300" class="menuItem">笔记
-              </el-menu-item>
+              <el-menu-item index="300" class="menuItem">笔记</el-menu-item>
               <el-menu-item index="500" class="menuItem">资源</el-menu-item>
+              <el-menu-item index="600" class="menuItem">论坛</el-menu-item>
             </el-menu>
           </el-col>
 
@@ -97,7 +97,7 @@
       searchLeft() {
         let w = document.body.clientWidth;
         // return  w * 16 / 24 * (10 / 24)
-        return (w - 1199) / 2 + 1199 / 24 * 4
+        return (w - 1199) / 2 + 1199 / 24 * 6
       },
     },
     mounted() {
@@ -114,6 +114,7 @@
         else if (key === '400-100') this.$router.push({path: '/func/crawler'});
         else if (key === '400-200') this.$router.push({path: '/func/low-poly'});
         else if (key === '500') this.$router.push({path: '/asset'})
+        else if (key === '600') this.$router.push({path: '/blog'})
       },
       //搜索框
       searchFocus() {

@@ -10,6 +10,9 @@ import note_save from '../components/note/save'
 import asset_list from '../components/asset/list'
 import asset_list_private from '../components/asset/listPrivate'
 
+//论坛
+import blog_list from '../components/blog/list'
+
 Vue.use(Router);
 
 export default new Router({
@@ -43,6 +46,12 @@ export default new Router({
     {
       path: '/asset/private',
       component: asset_list_private,
+    },
+
+    //论坛
+    {
+      path: '/blog',
+      component: blog_list,
     },
   ]
 })

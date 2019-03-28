@@ -16,7 +16,9 @@
                   <el-row class="srdiv">
                     <el-col :md="12">
                       <img @click="glb.goto_me" :src="headImg" class="image hvr-grow"
-                           style="padding: 0 20px 0 20px;width: 100px;cursor: pointer;border-radius:50%;">
+                           style="padding: 0 20px 0 20px;width: 100px;
+                           cursor: pointer;
+                           border-radius:50%;">
                     </el-col>
                     <el-col :md="12">
                       <div style="margin-top:5px;">

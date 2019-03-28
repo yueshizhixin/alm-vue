@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="cursor-div">
     <el-container>
       <el-header class="vueHeader">
         <vue-header></vue-header>
@@ -11,6 +11,7 @@
         </keep-alive>
       </el-main>
     </el-container>
+    <!--<img id="cursorPointer" :src="pointer" alt="" class="cursor-img">-->
   </div>
 </template>
 
@@ -18,6 +19,7 @@
   import VueHeader from "@comp/vueHeader";
   import VueFooter from "@comp/vueFooter";
   import glb from "@comp/GLOBAL"
+  import pointer from "@/assets/pointer.png"
 
   export default {
     name: 'App',
@@ -27,12 +29,16 @@
       return {
         headImg: [],//头像
         tips: [],//提示
+
+        // cursorPointer: null,//鼠标对象
+        // pointer: require("@/assets/pointer.png"),
       }
     },
     created() {
       this.dataInit()
     },
     mounted() {
+      // this.cursorInit()
     },
     methods: {
       dataInit() {
@@ -94,12 +100,34 @@
           hover: 0,
         },])
       },
+
+      //鼠标位置
+      // cursorInit() {
+      //   this.cursorPointer = document.getElementById('cursorPointer');
+      //   document.onmousemove = (event) => {
+      //     this.cursorPointer.style.top = event.clientY + "px";
+      //     this.cursorPointer.style.left = event.clientX + "px";
+      //   };
+      // },
     },
   }
 
 </script>
 
 <style>
+
+  /*鼠标图片*/
+  /*.cursor-div {*/
+    /*cursor: none !important;*/
+  /*}*/
+
+  /*.cursor-img {*/
+    /*width: 50px !important;*/
+    /*height: 50px !important;*/
+    /*z-index: 99999;*/
+    /*position: absolute;*/
+  /*}*/
+
   .vueHeader, .vueFooter {
     position: fixed;
     width: 100%;
