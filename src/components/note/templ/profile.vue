@@ -1,8 +1,8 @@
 <template>
   <div>
-    <el-row :key="item.id">
+    <el-row :key="item.id" :class="{'isTop':item.id==68353199479}">
       <el-col :md="24" class="note-body">
-        <el-card>
+        <el-card >
           <el-row style="margin-top: 6px">
             <el-col :md="18">
                     <span class="note-tile" style="cursor: pointer;" @click="$router.push({path: '/note/'+item.id})">
@@ -113,5 +113,31 @@
     margin-top: 9px;
     margin-left: -8px;
     text-align: left !important;
+  }
+
+  /**
+    置顶
+   */
+  .isTop{
+    overflow: hidden;
+  }
+  
+  .isTop:after {
+    content: 'TOP';
+    font-size: 15px;
+    position: absolute;
+    left: -50px;
+    top: 0px;
+    background-color: #e77da3;
+    color: white;
+    width: 100px;
+    height: 28px;
+    text-align: center;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    line-height: 29px;
+    -webkit-transform-origin: center top;
+    transform-origin: center top;
+    padding-top: 10px;
   }
 </style>
