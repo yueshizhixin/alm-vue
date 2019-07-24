@@ -65,7 +65,7 @@
         </el-row>
       </div>
     </transition>
-    <go-top-btn :show="go_x_btn_show" :refId="'note-list-divMain'" ></go-top-btn>
+    <go-top-btn :show="go_x_btn_show" :refId="'note-list-divMain'"></go-top-btn>
   </div>
 </template>
 <script>
@@ -140,8 +140,7 @@
         let w = document.body.clientWidth
         if (w > 1199) {
           return (w - 1199 - 20 * 2) / 2 - 20 * 2.5 + 1199 / 24 * 20
-        }
-        else {
+        } else {
           return w / 24 * 20
         }
       },
@@ -159,8 +158,7 @@
           this.tags.forEach(x => {
             if (x.id === id) {
               x.hover = 1
-            }
-            else {
+            } else {
               x.hover = 0
             }
             Array.from(x.children).forEach(y => {
@@ -173,8 +171,7 @@
             Array.from(x.children).forEach(y => {
               if (y.id === id) {
                 y.hover = 1;
-              }
-              else {
+              } else {
                 y.hover = 0;
               }
             })
@@ -184,8 +181,7 @@
       mouseleaveM(id, layer) {
         if (layer === 1) {
           this.tags.find(x => x.id === id).hover = 0
-        }
-        else if (layer === 2) {
+        } else if (layer === 2) {
           this.tags.forEach(x => {
             let item = x.children.find(y => y.id === id)
             if (item) {
@@ -298,10 +294,10 @@
             if (x.tagName2) {
               x.tags.push(x.tagName2)
             }
-            x.agreeCount = this.randomNum()
-            x.commCount = this.randomNum()
-            x.shareCount = this.randomNum()
-            x.collectCount = this.randomNum()
+            x.readCount = x.readCount
+            x.commCount = 0
+            x.shareCount = 0
+            x.collectCount = 0
             // sessionStorage['note/' + x.id] = JSON.stringify(x)
           })
           let len = Array.from(data.data).length

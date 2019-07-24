@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row :key="item.id" :class="{'isTop':item.id==68353199479}">
+    <el-row :key="item.id" :class="{'isTop':item.isTop===1}">
       <el-col :md="24" class="note-body">
         <el-card >
           <el-row style="margin-top: 6px">
@@ -24,7 +24,7 @@
           </el-row>
           <el-row v-if="!glb.isMobile()" style="margin-top: 9px">
             <el-col :md="4" :sm="4">
-              <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{item.agreeCount}}</el-button>
+              <el-button class="bn-note-op" icon="iconfont icon-less">&nbsp;{{item.readCount}}</el-button>
             </el-col>
             <el-col :md="4" :sm="4">
               <el-button class="bn-note-op" icon="iconfont icon-iccomm">&nbsp;&nbsp;{{item.commCount}}

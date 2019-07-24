@@ -9,7 +9,7 @@
   export default {
     name: "GLOBAL",
 
-    isMobile(){
+    isMobile() {
       let ua = navigator.userAgent
       let ipad = ua.match(/(iPad).*OS\s([\d_]+)/)
       let isIphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/)
@@ -61,9 +61,9 @@
           return time
         }
       },
-      qiniuFormat(time){
-        let str=String(time)
-        time=Number(str.substring(0,str.length-4))
+      qiniuFormat(time) {
+        let str = String(time)
+        time = Number(str.substring(0, str.length - 4))
         let oneday = 24 * 60 * 60 * 1000;
         let now = new Date()
         let today = new Date(now.getFullYear() + '-' + (Number(now.getMonth()) + 1) + '-' + now.getDate())
@@ -74,7 +74,7 @@
         } else if (timedate >= yestoday && timedate < today) {
           return '昨天 ' + this.pre0(timedate.getHours(), 2) + ':' + this.pre0(timedate.getMinutes(), 2) + ":" + this.pre0(timedate.getSeconds(), 2)
         } else {
-          if(Number.isInteger(time)){
+          if (Number.isInteger(time)) {
             return new Date(time).format('yyyy-MM-dd HH:mm:ss')
           }
         }
@@ -92,10 +92,10 @@
     imgFormat: {
       head: '?imageView2/1/w/300/h/300',
       bgSmall: '?imageView2/2/w/480/h/270',
-      bgFormat(item,url) {
+      bgFormat(item, url) {
         return item.cdn.url + url + item.imgFormat.bgSmall
       },
-      headFormat(item,url) {
+      headFormat(item, url) {
         return item.cdn.url + url + item.imgFormat.head
       },
     },
@@ -171,21 +171,18 @@
           .then((res) => {
             if (res.status === 200) {
               suc(JSON.parse(res.data))
-            }
-            else {
+            } else {
               console.log(res)
             }
           }).catch((e) => {
           console.log(e)
         })
-      }
-      else if (type === 'get') {
+      } else if (type === 'get') {
         item.$axios.get(url, data)
           .then((res) => {
             if (res.status === 200) {
               suc(JSON.parse(res.data))
-            }
-            else {
+            } else {
               console.log(res)
             }
           }).catch((e) => {
