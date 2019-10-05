@@ -19,8 +19,8 @@ Vue.use(mavonEditor)
 
 axios.defaults.withCredentials = true
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-// axios.defaults.baseURL = 'http://127.0.0.1:8080/api/v1';
-axios.defaults.baseURL = 'http://123.206.21.86/note/api/v1';
+axios.defaults.baseURL = 'http://127.0.0.1:8080/api/v1';
+// axios.defaults.baseURL = 'http://123.206.21.86/note/api/v1';
 axios.defaults.transformRequest = (data => {
   return qs.stringify(data)
 })

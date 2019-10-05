@@ -292,7 +292,6 @@
               this.$router.push({path: '/note/save/' + data.data.id})
             }
           }
-
         })
       },
       //图片保存
