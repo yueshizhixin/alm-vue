@@ -70,6 +70,12 @@
           `<span class='tip'>周虽旧邦</span><span class='tip'>其命维新</span>`,
           `<span class='tip'>大海的香气</span><span class='tip'>迟来的后悔</span>`,
           `<span class='tip'>塞下秋来风景异</span><span class='tip'>衡阳雁去无留意</span>`,
+          `<span class='tip'>萧关逢候骑</span><span class='tip'>都护在燕然</span>`,
+          `<span class='tip'>半壁见海日</span><span class='tip'>空中闻天鸡</span>`,
+          `<span class='tip'>青冥浩荡不见底</span><span class='tip'>日月照耀金银台</span>`,
+          `<span class='tip'>此身合是诗人未</span><span class='tip'>细雨骑驴入剑门</span>`,
+          `<span class='tip'>尔曹身与名俱灭</span><span class='tip'>不废江河万古流</span>`,
+          `<span class='tip'>寄意寒星荃不察</span><span class='tip'>我以我血荐轩辕</span>`,
         ])
         sessionStorage['assetTag'] = JSON.stringify([{
           id: 1,
